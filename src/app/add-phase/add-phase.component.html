@@ -1,0 +1,113 @@
+<h1>Formulaire d'ajout de phases de projet</h1>
+<div class="project-details">
+  <h2>Détails du projet</h2>
+  <table>
+    <tr>
+      <td><strong>Nom du projet :</strong></td>
+      <td>{{ projectVals.projectName }}</td>
+    </tr>
+    <tr>
+      <td><strong>Description:</strong></td>
+      <td>{{ projectVals.description }}</td>
+    </tr>
+  </table>
+</div>
+<!-- to do  -->
+<div class="form-data-grid-container">
+  <h2>Veuillez ajouter une phase au projet</h2>
+  <!-- Form to add Phases -->
+  <form [formGroup]="phaseForm" (ngSubmit)="onSubmit()">
+    <div class="form">
+      <div>
+        <label for="phase-name">Nom de la phase:</label>
+        <input
+          id="phase-name"
+          type="text"
+          formControlName="phaseName"
+          required
+        />
+      </div>
+      <div>
+        <label for="description">Description:</label>
+        <input
+          id="description"
+          type="text"
+          formControlName="description"
+          required
+        />
+      </div>
+      <div>
+        <button name="add-phase" type="button" (click)="savePhase()">
+          Ajouter une Phase
+        </button>
+      </div>
+    </div>
+
+    <!-- List of project phase -->
+    <h2>Phases du Projet</h2>
+
+    <table>
+      <tr>
+        <th>Numéro de phase</th>
+        <th>Nom de la phase</th>
+        <th>Description</th>
+      </tr>
+      <ng-container *ngFor="let phase of phaseList; let i = index">
+        <tr>
+          <td>{{ i + 1 }}</td>
+          <td>{{ phase.phaseName }}</td>
+          <td>{{ phase.description }}</td>
+          <td>
+            <!-- button for : expand div for update phase -->
+            <button name="expand-update" (click)="expandUpdate(phase)">
+              <mat-icon>update</mat-icon>
+              <p>Mettre à jour</p>
+            </button>
+          </td>
+
+          <td>
+            <!-- button for : delete phase -->
+            <button name="delete-phase" (click)="deletePhase(i)">
+              <mat-icon>delete_forever</mat-icon>
+              <p>Supprimer la phase</p>
+            </button>
+          </td>
+        </tr>
+        <!-- expanded div for fields to update phase -->
+        <div *ngIf="phase.isExpanded">
+          <h3>
+            Veuillez remplir les informations pour mettre à jour le numéro de
+            phase {{ i + 1 }} :
+          </h3>
+          <label for="new-phase-name">Nom de la phase:</label>
+          <input
+            id="new-phase-name"
+            type="text"
+            formControlName="newPhaseName"
+            required
+          />
+
+          <div>
+            <label for="new-description">Description:</label>
+            <input
+              id="new-description"
+              type="text"
+              formControlName="newDescription"
+              required
+            />
+          </div>
+          <div>
+            <button name="update-phase" (click)="updatePhase(phase)">
+              <mat-icon>get_app</mat-icon>
+              <p>Valider les modifications</p>
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </table>
+
+    <div>
+      <button type="submit" name="submit">Submit</button>
+    </div>
+  </form>
+</div>

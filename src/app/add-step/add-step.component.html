@@ -1,0 +1,122 @@
+<h1>Personnalisation des Étapes pour votre Projet</h1>
+<div class="project-details">
+  <h2>Détails du projet</h2>
+  <table>
+    <tr>
+      <td><strong>Nom du projet :</strong></td>
+      <td>{{ projectVals.projectName }}</td>
+    </tr>
+    <tr>
+      <td><strong>Description:</strong></td>
+      <td>{{ projectVals.description }}</td>
+    </tr>
+  </table>
+</div>
+
+<h2>Définition des étapes du projet</h2>
+<form [formGroup]="stepForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="phase">Nom de phase:</label>
+    <select formControlName="phase">
+      <option *ngFor="let phase of phaseList" [ngValue]="phase">
+        {{ phase.phaseName }}
+      </option>
+    </select>
+  </div>
+  <div>
+    <label for="step-name">Nom de l'étape:</label>
+    <input id="step-name" type="text" formControlName="stepName" required />
+  </div>
+  <div>
+    <label for="description">Description:</label>
+    <input
+      id="description"
+      type="text"
+      formControlName="description"
+      required
+    />
+  </div>
+  <button name="add-step" type="button" (click)="saveStep()">
+    Ajouter une étape
+  </button>
+  <h2>Étapes du projet par phase</h2>
+  <table>
+    <tr>
+      <th>Numéro d'étape</th>
+      <th>Nom de l'étape</th>
+      <th>Description</th>
+    </tr>
+    <ng-container *ngFor="let phase of phaseList; let i = index">
+      <tr>
+        <td colspan="3">
+          <p>
+            Numéro de phase : {{ i + 1 }} - Nom de la phase :
+            {{ phase.phaseName }} - Description : {{ phase.description }}
+          </p>
+        </td>
+      </tr>
+      <ng-container *ngFor="let step of phase.steps; let k = index">
+        <tr>
+          <td>{{ k + 1 }}</td>
+          <td>{{ step.stepName }}</td>
+          <td>{{ step.description }}</td>
+          <td>
+            <!-- button for : expand div for update phase -->
+            <button name="expand-update" (click)="expandUpdate(i, k)">
+              <mat-icon>update</mat-icon>
+              <p>Mettre à jour</p>
+            </button>
+          </td>
+          <td>
+            <!-- button for : delete step -->
+            <button name="delete-phase" (click)="deleteStep(i, k)">
+              <mat-icon>delete_forever</mat-icon>
+              <p>Supprimer la phase</p>
+            </button>
+          </td>
+        </tr>
+        <div *ngIf="step.isExpanded">
+          <h3>
+            Veuillez remplir le formulaire ci-dessous pour mettre à jour les
+            étapes du projet.
+          </h3>
+          <div>
+            <label for="new-phase">Nom de phase:</label>
+            <select formControlName="newPhase">
+              <option *ngFor="let phase of phaseList" [ngValue]="phase">
+                {{ phase.phaseName }}
+              </option>
+            </select>
+          </div>
+          <div>
+            <label for="new-step-name">Nom de l'étape:</label>
+            <input
+              id="new-step-name"
+              type="text"
+              formControlName="newStepName"
+              required
+            />
+          </div>
+          <div>
+            <label for="new-description">Description:</label>
+            <input
+              id="new-description"
+              type="text"
+              formControlName="newDescription"
+              required
+            />
+          </div>
+          <div>
+            <button name="update-phase" (click)="updateStep(i, k)">
+              <mat-icon>get_app</mat-icon>
+              <p>Valider les modifications</p>
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </table>
+  <div>
+    <button type="submit" name="submit">Submit</button>
+  </div>
+</form>

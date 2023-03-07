@@ -1,0 +1,20 @@
+<h1 style="text-align: center">Ajouter un Projet</h1>
+<form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="project-name"> Nom du Projet:</label>
+    <input
+      id="project-name"
+      type="text"
+      formControlName="projectName"
+      required
+    />
+  </div>
+
+  <div>
+    <label for="description"> Description:</label>
+    <input id="description" type="text" formControlName="description" />
+  </div>
+  <div>
+    <button type="submit">Submit</button>
+  </div>
+</form>
