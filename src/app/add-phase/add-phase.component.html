@@ -27,6 +27,23 @@
           required
         />
       </div>
+      <div
+        *ngIf="
+          phaseForm.controls['phaseName'].invalid &&
+          (phaseForm.controls['phaseName'].touched ||
+            phaseForm.controls['phaseName'].dirty)
+        "
+        class="error-display"
+      >
+        <div *ngIf="phaseForm.controls['phaseName'].errors?.['required']">
+          Veuillez remplir ce champ; ne pas laisser ce champ vide.
+        </div>
+        <div
+          *ngIf="phaseForm.controls['phaseName'].errors?.['invalidNameOfPhase']"
+        >
+          Le nom saisi est invalide. Veuillez saisir un nom valide.
+        </div>
+      </div>
       <div>
         <label for="description">Description:</label>
         <input
@@ -59,7 +76,11 @@
           <td>{{ phase.description }}</td>
           <td>
             <!-- button for : expand div for update phase -->
-            <button name="expand-update" (click)="expandUpdate(phase)">
+            <button
+              name="expand-update"
+              type="button"
+              (click)="expandUpdate(phase)"
+            >
               <mat-icon>update</mat-icon>
               <p>Mettre à jour</p>
             </button>
@@ -67,7 +88,7 @@
 
           <td>
             <!-- button for : delete phase -->
-            <button name="delete-phase" (click)="deletePhase(i)">
+            <button name="delete-phase" type="button" (click)="deletePhase(i)">
               <mat-icon>delete_forever</mat-icon>
               <p>Supprimer la phase</p>
             </button>
@@ -86,7 +107,25 @@
             formControlName="newPhaseName"
             required
           />
-
+          <div
+            *ngIf="
+              phaseForm.controls['newPhaseName'].invalid &&
+              (phaseForm.controls['newPhaseName'].touched ||
+                phaseForm.controls['newPhaseName'].dirty)
+            "
+            class="error-display"
+          >
+            <div
+              *ngIf="phaseForm.controls['newPhaseName'].errors?.['required']"
+            >
+              Veuillez remplir ce champ; ne pas laisser ce champ vide.
+            </div>
+            <div
+              *ngIf="phaseForm.controls['newPhaseName'].errors?.['invalidNameOfPhase']"
+            >
+              Le nom saisi est invalide. Veuillez saisir un nom valide.
+            </div>
+          </div>
           <div>
             <label for="new-description">Description:</label>
             <input

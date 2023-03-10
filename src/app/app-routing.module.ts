@@ -4,12 +4,14 @@ import { ActionGridComponent } from './action-grid/action-grid.component';
 import { AddPhaseComponent } from './add-phase/add-phase.component';
 import { AddProjectComponent } from './add-project/add-project.component';
 import { AddStepComponent } from './add-step/add-step.component';
+import { AddTaskComponent } from './add-task/add-task.component';
 
 const routes: Routes = [
   { path: 'actionGrid', component: ActionGridComponent },
   { path: 'addProject', component: AddProjectComponent },
   { path: 'addPhase/:projectVals', component: AddPhaseComponent },
   { path: 'addStep/:projectVals/:phaseList', component: AddStepComponent },
+  { path: 'addTask', component: AddTaskComponent },
 ];
 
 @NgModule({

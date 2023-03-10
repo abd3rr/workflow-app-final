@@ -12,7 +12,7 @@ import { Step } from '../interfaces/Step';
   styleUrls: ['./add-step.component.css'],
 })
 export class AddStepComponent {
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private router: Router) {}
   projectVals!: Project;
   phaseList: Phase[] = []; // retrieved from add-phase
   stepList: Step[] = [];
@@ -110,5 +110,7 @@ export class AddStepComponent {
       this.phaseList[phaseIndex].steps.splice(stepIndex, 1);
     }
   }
-  onSubmit() {}
+  onSubmit() {
+    // TO DO
+  }
 }

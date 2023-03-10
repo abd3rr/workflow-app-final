@@ -17,9 +17,15 @@ export class AddPhaseComponent {
   phaseList: Phase[] = [];
 
   phaseForm = new FormGroup({
-    phaseName: new FormControl('', [Validators.required]),
+    phaseName: new FormControl('', [
+      Validators.required,
+      this.phaseNameValidator,
+    ]),
     description: new FormControl(''),
-    newPhaseName: new FormControl('', [Validators.required]),
+    newPhaseName: new FormControl('', [
+      Validators.required,
+      this.phaseNameValidator,
+    ]),
     newDescription: new FormControl('', [Validators.required]),
   });
 
@@ -65,4 +71,13 @@ export class AddPhaseComponent {
     );
     this.router.navigate(['/addStep', encodedProjectVals, encodedPhaseList]);
   }
+  // Validators
+
+  phaseNameValidator(control: FormControl) {
+    if (!control.value) return { required: true };
+    const pattern = /^[a-zA-Z][a-zA-Z0-9_ -]*$/;
+    if (!pattern.test(control.value)) return { invalidNameOfPhase: true };
+    return null;
+  }
+  //-------
 }

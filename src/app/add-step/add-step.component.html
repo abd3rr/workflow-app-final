@@ -62,14 +62,22 @@
           <td>{{ step.description }}</td>
           <td>
             <!-- button for : expand div for update phase -->
-            <button name="expand-update" (click)="expandUpdate(i, k)">
+            <button
+              name="expand-update"
+              type="button"
+              (click)="expandUpdate(i, k)"
+            >
               <mat-icon>update</mat-icon>
               <p>Mettre à jour</p>
             </button>
           </td>
           <td>
             <!-- button for : delete step -->
-            <button name="delete-phase" (click)="deleteStep(i, k)">
+            <button
+              name="delete-phase"
+              type="button"
+              (click)="deleteStep(i, k)"
+            >
               <mat-icon>delete_forever</mat-icon>
               <p>Supprimer la phase</p>
             </button>
@@ -107,7 +115,11 @@
             />
           </div>
           <div>
-            <button name="update-phase" (click)="updateStep(i, k)">
+            <button
+              name="update-phase"
+              type="button"
+              (click)="updateStep(i, k)"
+            >
               <mat-icon>get_app</mat-icon>
               <p>Valider les modifications</p>
             </button>

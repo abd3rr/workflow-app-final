@@ -1,0 +1,68 @@
+<h1>Add Task</h1>
+<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="Project Name">Project Name: </label>
+    <select formControlName="project">
+      <option *ngFor="let project of projectList" [ngValue]="project">
+        {{ project }}
+      </option>
+    </select>
+  </div>
+  <!-- Load Phases on Project Change -->
+  <div>
+    <label for="Phase Name"> Phase Name: </label>
+    <select formControlName="phase">
+      <option *ngFor="let phase of phaseList" [ngValue]="phase">
+        {{ phase }}
+      </option>
+    </select>
+  </div>
+  <!-- Load Steps on Phase Change -->
+  <div>
+    <label for="Step Name"> Step Name: </label>
+    <select formControlName="Step">
+      <option *ngFor="let step of stepList" [ngValue]="step">
+        {{ step }}
+      </option>
+    </select>
+  </div>
+
+  <div>
+    <label for="task-name">Task Name:</label>
+    <input id="task-name" type="text" formControlName="taskName" required />
+  </div>
+
+  <div>
+    <label for="description">Description: </label>
+    <input
+      id="description"
+      type="text"
+      formControlName="description"
+      required
+    />
+  </div>
+
+  <div>
+    <label for="task-name">Assigned User:</label>
+    <mat-form-field appearance="fill">
+      <mat-label>Assigned User</mat-label>
+      <mat-select formControlName="assignedUser" multiple>
+        <mat-option *ngFor="let user of userList" [value]="user">{{
+          user
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <label for="task-name">Parent Task:</label>
+    <mat-form-field appearance="fill">
+      <mat-label> Parent Task</mat-label>
+      <mat-select formControlName="parentTask" multiple>
+        <mat-option *ngFor="let task of taskList" [value]="task">{{
+          task
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</form>

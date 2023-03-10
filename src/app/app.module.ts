@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +18,7 @@ import { ActionGridComponent } from './action-grid/action-grid.component';
 import { AddProjectComponent } from './add-project/add-project.component';
 import { AddPhaseComponent } from './add-phase/add-phase.component';
 import { AddStepComponent } from './add-step/add-step.component';
+import { AddTaskComponent } from './add-task/add-task.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { AddStepComponent } from './add-step/add-step.component';
     AddProjectComponent,
     AddPhaseComponent,
     AddStepComponent,
+    AddTaskComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,7 @@ import { AddStepComponent } from './add-step/add-step.component';
     MatGridListModule,
     FormsModule,
     ReactiveFormsModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

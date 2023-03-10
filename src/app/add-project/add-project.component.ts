@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, Form } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,10 +10,21 @@ import { Router } from '@angular/router';
 export class AddProjectComponent {
   constructor(private router: Router) {}
   projectForm = new FormGroup({
-    projectName: new FormControl('', [Validators.required]),
+    projectName: new FormControl('', [
+      Validators.required,
+      this.projectNameValidator,
+    ]),
     description: new FormControl(''),
   });
+  // Validators Functions
 
+  projectNameValidator(control: FormControl) {
+    if (!control.value) return { required: true };
+    const pattern = /^[a-zA-Z][a-zA-Z0-9_ -]*$/;
+    if (!pattern.test(control.value)) return { invalidNameOfProject: true };
+    return null;
+  }
+  //-----
   onSubmit() {
     const projectVals = this.projectForm.value;
     const encodedProjectVals = encodeURIComponent(JSON.stringify(projectVals));
