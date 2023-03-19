@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Phase } from '../interfaces/phase';
 import { Project } from '../interfaces/project';
 import { Step } from '../interfaces/Step';
+import { ApiService } from '../services/api.service';
+import { catchError, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-add-step',
@@ -12,10 +14,16 @@ import { Step } from '../interfaces/Step';
   styleUrls: ['./add-step.component.css'],
 })
 export class AddStepComponent {
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private apiService: ApiService
+  ) {}
   projectVals!: Project;
+  projectId!: string;
   phaseList: Phase[] = []; // retrieved from add-phase
   stepList: Step[] = [];
+  observablesOfPhases = [];
 
   stepForm = new FormGroup({
     phase: new FormControl(null, [Validators.required]),
@@ -110,7 +118,147 @@ export class AddStepComponent {
       this.phaseList[phaseIndex].steps.splice(stepIndex, 1);
     }
   }
+
+  // onSubmit() {
+
+  //   this.createProject();
+  // }
   onSubmit() {
-    // TO DO
+    const projectName = this.projectVals.projectName;
+    const description = this.projectVals.description;
+    this.apiService.createProject(projectName, description).subscribe(
+      (projectResponse) => {
+        const projectId = projectResponse.id;
+        for (let phase of this.phaseList) {
+          const phaseName = phase.phaseName;
+          const phaseDescription = phase.description;
+          this.apiService
+            .createPhase(projectId, phaseName, phaseDescription)
+            .subscribe(
+              (phaseResponse) => {
+                const phaseId = phaseResponse.id;
+                for (let step of phase.steps) {
+                  const stepName = step.stepName;
+                  const stepDescription = step.description;
+                  this.apiService
+                    .createStep(phaseId, stepName, stepDescription)
+                    .subscribe(
+                      (stepResponse) => {
+                        console.log(stepResponse);
+                        const encodedPhaseList = encodeURIComponent(
+                          JSON.stringify(this.phaseList)
+                        );
+                        const encodedProjectVals = encodeURIComponent(
+                          JSON.stringify(this.projectVals)
+                        );
+                        this.router.navigate([
+                          '/sucessProjectAdd',
+                          encodedProjectVals,
+                          encodedPhaseList,
+                        ]);
+                      },
+                      (stepError) => {
+                        console.error('Error creating step:', stepError);
+                        this.deleteProject(projectId); // delete project if step creation fails
+                        // display error message to the user
+                      }
+                    );
+                }
+              },
+              (phaseError) => {
+                console.error('Error creating phase:', phaseError);
+                this.deleteProject(projectId); // delete project if phase creation fails
+                // display error message to the user
+              }
+            );
+        }
+      },
+      (projectError) => {
+        console.error('Error creating project:', projectError);
+        // display error message to the user
+      }
+    );
   }
+
+  deleteProject(projectId: string) {
+    this.apiService.deleteProject(projectId).subscribe(
+      (deleteResponse) => {
+        console.log('Project deleted successfully');
+      },
+      (deleteError) => {
+        console.error('Error deleting project:', deleteError);
+      }
+    );
+  }
+  // createProject() {
+  //   this.apiService
+  //     .createProject(this.projectVals.projectName, this.projectVals.description)
+  //     .subscribe(
+  //       (response) => {
+  //         console.log('response');
+  //         this.createPhase(this.projectVals.projectName);
+  //       },
+  //       (error) => {
+  //         console.error(error);
+  //       }
+  //     );
+  // }
+
+  // createPhase(projectName: string) {
+  //   // Get Project ID
+  //   this.apiService.getProjectIdByName(projectName).subscribe(
+  //     (projectId) => {
+  //       // Create Phase using project ID
+  //       for (let phase of this.phaseList) {
+  //         this.apiService
+  //           .createPhase(projectId, phase.phaseName, phase.description)
+  //           .subscribe(
+  //             (response) => {
+  //               console.log(response);
+  //               // getting the id of the created Phase
+  //               this.apiService
+  //                 .getPhaseIdByNameAndProjectName(
+  //                   phase.phaseName,
+  //                   this.projectVals.projectName
+  //                 )
+  //                 .subscribe(
+  //                   (phaseId) => {
+  //                     console.log('Phase ID: ' + phaseId);
+  //                     // creating the step using the phaseId
+  //                     for (let step of phase.steps) {
+  //                       this.createStep(
+  //                         phaseId,
+  //                         step.stepName,
+  //                         step.description
+  //                       );
+  //                     }
+  //                   },
+  //                   (error) => {
+  //                     console.error(error);
+  //                   }
+  //                 );
+  //             },
+  //             (error) => {
+  //               // creating Phase block
+  //               console.error(error);
+  //             }
+  //           );
+  //       }
+  //     },
+  //     (error) => {
+  //       // getting Project Id block
+  //       console.error(error);
+  //     }
+  //   );
+  // }
+  // createStep(phaseId: string, stepName: string, description: string | null) {
+  //   this.apiService.createStep(phaseId, stepName, description).subscribe(
+  //     (response) => {
+  //       console.log(response);
+  //     },
+  //     (error) => {
+  //       console.error(error);
+  //     }
+  //   );
+  // }
 }

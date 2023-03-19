@@ -9,6 +9,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,6 +20,9 @@ import { AddProjectComponent } from './add-project/add-project.component';
 import { AddPhaseComponent } from './add-phase/add-phase.component';
 import { AddStepComponent } from './add-step/add-step.component';
 import { AddTaskComponent } from './add-task/add-task.component';
+import { SuccessCreateProjectComponent } from './success-create-project/success-create-project.component';
+
+import { SomethingWentWrongComponent } from './something-went-wrong/something-went-wrong.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +33,8 @@ import { AddTaskComponent } from './add-task/add-task.component';
     AddPhaseComponent,
     AddStepComponent,
     AddTaskComponent,
+    SuccessCreateProjectComponent,
+    SomethingWentWrongComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +49,7 @@ import { AddTaskComponent } from './add-task/add-task.component';
     FormsModule,
     ReactiveFormsModule,
     MatSelectModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

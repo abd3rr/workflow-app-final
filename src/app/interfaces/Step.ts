@@ -1,6 +1,6 @@
 export interface Step {
   stepName: string;
-  description: string | null;
+  description: string;
   isExpanded: boolean;
-  [key: string]: string | number | null | boolean | undefined;
+  [key: string]: string | number | null | undefined | boolean;
 }

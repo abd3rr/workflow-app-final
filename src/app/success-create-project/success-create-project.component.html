@@ -1,0 +1,35 @@
+<div class="container success">
+  <div class="header">
+    <h1 class="title">Project Created Successfully</h1>
+    <button name="add-task" type="button" [routerLink]="'/addTask'">
+      Add Task
+    </button>
+  </div>
+  <div class="row">
+    <div class="col">
+      <p><strong>Project Name:</strong> {{ projectVals.projectName }}</p>
+      <p><strong>Project Description:</strong> {{ projectVals.projectName }}</p>
+    </div>
+    <div class="col">
+      <h2 class="subtitle">Phases and Steps:</h2>
+      <table class="datagrid">
+        <thead>
+          <tr>
+            <th>Phase Name</th>
+            <th>Step Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let phase of phaseList">
+            <td>{{ phase.phaseName }}</td>
+            <td>
+              <ul class="list">
+                <li *ngFor="let step of phase.steps">{{ step.stepName }}</li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
