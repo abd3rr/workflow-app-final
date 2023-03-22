@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Phase } from '../interfaces/phase';
 import { Project } from '../interfaces/project';
-import { Step } from '../interfaces/Step';
+import { Step } from '../interfaces/step';
 import { ApiService } from '../services/api.service';
 import { catchError, forkJoin } from 'rxjs';
 
@@ -48,6 +48,7 @@ export class AddStepComponent {
 
   saveStep() {
     const newStep: Step = {
+      id: null,
       stepName: this.stepForm.get('stepName')?.value!,
       description: this.stepForm.get('description')?.value!,
       isExpanded: false,
@@ -61,12 +62,6 @@ export class AddStepComponent {
   }
 
   expandUpdate(phaseIndex: number, stepIndex: number) {
-    //const phaseIndex = this.phaseList.findIndex(
-    //   (phase) => phase === currentPhase
-    // );
-    // const stepIndex = this.phaseList[phaseIndex].steps.findIndex(
-    //   (step) => step === selectedStep
-    // );
     this.phaseList[phaseIndex].steps[stepIndex].isExpanded =
       !this.phaseList[phaseIndex].steps[stepIndex].isExpanded;
 
@@ -77,41 +72,30 @@ export class AddStepComponent {
     });
   }
   updateStep(phaseIndex: number, stepIndex: number) {
-    // const phaseIndex = this.phaseList.findIndex(
-    //   (phase) => phase === currentPhase
-    // );
-    // const stepIndex = this.phaseList[phaseIndex].steps.findIndex(
-    //   (step) => step === selectedStep
-    // );
-    // this.phaseList[phaseIndex] =
-    //   this.phaseList[phaseIndex].phaseName !==
-    //   this.stepForm.get('newPhase')?.value
-    //     ? selectedPhase
-    //     : this.phaseList[phaseIndex];
-    const newPhase: Phase = this.stepForm.get('newPhase')?.value as Phase; // selected phase
-    // to do this part choose the new index push setps infos, delele the old one ; optimaly do changes only if phase onChange
+    const newPhase: Phase = this.stepForm.get('newPhase')!.value as Phase; // selected phase
+    const newStepName = this.stepForm.get('newStepName')!.value!;
+    const newDescription = this.stepForm.get('newDescription')!.value!;
+
     if (newPhase.phaseName !== this.phaseList[phaseIndex].phaseName) {
       const newStep: Step = {
-        stepName: this.stepForm.get('newStepName')?.value!,
-        description: this.stepForm.get('newDescription')?.value!,
+        id: null,
+        stepName: newStepName,
+        description: newDescription,
         isExpanded: false,
       };
       const newPhaseIndex = this.phaseList.findIndex(
         (phase) => phase === newPhase
       );
-      this.phaseList[newPhaseIndex].steps.push(newStep); //update the new Phase
-      this.phaseList[phaseIndex].steps.splice(stepIndex, 1); // delete the step of the old phase
-      this.phaseList[phaseIndex].steps[stepIndex].isExpanded = false;
-      this.stepForm.reset({});
+      this.phaseList[newPhaseIndex].steps.push(newStep);
+      this.phaseList[phaseIndex].steps.splice(stepIndex, 1);
     } else {
-      this.phaseList[phaseIndex].steps[stepIndex].stepName =
-        this.stepForm.get('newStepName')?.value!;
-      this.phaseList[phaseIndex].steps[stepIndex].description =
-        this.stepForm.get('newDescription')?.value!;
-      this.phaseList[phaseIndex].steps[stepIndex].isExpanded = false;
-
-      this.stepForm.reset({});
+      const currentStep = this.phaseList[phaseIndex].steps[stepIndex];
+      currentStep.stepName = newStepName;
+      currentStep.description = newDescription;
     }
+
+    this.phaseList[phaseIndex].steps[stepIndex].isExpanded = false;
+    this.stepForm.reset({});
   }
   deleteStep(phaseIndex: number, stepIndex: number) {
     if (confirm('Are you sure to delete ')) {
@@ -190,75 +174,4 @@ export class AddStepComponent {
       }
     );
   }
-  // createProject() {
-  //   this.apiService
-  //     .createProject(this.projectVals.projectName, this.projectVals.description)
-  //     .subscribe(
-  //       (response) => {
-  //         console.log('response');
-  //         this.createPhase(this.projectVals.projectName);
-  //       },
-  //       (error) => {
-  //         console.error(error);
-  //       }
-  //     );
-  // }
-
-  // createPhase(projectName: string) {
-  //   // Get Project ID
-  //   this.apiService.getProjectIdByName(projectName).subscribe(
-  //     (projectId) => {
-  //       // Create Phase using project ID
-  //       for (let phase of this.phaseList) {
-  //         this.apiService
-  //           .createPhase(projectId, phase.phaseName, phase.description)
-  //           .subscribe(
-  //             (response) => {
-  //               console.log(response);
-  //               // getting the id of the created Phase
-  //               this.apiService
-  //                 .getPhaseIdByNameAndProjectName(
-  //                   phase.phaseName,
-  //                   this.projectVals.projectName
-  //                 )
-  //                 .subscribe(
-  //                   (phaseId) => {
-  //                     console.log('Phase ID: ' + phaseId);
-  //                     // creating the step using the phaseId
-  //                     for (let step of phase.steps) {
-  //                       this.createStep(
-  //                         phaseId,
-  //                         step.stepName,
-  //                         step.description
-  //                       );
-  //                     }
-  //                   },
-  //                   (error) => {
-  //                     console.error(error);
-  //                   }
-  //                 );
-  //             },
-  //             (error) => {
-  //               // creating Phase block
-  //               console.error(error);
-  //             }
-  //           );
-  //       }
-  //     },
-  //     (error) => {
-  //       // getting Project Id block
-  //       console.error(error);
-  //     }
-  //   );
-  // }
-  // createStep(phaseId: string, stepName: string, description: string | null) {
-  //   this.apiService.createStep(phaseId, stepName, description).subscribe(
-  //     (response) => {
-  //       console.log(response);
-  //     },
-  //     (error) => {
-  //       console.error(error);
-  //     }
-  //   );
-  // }
 }

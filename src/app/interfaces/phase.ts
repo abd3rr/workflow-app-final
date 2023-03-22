@@ -1,5 +1,7 @@
-import { Step } from './Step';
+import { Step } from './step';
+
 export interface Phase {
+  id: number | null;
   phaseName: string;
   description: string | null;
   isExpanded: boolean;

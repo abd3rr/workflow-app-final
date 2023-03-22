@@ -1,4 +1,5 @@
 export interface Step {
+  id: number | null;
   stepName: string;
   description: string;
   isExpanded: boolean;

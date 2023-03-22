@@ -2,27 +2,29 @@
 <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
   <div>
     <label for="Project Name">Project Name: </label>
-    <select formControlName="project">
+    <select formControlName="project" (change)="onProjectSelected()">
       <option *ngFor="let project of projectList" [ngValue]="project">
-        {{ project }}
+        {{ project.projectName }}
       </option>
     </select>
   </div>
   <!-- Load Phases on Project Change -->
   <div>
     <label for="Phase Name"> Phase Name: </label>
-    <select formControlName="phase">
+    <select formControlName="phase" (change)="onPhaseSelected()">
+      <option [ngValue]="null">---</option>
       <option *ngFor="let phase of phaseList" [ngValue]="phase">
-        {{ phase }}
+        {{ phase.phaseName }}
       </option>
     </select>
   </div>
   <!-- Load Steps on Phase Change -->
   <div>
     <label for="Step Name"> Step Name: </label>
-    <select formControlName="Step">
+    <select formControlName="step">
+      <option [ngValue]="null">---</option>
       <option *ngFor="let step of stepList" [ngValue]="step">
-        {{ step }}
+        {{ step.stepName }}
       </option>
     </select>
   </div>

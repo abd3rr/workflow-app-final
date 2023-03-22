@@ -1,6 +1,9 @@
-export interface Project {
-  projectName: string;
+import { Phase } from './phase';
 
+export interface Project {
+  id: number | null;
+  projectName: string;
   description: string | null;
-  [key: string]: string | number | null | undefined;
+  phases: Phase[];
+  [key: string]: string | number | null | undefined | Phase[];
 }

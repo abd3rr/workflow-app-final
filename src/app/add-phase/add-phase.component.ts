@@ -39,6 +39,7 @@ export class AddPhaseComponent {
   }
   savePhase() {
     const newPhase: Phase = {
+      id: null,
       phaseName: this.phaseForm.get('phaseName')?.value!,
       description: this.phaseForm.get('description')?.value!,
       isExpanded: false,
