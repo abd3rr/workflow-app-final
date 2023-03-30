@@ -1,8 +1,14 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder,
+} from '@angular/forms';
 import { Project } from '../interfaces/project';
 import { Phase } from '../interfaces/phase';
 import { Step } from '../interfaces/step';
+import { Job } from '../interfaces/job';
 import { ApiService } from '../services/api.service';
 
 @Component({
@@ -15,9 +21,10 @@ export class AddTaskComponent {
   projectList!: Project[];
   phaseList!: Phase[] | null;
   stepList!: Step[];
-
-  userList = ['User 1 ', 'User 2', 'User 3 '];
+  actionsCounter: number = 1;
+  jobList!: Job[];
   taskList = ['task 1', 'task 2 ', 'task 3 '];
+  actionList = ['Upload File'];
   // ---------
   constructor(private apiService: ApiService) {}
 
@@ -31,6 +38,11 @@ export class AddTaskComponent {
         console.error('Error getting the projects');
       }
     );
+
+    this.apiService.getAllJobs().subscribe((jobsResponse) => {
+      this.jobList = jobsResponse;
+      console.log(this.jobList);
+    });
   }
 
   taskForm = new FormGroup({
@@ -39,8 +51,10 @@ export class AddTaskComponent {
     step: new FormControl({}, Validators.required),
     taskName: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
-    assignedUser: new FormControl(false, Validators.required),
-    parentTask: new FormControl(false, Validators.required),
+    assignedJobs: new FormControl([], Validators.required),
+    parentTask: new FormControl([], Validators.required),
+    file: new FormControl('', Validators.required),
+    shouldSendMail: new FormControl(false),
   });
 
   onSubmit() {}
@@ -61,25 +75,4 @@ export class AddTaskComponent {
       this.taskForm.patchValue({ phase: null, step: null });
     }
   }
-  onStepSelected() {}
-  // onProjectChange() {
-  //   const selectedProject = this.taskForm.value.project as Project | null;
-
-  //   if (selectedProject && selectedProject.phases) {
-  //     this.phaseList = selectedProject.phases;
-  //   }
-  // }
-  // onPhaseChange() {
-  //   const selectedPhase = this.taskForm.value.phase as Phase | null;
-  //   if (selectedPhase && selectedPhase.id) {
-  //     this.apiService.getStepsByPhaseId(selectedPhase.id).subscribe(
-  //       (stepsResponse) => {
-  //         this.stepList = stepsResponse as Step[];
-  //       },
-  //       (error) => {
-  //         console.error('Error getting the steps');
-  //       }
-  //     );
-  //   }
-  // }
 }

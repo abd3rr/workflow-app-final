@@ -45,12 +45,12 @@
   </div>
 
   <div>
-    <label for="task-name">Assigned User:</label>
+    <label for="task-name">Assigned Jobs:</label>
     <mat-form-field appearance="fill">
-      <mat-label>Assigned User</mat-label>
-      <mat-select formControlName="assignedUser" multiple>
-        <mat-option *ngFor="let user of userList" [value]="user">{{
-          user
+      <mat-label>Assigned Jobs</mat-label>
+      <mat-select formControlName="assignedJobs" multiple>
+        <mat-option *ngFor="let job of jobList" [value]="job">{{
+          job.title
         }}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -61,10 +61,33 @@
     <mat-form-field appearance="fill">
       <mat-label> Parent Task</mat-label>
       <mat-select formControlName="parentTask" multiple>
+        <mat-option Value="null"
+          >Aucune tâche précédente (première tâche)
+        </mat-option>
         <mat-option *ngFor="let task of taskList" [value]="task">{{
           task
         }}</mat-option>
       </mat-select>
     </mat-form-field>
+  </div>
+  <h3>Actions :</h3>
+
+  <div>
+    <label for="task-name">Upload File:</label>
+    <input id="file" type="file" formControlName="file" required />
+  </div>
+
+  <div>
+    <label for="send-mail">Send Mail:</label>
+    <input
+      id="send-mail"
+      type="checkbox"
+      formControlName="shouldSendMail"
+      required
+    />
+  </div>
+
+  <div>
+    <button type="submit" name="submit">Submit</button>
   </div>
 </form>

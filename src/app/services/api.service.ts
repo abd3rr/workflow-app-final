@@ -111,6 +111,17 @@ export class ApiService {
       })
     );
   }
+
+  getAllJobs(): Observable<any> {
+    const url = `${this.baseUrl}/jobs`;
+    return this.http.get(url).pipe(
+      retry(3),
+      catchError((error) => {
+        console.log('An error occured getting the jobs: ', error);
+        return throwError('Something went wrong; please try again later');
+      })
+    );
+  }
   // public getAllProjects(): Observable<any> {
   //   const url = `${this.baseUrl}/projects`;
   //   return this.http.get(url).pipe(
