@@ -1,0 +1,71 @@
+<form [formGroup]="taskForm">
+  <div>
+    <label for="Project Name">Project Name: </label>
+    <select formControlName="project" (change)="onProjectSelected()">
+      <option [ngValue]="null">---</option>
+      <option *ngFor="let project of projectList" [ngValue]="project">
+        {{ project.projectName }}
+      </option>
+    </select>
+  </div>
+  <!-- Load Phases on Project Change -->
+  <div>
+    <label for="Phase Name"> Phase Name: </label>
+    <select formControlName="phase" (change)="onPhaseSelected()">
+      <option [ngValue]="null">---</option>
+      <option *ngFor="let phase of phaseList" [ngValue]="phase">
+        {{ phase.phaseName }}
+      </option>
+    </select>
+  </div>
+  <!-- Load Steps on Phase Change -->
+  <div>
+    <label for="Step Name"> Step Name: </label>
+    <select formControlName="step" (change)="onStepSelected()">
+      <option [ngValue]="null">---</option>
+      <option *ngFor="let step of stepList" [ngValue]="step">
+        {{ step.stepName }}
+      </option>
+    </select>
+  </div>
+  <button (click)="resetFilters()">Reset Filters</button>
+</form>
+
+<div class="container">
+  <h2 class="title">Tasks Waiting for Validation</h2>
+
+  <div *ngIf="tasksWaitingForValidation.length === 0" class="no-tasks-message">
+    No tasks waiting for validation found.
+  </div>
+
+  <div class="card-container">
+    <div
+      *ngFor="let task of tasksWaitingForValidation"
+      class="card validation"
+      (click)="task.id && goToVerificationDetail(task.id)"
+    >
+      <div class="card-body">
+        <h5 class="card-title">{{ task.taskName }}</h5>
+        <p class="card-text">{{ task.description }}</p>
+        <span class="tag">Verification</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <h2 class="title">User Task List</h2>
+  <div *ngIf="tasks.length === 0" class="no-tasks-message">No tasks found.</div>
+  <div class="card-container">
+    <div
+      *ngFor="let task of tasks"
+      class="card task"
+      (click)="task.id && goToTaskDetail(task.id)"
+    >
+      <div class="card-body">
+        <h5 class="card-title">{{ task.taskName }}</h5>
+        <p class="card-text">{{ task.description }}</p>
+        <span class="tag">Task</span>
+      </div>
+    </div>
+  </div>
+</div>

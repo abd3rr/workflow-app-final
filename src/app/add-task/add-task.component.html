@@ -21,8 +21,8 @@
   <!-- Load Steps on Phase Change -->
   <div>
     <label for="Step Name"> Step Name: </label>
-    <select formControlName="step">
-      <option [ngValue]="null">---</option>
+    <select formControlName="step" (change)="onStepSelected()">
+      <option [ngValue]="[]">---</option>
       <option *ngFor="let step of stepList" [ngValue]="step">
         {{ step.stepName }}
       </option>
@@ -42,6 +42,16 @@
       formControlName="description"
       required
     />
+  </div>
+
+  <div>
+    <label for="instructions">Instructions: </label>
+    <textarea
+      id="instructions"
+      formControlName="instructions"
+      required
+      rows="4"
+    ></textarea>
   </div>
 
   <div>
@@ -65,7 +75,7 @@
           >Aucune tâche précédente (première tâche)
         </mat-option>
         <mat-option *ngFor="let task of taskList" [value]="task">{{
-          task
+          task.taskName
         }}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -74,7 +84,22 @@
 
   <div>
     <label for="task-name">Upload File:</label>
-    <input id="file" type="file" formControlName="file" required />
+    <input
+      id="file"
+      type="file"
+      formControlName="file"
+      (change)="onFileChange($event)"
+      required
+    />
+  </div>
+  <div>
+    <label for="required-verification">Verification:</label>
+    <input
+      id="required-verification"
+      type="checkbox"
+      formControlName="requiredVerification"
+      required
+    />
   </div>
 
   <div>
@@ -82,7 +107,7 @@
     <input
       id="send-mail"
       type="checkbox"
-      formControlName="shouldSendMail"
+      formControlName="sendEmail"
       required
     />
   </div>

@@ -1,0 +1,39 @@
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px auto;
+  max-width: 400px;
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #000;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #000;
+}
+
+input[type="text"],
+input[type="password"] {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #000;
+  width: 100%;
+}
+
+button[type="submit"] {
+  padding: 10px 20px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #000;
+}

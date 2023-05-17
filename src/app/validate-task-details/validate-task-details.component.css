@@ -1,0 +1,77 @@
+/* General styles */
+body {
+  background-color: white;
+  color: black;
+  font-family: Arial, sans-serif;
+}
+
+/* Headings */
+h1,
+h2,
+h3 {
+  color: black;
+  margin-bottom: 0.5em;
+  font-size: 1.2em; /* Set the same font size for all headers */
+}
+
+/* Paragraphs */
+p {
+  color: black;
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+/* Lists */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 0.5em;
+}
+
+/* Buttons */
+button {
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 0.5em 1em;
+  margin: 0.5em 0;
+  font-size: 1em;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #333;
+}
+
+/* Back button */
+.back-button {
+  margin-bottom: 2em;
+}
+
+/* Strong elements */
+strong {
+  color: #333;
+  font-weight: bold;
+}
+
+/* Method execution status */
+.success {
+  color: green;
+}
+
+.failure {
+  color: red;
+}
+
+/* Method list */
+ul.methods {
+  padding-left: 1em;
+}
+
+li.method {
+  margin-bottom: 1em;
+}

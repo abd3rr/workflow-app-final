@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-side-nav',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./side-nav.component.css'],
 })
 export class SideNavComponent {
+  constructor(public authService: AuthService) {}
   isExpanded: boolean = false;
 }

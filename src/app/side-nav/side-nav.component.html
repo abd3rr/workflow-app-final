@@ -13,7 +13,25 @@
         </mat-icon>
       </mat-list-item>
 
-      <mat-list-item [routerLink]="">
+      <mat-list-item
+        *ngIf="
+          authService.userRole === 'admin' || authService.userRole === 'user'
+        "
+        [routerLink]="'/home'"
+      >
+        <mat-icon mat-list-icon>home</mat-icon>
+        <span
+          style="width: 100%; text-align: center"
+          *ngIf="isExpanded"
+          class="menu-item"
+          >Home</span
+        >
+      </mat-list-item>
+
+      <mat-list-item
+        *ngIf="authService.userRole === 'admin'"
+        [routerLink]="'/listTasks'"
+      >
         <mat-icon mat-list-icon>dashboard</mat-icon>
         <span
           style="width: 100%; text-align: center"
@@ -23,12 +41,29 @@
         >
       </mat-list-item>
 
+      <mat-list-item
+        *ngIf="authService.userRole === 'user'"
+        [routerLink]="'/taskListUser'"
+      >
+        <mat-icon mat-list-icon>view_list</mat-icon>
+        <span
+          style="width: 100%; text-align: center"
+          *ngIf="isExpanded"
+          class="menu-item"
+        >
+          User Task List
+        </span>
+      </mat-list-item>
+
       <mat-list-item [routerLink]="">
         <mat-icon mat-list-icon>notifications_none</mat-icon>
         <span *ngIf="isExpanded" class="menu-item">Notification</span>
       </mat-list-item>
 
-      <mat-list-item [routerLink]="'/actionGrid'">
+      <mat-list-item
+        *ngIf="authService.userRole === 'admin'"
+        [routerLink]="'/actionGrid'"
+      >
         <mat-icon mat-list-icon>library_add</mat-icon>
         <span
           style="width: 100%; text-align: center"
@@ -38,7 +73,12 @@
         >
       </mat-list-item>
 
-      <mat-list-item [routerLink]="">
+      <mat-list-item
+        *ngIf="
+          authService.userRole === 'admin' || authService.userRole === 'user'
+        "
+        [routerLink]="'/validateTask'"
+      >
         <mat-icon mat-list-icon>done_outline</mat-icon>
         <span
           style="width: 100%; text-align: center"
@@ -48,7 +88,7 @@
         >
       </mat-list-item>
 
-      <mat-list-item [routerLink]="">
+      <mat-list-item (click)="authService.logout()">
         <mat-icon mat-list-icon>exit_to_app</mat-icon>
         <span
           style="width: 100%; text-align: center"
@@ -61,7 +101,5 @@
   </mat-sidenav>
 
   <!-- Content - rendered Content for the current router path into the <router-outlet>, e.g. /dashboard or /info-->
-  <mat-sidenav-content>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
+  <mat-sidenav-content> <router-outlet></router-outlet> </mat-sidenav-content>
 </mat-sidenav-container>

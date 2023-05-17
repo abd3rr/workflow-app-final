@@ -1,0 +1,38 @@
+<button (click)="goBack()" class="back-button">Back to Task List</button>
+
+<h2>Task Details</h2>
+<div *ngIf="task">
+  <p>
+    <strong>Step Name:</strong> {{ step?.stepName }} {{ step?.description }}
+  </p>
+  <p><strong>Step Description</strong> {{ step?.description }}</p>
+  <p><strong> Task ID:</strong> {{ task.id }}</p>
+  <p><strong>Name:</strong> {{ task.taskName }}</p>
+  <p><strong>Description:</strong> {{ task.description }}</p>
+  <p><strong>Instructions:</strong> {{ task.instructions }}</p>
+  <p><strong>Status:</strong> {{ task.status }}</p>
+  <h3>Method Details</h3>
+  <div *ngIf="methods.length">
+    <ul>
+      <li *ngFor="let method of methods; let i = index">
+        <p><strong>Method Name:</strong> {{ method.methodName }}</p>
+        <p
+          [class.success]="methodExecutions[i].executed"
+          [class.failure]="!methodExecutions[i].executed"
+        >
+          <strong>Execution Status:</strong>
+          {{
+            methodExecutions[i].executed
+              ? "Executed Successfully"
+              : "Execution Failed"
+          }}
+        </p>
+      </li>
+    </ul>
+  </div>
+  <div class="verification-actions">
+    <h2>Verify the task</h2>
+    <button (click)="markAsFailed()">Mark as Failed</button>
+    <button (click)="markAsPassed()">Mark as Passed</button>
+  </div>
+</div>

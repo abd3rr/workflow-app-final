@@ -1,1 +1,2 @@
-<app-side-nav></app-side-nav>
+<app-login *ngIf="!isLoggedIn"></app-login>
+<app-authenticated-wrapper *ngIf="isLoggedIn"></app-authenticated-wrapper>
