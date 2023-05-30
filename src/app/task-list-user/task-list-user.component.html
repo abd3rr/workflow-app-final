@@ -27,6 +27,14 @@
         {{ step.stepName }}
       </option>
     </select>
+    <div>
+      <mat-slide-toggle
+        formControlName="showAllTasks"
+        (change)="onShowAllTasksChange($event)"
+      >
+        Show all tasks
+      </mat-slide-toggle>
+    </div>
   </div>
   <button (click)="resetFilters()">Reset Filters</button>
 </form>
@@ -59,7 +67,8 @@
     <div
       *ngFor="let task of tasks"
       class="card task"
-      (click)="task.id && goToTaskDetail(task.id)"
+      [class.disabled]="task.isDisabled"
+      (click)="!task.isDisabled && task.id && goToTaskDetail(task.id)"
     >
       <div class="card-body">
         <h5 class="card-title">{{ task.taskName }}</h5>

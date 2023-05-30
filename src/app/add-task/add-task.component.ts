@@ -97,7 +97,9 @@ export class AddTaskComponent {
 
         childTaskIds: [], // We don't set the child tasks
         methodExecutions: [], // we don't set the methods execution
+        feedbacks: [], // we don't set the feedbacks
         status: 'PENDING',
+        isDisabled: false,
       };
 
       // Add the assigned jobs to the task object
@@ -177,6 +179,7 @@ export class AddTaskComponent {
     if (selectedProject && selectedProject.phases) {
       this.phaseList = selectedProject.phases;
       this.taskForm.patchValue({ phase: null, step: null });
+      this.taskList = [];
     }
   }
   onPhaseSelected() {
@@ -184,15 +187,16 @@ export class AddTaskComponent {
     if (selectedPhase && selectedPhase.steps) {
       this.stepList = selectedPhase.steps;
     } else {
-      this.taskForm.patchValue({ phase: null, step: null });
+      this.taskForm.patchValue({ phase: null, step: null, parentTask: null });
     }
+    this.taskList = [];
   }
 
   onStepSelected() {
-    const selectedStep = this.taskForm.get('step')?.value as Step;
-    if (selectedStep !== null) {
+    const selectedProject = this.taskForm.get('project')?.value as Project;
+    if (selectedProject !== null) {
       this.apiService
-        .getTasksByStepId(selectedStep.id)
+        .getTasksByProjectId(selectedProject.id)
         .subscribe((tasksResponse) => {
           this.taskList = tasksResponse;
         });

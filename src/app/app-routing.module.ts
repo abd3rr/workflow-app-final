@@ -16,6 +16,8 @@ import { TaskListUserComponent } from './task-list-user/task-list-user.component
 import { TaskDetailUserComponent } from './task-detail-user/task-detail-user.component';
 import { ValidateTaskComponent } from './validate-task/validate-task.component';
 import { ValidateTaskDetailsComponent } from './validate-task-details/validate-task-details.component';
+import { DashboardGridComponent } from './dashboard-grid/dashboard-grid.component';
+import { TaskStatisticsComponent } from './task-statistics/task-statistics.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -101,6 +103,18 @@ const routes: Routes = [
         component: ValidateTaskDetailsComponent,
         canActivate: [RoleGuard],
         data: { expectedRoles: ['user', 'admin'] },
+      },
+      {
+        path: 'dashboardGrid',
+        component: DashboardGridComponent,
+        canActivate: [RoleGuard],
+        data: { expectedRoles: ['admin'] },
+      },
+      {
+        path: 'taskStatistics',
+        component: TaskStatisticsComponent,
+        canActivate: [RoleGuard],
+        data: { expectedRoles: ['admin'] },
       },
     ],
   },

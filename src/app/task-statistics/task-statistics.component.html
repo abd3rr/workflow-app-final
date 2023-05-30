@@ -1,0 +1,118 @@
+<h1>Statistics Page</h1>
+<div class="all-projects-section">
+  <h2 class="mb-4">Stats for All Projects</h2>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Task Count by Status</h2>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Status :</th>
+                  <th>Pending</th>
+                  <th>Starting</th>
+                  <th>Waiting for Validation</th>
+                  <th>Finished</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>Count :</th>
+                  <td>{{ allPendingTasks }}</td>
+                  <td>{{ allStartingTasks }}</td>
+                  <td>{{ allWaitingForValidationTasks }}</td>
+                  <td>{{ allFinishedTasks }}</td>
+                </tr>
+                <tr>
+                  <th>Total of Tasks :</th>
+                  <td colspan="4">{{ allTasks }}</td>
+                </tr>
+                <tr>
+                  <th>Total of Projects</th>
+                  <td colspan="4">{{ allProjects }}</td>
+                </tr>
+                <tr>
+                  <th>Total of Phases</th>
+                  <td colspan="4">{{ allPhases }}</td>
+                </tr>
+                <tr>
+                  <th>Total of Steps</th>
+                  <td colspan="4">{{ allSteps }}</td>
+                </tr>
+                <tr>
+                  <th>Total of Users</th>
+                  <td colspan="4">{{ allUsers }}</td>
+                </tr>
+                <tr>
+                  <th>Total of Jobs</th>
+                  <td colspan="4">{{ allJobs }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Completion Rate of All Projects</h2>
+          <ngx-charts-gauge
+            [view]="[400, 400]"
+            [scheme]="colorScheme"
+            [results]="gaugeDataOfCompletionRateForAllTasks"
+            [min]="0"
+            [max]="100"
+            [angleSpan]="240"
+            [startAngle]="-120"
+            [units]="'%'"
+            [bigSegments]="10"
+            [smallSegments]="5"
+            [showAxis]="true"
+          ></ngx-charts-gauge>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Average Completion Time of All Projects</h2>
+          <ngx-charts-gauge
+            [view]="[400, 400]"
+            [scheme]="colorScheme"
+            [results]="gaugeDataOfAverageCompletionTimeForAllTasks"
+            [min]="0"
+            [max]="100"
+            [angleSpan]="240"
+            [startAngle]="-120"
+            [units]="'Hours'"
+            [bigSegments]="10"
+            [smallSegments]="5"
+            [showAxis]="true"
+          ></ngx-charts-gauge>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="display: flex; justify-content: center; align-items: center">
+    <ngx-charts-bar-vertical
+      [view]="[700, 400]"
+      [scheme]="colorScheme"
+      [results]="barChartDataForAllProjects"
+      [gradient]="false"
+      [xAxis]="true"
+      [yAxis]="true"
+      [legend]="true"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      [xAxisLabel]="'Task Status'"
+      [yAxisLabel]="'Number of Tasks'"
+    >
+    </ngx-charts-bar-vertical>
+  </div>
+</div>

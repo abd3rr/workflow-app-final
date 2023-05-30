@@ -3,6 +3,7 @@
   <div>
     <label for="Project Name">Project Name: </label>
     <select formControlName="project" (change)="onProjectSelected()">
+      <option [ngValue]="null">---</option>
       <option *ngFor="let project of projectList" [ngValue]="project">
         {{ project.projectName }}
       </option>
@@ -29,6 +30,7 @@
     </select>
   </div>
   <div>
+    <button (click)="resetFilters()">Remove Phase or Step Filters</button>
     <button type="submit" name="submit" [disabled]="tasksInitiated">
       Deploy the Workflow
     </button>
@@ -44,3 +46,22 @@
     overflow: hidden;
   "
 ></div>
+
+<div class="color-legend">
+  <h2>Color Legend:</h2>
+  <ul>
+    <li>
+      <span class="color-box" style="background-color: #ffa500"></span> Pending
+    </li>
+    <li>
+      <span class="color-box" style="background-color: #1e90ff"></span> Starting
+    </li>
+    <li>
+      <span class="color-box" style="background-color: #32cd32"></span> Finished
+    </li>
+    <li>
+      <span class="color-box" style="background-color: #ff69b4"></span> Waiting
+      for validation
+    </li>
+  </ul>
+</div>

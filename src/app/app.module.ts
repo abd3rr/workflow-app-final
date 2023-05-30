@@ -11,6 +11,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,6 +37,13 @@ import { TaskDetailUserComponent } from './task-detail-user/task-detail-user.com
 import { ValidateTaskComponent } from './validate-task/validate-task.component';
 import { ValidateTaskDetailsComponent } from './validate-task-details/validate-task-details.component';
 
+import { FeedbackDialogComponent } from './feedback-dialog/feedback-dialog.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { DashboardGridComponent } from './dashboard-grid/dashboard-grid.component';
+import { TaskStatisticsComponent } from './task-statistics/task-statistics.component';
+import { MatCardModule } from '@angular/material/card';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,6 +64,11 @@ import { ValidateTaskDetailsComponent } from './validate-task-details/validate-t
     TaskDetailUserComponent,
     ValidateTaskComponent,
     ValidateTaskDetailsComponent,
+    FeedbackDialogComponent,
+    NotificationsComponent,
+
+    DashboardGridComponent,
+    TaskStatisticsComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,6 +85,11 @@ import { ValidateTaskDetailsComponent } from './validate-task-details/validate-t
     MatSelectModule,
     HttpClientModule,
     MatSnackBarModule,
+    MatSlideToggleModule,
+    MatDialogModule,
+    DatePipe,
+    MatCardModule,
+    NgxChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

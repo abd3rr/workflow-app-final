@@ -33,6 +33,23 @@
     </ul>
   </div>
 
+  <div *ngIf="task && task.feedbacks && task.feedbacks.length > 0">
+    <h3>Feedbacks</h3>
+    <ul>
+      <li *ngFor="let feedback of task.feedbacks">
+        <p><strong>Feedback Message:</strong> {{ feedback?.['message'] }}</p>
+        <p>
+          <strong>Date:</strong>
+          {{ feedback?.['feedbackDate'] | date:'medium' }} ,
+          <strong>User:</strong>
+          {{ feedback && feedback.userId && users[feedback.userId].fullName }}
+          <strong>Job:</strong>
+          {{ feedback && feedback.userId && jobs[feedback.userId].title }}
+        </p>
+      </li>
+    </ul>
+  </div>
+
   <div *ngIf="unexecutedMethods.length > 0">
     <h3>Methods</h3>
     <form (ngSubmit)="submitForm()">

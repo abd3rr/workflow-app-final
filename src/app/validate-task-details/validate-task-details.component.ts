@@ -6,6 +6,10 @@ import { Method } from '../interfaces/method';
 import { MethodExecution } from '../interfaces/methodExecution';
 import { Step } from '../interfaces/step';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { FeedbackDialogComponent } from '../feedback-dialog/feedback-dialog.component';
+import { Feedback } from '../interfaces/feedback';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-validate-task-details',
@@ -23,7 +27,9 @@ export class ValidateTaskDetailsComponent {
     private router: Router,
     private route: ActivatedRoute,
     private apiService: ApiService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -72,19 +78,71 @@ export class ValidateTaskDetailsComponent {
       );
     });
   }
+  // markAsFailed() {
+  //   this.apiService.invalidateTask(this.taskId).subscribe(
+  //     () => {
+  //       this.router.navigate(['/taskListUser']);
+  //       this.snackBar.open('Task invalidated successfully', 'Close', {
+  //         duration: 5000,
+  //       });
+  //     },
+  //     (error) => {
+  //       console.error('Error invalidating the task', error);
+  //     }
+  //   );
+  // }
+
   markAsFailed() {
-    this.apiService.invalidateTask(this.taskId).subscribe(
-      () => {
-        this.router.navigate(['/taskListUser']);
-        this.snackBar.open('Task invalidated successfully', 'Close', {
-          duration: 5000,
-        });
-      },
-      (error) => {
-        console.error('Error invalidating the task', error);
+    const dialogRef = this.dialog.open(FeedbackDialogComponent, {
+      width: '250px',
+      data: { feedback: '' },
+    });
+
+    dialogRef.afterClosed().subscribe((feedbackMessage) => {
+      if (feedbackMessage) {
+        this.apiService
+          .getUserByName(this.authService.currentUser.username)
+          .subscribe(
+            (user) => {
+              const feedback: Feedback = {
+                id: 0,
+                message: feedbackMessage,
+                feedbackDateTime: undefined,
+                userId: user.id,
+              };
+
+              this.apiService.addFeedback(this.taskId, feedback).subscribe(
+                (response) => {
+                  console.log('Feedback added successfully');
+                  this.apiService.invalidateTask(this.taskId).subscribe(
+                    () => {
+                      this.router.navigate(['/taskListUser']);
+                      this.snackBar.open(
+                        'Task invalidated successfully',
+                        'Close',
+                        {
+                          duration: 5000,
+                        }
+                      );
+                    },
+                    (error) => {
+                      console.error('Error invalidating the task', error);
+                    }
+                  );
+                },
+                (error) => {
+                  console.error('Error adding feedback', error);
+                }
+              );
+            },
+            (error) => {
+              console.error('Error getting user by name', error);
+            }
+          );
       }
-    );
+    });
   }
+
   markAsPassed() {
     this.apiService.validateAndStartChildTasks(this.taskId).subscribe(
       () => {
@@ -98,6 +156,7 @@ export class ValidateTaskDetailsComponent {
       }
     );
   }
+
   goBack(): void {
     this.router.navigate(['/validateTasks']);
   }

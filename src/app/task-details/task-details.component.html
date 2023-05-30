@@ -44,6 +44,19 @@
     </div>
   </div>
 
+  <div *ngIf="task && task.feedbacks && task.feedbacks.length > 0">
+    <h3>Feedbacks</h3>
+    <ul>
+      <li *ngFor="let feedback of task.feedbacks">
+        <p><strong>Feedback:</strong> {{ feedback?.['message'] }}</p>
+        <p>
+          <strong>Date:</strong>
+          {{ feedback?.['feedbackDate'] | date:'medium' }}
+        </p>
+      </li>
+    </ul>
+  </div>
+
   <!-- ... -->
   <!-- ... -->
 

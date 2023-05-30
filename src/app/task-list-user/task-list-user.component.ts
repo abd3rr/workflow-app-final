@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Task } from '../interfaces/task';
+import { Task, TaskStatus } from '../interfaces/task';
 import { AuthService } from '../services/auth.service';
 import { ApiService } from '../services/api.service';
 import { Router } from '@angular/router';
@@ -39,6 +39,7 @@ export class TaskListUserComponent {
       null,
       Validators.required
     ) as FormControl<Step | null>,
+    showAllTasks: new FormControl(false),
   });
 
   ngOnInit() {
@@ -59,23 +60,37 @@ export class TaskListUserComponent {
             const project = this.taskForm.get('project')?.value;
             const phase = this.taskForm.get('phase')?.value;
             const step = this.taskForm.get('step')?.value;
+            const showAllTasks = this.taskForm.get('showAllTasks')?.value;
+
+            let statusList: TaskStatus[] = ['STARTING'];
+            if (showAllTasks) {
+              statusList.push('PENDING');
+            }
 
             this.apiService
               .getTasksByJobIdsStatusProjectPhaseStep(
                 [job.id],
-                'STARTING',
+                statusList,
                 project?.id ?? undefined,
                 phase?.id ?? undefined,
                 step?.id ?? undefined
               )
               .subscribe((tasks) => {
                 console.log('Tasks:', tasks); // Debug tasks data
-                this.tasks = tasks;
+                this.tasks = tasks.map((task) => {
+                  // If the task status is 'PENDING', set isDisabled to true
+                  if (task.status === 'PENDING') {
+                    return { ...task, isDisabled: true };
+                  }
+                  // Otherwise, return the task as is
+                  return task;
+                });
               });
           });
         });
     }
   }
+
   fetchUserValidationTasks() {
     if (this.authService.currentUser) {
       this.apiService
@@ -141,6 +156,11 @@ export class TaskListUserComponent {
   }
 
   onStepSelected() {
+    this.fetchUserTasks();
+    this.fetchUserValidationTasks();
+  }
+
+  onShowAllTasksChange(event: any) {
     this.fetchUserTasks();
     this.fetchUserValidationTasks();
   }

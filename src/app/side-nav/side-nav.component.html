@@ -30,7 +30,7 @@
 
       <mat-list-item
         *ngIf="authService.userRole === 'admin'"
-        [routerLink]="'/listTasks'"
+        [routerLink]="'/dashboardGrid'"
       >
         <mat-icon mat-list-icon>dashboard</mat-icon>
         <span
@@ -55,7 +55,7 @@
         </span>
       </mat-list-item>
 
-      <mat-list-item [routerLink]="">
+      <mat-list-item (click)="notificationsSidenav.toggle()">
         <mat-icon mat-list-icon>notifications_none</mat-icon>
         <span *ngIf="isExpanded" class="menu-item">Notification</span>
       </mat-list-item>
@@ -101,5 +101,21 @@
   </mat-sidenav>
 
   <!-- Content - rendered Content for the current router path into the <router-outlet>, e.g. /dashboard or /info-->
-  <mat-sidenav-content> <router-outlet></router-outlet> </mat-sidenav-content>
+  <mat-sidenav-content>
+    <mat-sidenav-container>
+      <mat-sidenav
+        #notificationsSidenav
+        mode="over"
+        position="start"
+        class="notifications-sidenav"
+      >
+        <app-notifications
+          (closeSidenav)="notificationsSidenav.close()"
+        ></app-notifications>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <router-outlet></router-outlet>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </mat-sidenav-content>
 </mat-sidenav-container>

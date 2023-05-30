@@ -1,0 +1,58 @@
+/* General styles */
+body {
+  background-color: #f2f2f2;
+  color: #333;
+  font-family: "Roboto", sans-serif;
+}
+
+/* Headings */
+h1,
+h2,
+h3 {
+  color: #212121;
+  margin-bottom: 0.75em;
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+/* Paragraphs */
+p {
+  color: #424242;
+  margin-top: 0;
+  margin-bottom: 1em;
+  line-height: 1.5;
+}
+
+/* Lists */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 0.75em;
+  padding-left: 0.5em;
+}
+
+li::before {
+  content: "-";
+  position: absolute;
+  left: 0;
+}
+
+/* Buttons */
+button {
+  background-color: #1565c0;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 0.75em 1.5em;
+  margin: 0.5em 0;
+  font-size: 1em;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0d47a1;
+}

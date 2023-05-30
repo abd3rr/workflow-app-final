@@ -6,14 +6,10 @@ import { Task } from '../interfaces/task';
 import { File } from '../interfaces/file';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApiService } from '../services/api.service';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
 import { MethodExecution } from '../interfaces/methodExecution';
 import { userParameter } from '../interfaces/userParameter';
+import { User } from '../interfaces/user';
+import { Job } from '../interfaces/job';
 
 @Component({
   selector: 'app-task-detail-user',
@@ -25,6 +21,9 @@ export class TaskDetailUserComponent {
   task!: Task | null;
   files: File[] = [];
   step!: Step | null;
+  users: { [id: number]: User } = {};
+  jobs: { [id: number]: Job } = {};
+
   unexecutedMethods: {
     methodExecution: MethodExecution;
     method: Method | null;
@@ -50,6 +49,7 @@ export class TaskDetailUserComponent {
         this.fetchFiles(task.fileIds);
         this.fetchStep(task.stepId);
         this.fetchUnexecutedMethods();
+        this.fetchUsersForFeedbacks();
       },
       (error) => {
         console.error('Error fetching task:', error);
@@ -83,19 +83,6 @@ export class TaskDetailUserComponent {
     }
   }
 
-  // fetchMethods(methodIds: number[]): void {
-  //   methodIds.forEach((methodId) => {
-  //     this.apiService.getMethodById(methodId).subscribe(
-  //       (method: Method) => {
-  //         this.methods.push(method);
-  //         this.createMethodForm(method);
-  //       },
-  //       (error) => {
-  //         console.error('Error fetching method:', error);
-  //       }
-  //     );
-  //   });
-  // }
   fetchUnexecutedMethods(): void {
     if (this.task && this.task.methodExecutions) {
       this.task.methodExecutions.forEach((methodExecution) => {
@@ -119,6 +106,41 @@ export class TaskDetailUserComponent {
         console.error('Error fetching method:', error);
       }
     );
+  }
+
+  fetchUsersForFeedbacks(): void {
+    if (this.task && this.task.feedbacks) {
+      this.task.feedbacks.forEach((feedback) => {
+        if (
+          feedback &&
+          feedback.userId !== null &&
+          feedback.userId !== undefined
+        ) {
+          this.apiService.getUserById(feedback.userId).subscribe(
+            (user: User) => {
+              this.users[feedback.userId] = user;
+              this.apiService.getJobByUserId(feedback.userId).subscribe(
+                (job: Job) => {
+                  this.jobs[feedback.userId] = job;
+                },
+                (error) => {
+                  console.error('Error fetching job:', error);
+                  this.jobs[feedback.userId] = {
+                    title: 'Job not found',
+                  } as Job;
+                }
+              );
+            },
+            (error) => {
+              console.error('Error fetching user:', error);
+              this.users[feedback.userId] = {
+                fullName: 'User not found',
+              } as User;
+            }
+          );
+        }
+      });
+    }
   }
 
   getParameterInputType(parameterType: string): string {
@@ -187,43 +209,4 @@ export class TaskDetailUserComponent {
         }
       );
   }
-
-  // onSubmitAll(): void {
-  //   if (this.allMethodsForm.valid) {
-  //     const userParametersByMethodExecutionId: {
-  //       [methodExecutionId: number]: any[];
-  //     } = {};
-
-  //     this.task?.methodExecutions?.forEach((methodExecution, index) => {
-  //       if (
-  //         methodExecution &&
-  //         !methodExecution.executed &&
-  //         methodExecution.id !== null
-  //       ) {
-  //         const methodForm = this.allMethodsForm.get(
-  //           `method-${methodExecution.methodId}-${index}`
-  //         );
-
-  //         if (methodForm) {
-  //           userParametersByMethodExecutionId[methodExecution.id] =
-  //             Object.values(methodForm.value);
-  //         }
-  //       }
-  //     });
-
-  //     this.apiService
-  //       .executeMethodsForTask(this.taskId, userParametersByMethodExecutionId)
-  //       .subscribe(
-  //         () => {
-  //           console.log('All methods executed successfully.');
-  //           // Handle successful execution here, e.g., navigate to another page or show a success message.
-  //         },
-  //         (error) => {
-  //           console.error('Error executing methods:', error);
-  //         }
-  //       );
-  //   } else {
-  //     console.error('One or more method forms are invalid.');
-  //   }
-  // }
 }

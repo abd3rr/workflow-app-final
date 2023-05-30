@@ -1,0 +1,44 @@
+.network-container {
+  position: relative;
+}
+
+.color-legend {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  z-index: 1;
+  max-width: 180px;
+}
+
+.color-legend ul {
+  list-style-type: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.color-box {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.color-legend li {
+  margin-left: 0;
+  padding-left: 25px;
+  position: relative;
+  white-space: nowrap;
+}
+
+.color-legend li::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+}
