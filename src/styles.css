@@ -4,11 +4,25 @@ html,
 body {
   height: 100%;
 }
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
+
 .error-display {
   color: red;
   font-size: 0.9em;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+}
+
+body,
+p,
+span,
+div {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
 }

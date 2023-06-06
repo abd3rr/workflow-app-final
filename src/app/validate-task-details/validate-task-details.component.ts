@@ -158,6 +158,6 @@ export class ValidateTaskDetailsComponent {
   }
 
   goBack(): void {
-    this.router.navigate(['/validateTasks']);
+    this.router.navigate(['/taskListUser']);
   }
 }

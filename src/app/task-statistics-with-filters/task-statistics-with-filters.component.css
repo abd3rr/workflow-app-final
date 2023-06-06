@@ -1,0 +1,81 @@
+.center-content {
+  display: flex;
+  justify-content: center;
+}
+
+.center-content-vertically {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+td,
+th {
+  text-align: center;
+}
+
+h1.center-content,
+h2.center-content {
+  color: #333; /* dark grey color */
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.container,
+.all-projects-section,
+.filter-section {
+  background-color: #f7f7f7; /* Light gray color */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.filter-section {
+  margin-top: 20px; /* Adds space between the sections */
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: bold;
+}
+
+.form-control {
+  border-radius: 0; /* Make inputs squared */
+}
+
+.btn-danger {
+  padding: 10px 20px;
+  font-size: 1.2em;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+.alert-warning {
+  font-weight: bold;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid #dee2e6;
+  text-align: center;
+}
+
+.ngx-charts-bar-vertical,
+.ngx-charts-gauge {
+  width: 80%;
+  height: auto;
+  margin: 0 auto;
+}

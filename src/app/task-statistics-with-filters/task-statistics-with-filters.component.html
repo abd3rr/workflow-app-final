@@ -1,0 +1,222 @@
+<h1 class="center-content">Filter Section</h1>
+<div class="container">
+  <!-- Filter Form -->
+  <form [formGroup]="filterForm" class="mb-5">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="Project Name">Project Name: </label>
+          <select
+            formControlName="project"
+            (change)="onProjectSelected()"
+            class="form-control"
+          >
+            <option [ngValue]="null">---</option>
+            <option *ngFor="let project of projectList" [ngValue]="project">
+              {{ project.projectName }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="Phase Name"> Phase Name: </label>
+          <select
+            formControlName="phase"
+            (change)="onPhaseSelected()"
+            class="form-control"
+          >
+            <option [ngValue]="null">---</option>
+            <option *ngFor="let phase of phaseList" [ngValue]="phase">
+              {{ phase.phaseName }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="Step Name"> Step Name: </label>
+          <select
+            formControlName="step"
+            (change)="onStepSelected()"
+            class="form-control"
+          >
+            <option [ngValue]="[]">---</option>
+            <option *ngFor="let step of stepList" [ngValue]="step">
+              {{ step.stepName }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center pt-4">
+      <button (click)="resetFilters()" class="btn btn-danger">
+        Remove Filters
+      </button>
+    </div>
+  </form>
+
+  <div class="object-of-stats text-center mb-5">
+    <p *ngIf="!selectedProject" class="alert alert-warning">
+      Please select a project to view its statistics. You can further specify
+      the phase and step for more detailed statistics.
+    </p>
+    <ng-container *ngIf="selectedProject">
+      <p style="font-size: 1.5em">The statistics displayed below are for:</p>
+      <table class="table table-bordered table-striped">
+        <tbody>
+          <tr>
+            <th>Project:</th>
+            <td>{{ selectedProject.projectName }}</td>
+          </tr>
+          <tr *ngIf="selectedPhase">
+            <th>Phase:</th>
+            <td>{{ selectedPhase.phaseName }}</td>
+          </tr>
+          <tr *ngIf="selectedStep">
+            <th>Step:</th>
+            <td>{{ selectedStep.stepName }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+  </div>
+
+  <div>
+    <h2 class="mb-4 center-content">Filtred Stats</h2>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <!-- Increase width to full on large screens -->
+
+        <!-- Table with Data Grid -->
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="card-title">Task Count by Status</h2>
+                <div class="table-responsive">
+                  <table class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Status :</th>
+                        <th>Pending</th>
+                        <th>Starting</th>
+                        <th>Waiting for Validation</th>
+                        <th>Finished</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th>Count :</th>
+                        <td>{{ pendingTasks }}</td>
+                        <td>{{ startingTasks }}</td>
+                        <td>{{ waitingForValidationTasks }}</td>
+                        <td>{{ finishedTasks }}</td>
+                      </tr>
+                      <tr>
+                        <th>Total of Tasks in Project :</th>
+                        <td colspan="4">
+                          {{
+                            pendingTasks +
+                            startingTasks +
+                            waitingForValidationTasks +
+                            finishedTasks
+                              ? pendingTasks +
+                                startingTasks +
+                                waitingForValidationTasks +
+                                finishedTasks
+                              : null
+                          }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>Total of Phases in Project</th>
+                        <td colspan="4">{{ phases }}</td>
+                      </tr>
+                      <tr>
+                        <th>Total of Steps In Project</th>
+                        <td colspan="4">{{ steps }}</td>
+                      </tr>
+                      <tr *ngIf="selectedPhase">
+                        <th>Total of Steps In Phase</th>
+                        <td colspan="4">{{ stepsInPhase }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body center-content center-content-vertically">
+            <h2 class="card-title">Task Status Distribution</h2>
+            <ngx-charts-bar-vertical
+              [view]="[700, 400]"
+              [scheme]="colorScheme"
+              [results]="barChartData"
+              [gradient]="false"
+              [xAxis]="true"
+              [yAxis]="true"
+              [legend]="true"
+              [showXAxisLabel]="true"
+              [showYAxisLabel]="true"
+              [xAxisLabel]="'Task Status'"
+              [yAxisLabel]="'Number of Tasks'"
+            >
+            </ngx-charts-bar-vertical>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project Completion Statistics Section -->
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body center-content center-content-vertically">
+            <h2 class="card-title">Completion Rate of All Projects</h2>
+            <ngx-charts-gauge
+              [view]="[400, 400]"
+              [scheme]="colorScheme"
+              [results]="gaugeDataOfCompletionRate"
+              [min]="0"
+              [max]="100"
+              [angleSpan]="240"
+              [startAngle]="-120"
+              [units]="'%'"
+              [bigSegments]="10"
+              [smallSegments]="5"
+              [showAxis]="true"
+            ></ngx-charts-gauge>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body center-content center-content-vertically">
+            <h2 class="card-title">Average Completion Time of All Projects</h2>
+            <ngx-charts-gauge
+              [view]="[400, 400]"
+              [scheme]="colorScheme"
+              [results]="gaugeDataOfAverageCompletionTime"
+              [min]="0"
+              [max]="100"
+              [angleSpan]="240"
+              [startAngle]="-120"
+              [units]="'Hours'"
+              [bigSegments]="10"
+              [smallSegments]="5"
+              [showAxis]="true"
+            ></ngx-charts-gauge>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

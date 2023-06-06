@@ -43,6 +43,9 @@ import { DashboardGridComponent } from './dashboard-grid/dashboard-grid.componen
 import { TaskStatisticsComponent } from './task-statistics/task-statistics.component';
 import { MatCardModule } from '@angular/material/card';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { TaskStatisticsWithFiltersComponent } from './task-statistics-with-filters/task-statistics-with-filters.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -69,6 +72,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 
     DashboardGridComponent,
     TaskStatisticsComponent,
+    TaskStatisticsWithFiltersComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,6 +94,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     DatePipe,
     MatCardModule,
     NgxChartsModule,
+    MatTableModule,
+    MatSortModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

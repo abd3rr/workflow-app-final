@@ -226,6 +226,7 @@ export class ApiService {
       'rtf',
       'png',
       'jpeg',
+      'jpg',
       'gif',
       'bmp',
       'webp',
@@ -240,6 +241,26 @@ export class ApiService {
       'xltm',
       'xlam',
       'xlsb',
+      'jfif',
+      'tiff',
+      'ico',
+      'heic',
+      'csv',
+      'epub',
+      'json',
+      'mkv',
+      'mov',
+      'mp4',
+      'mpeg',
+      'mpg',
+      'oga',
+      'ogv',
+      'ogx',
+      'rar',
+      'tar',
+      'tif',
+      '7z',
+      'zip',
     ];
     const fileExtension = file.name.split('.').pop()?.toLowerCase();
 
@@ -267,6 +288,17 @@ export class ApiService {
           return throwError(ERROR_MESSAGES.GENERAL);
         })
       );
+  }
+
+  public getFilesByProjectId(projectId: number): Observable<any> {
+    const url = `${this.baseUrl}/files/project/${projectId}`;
+    return this.http.get(url).pipe(
+      retry(3),
+      catchError((error) => {
+        console.log('An error occurred getting the file:', error);
+        return throwError(ERROR_MESSAGES.GENERAL);
+      })
+    );
   }
 
   public getTaskById(id: number): Observable<any> {
@@ -348,6 +380,25 @@ export class ApiService {
         saveAs(file, `file-${fileId}.${fileExtension}`);
         window.URL.revokeObjectURL(fileUrl);
       }),
+      catchError((error) => {
+        console.log('An error occurred downloading the file:', error);
+        return throwError(ERROR_MESSAGES.GENERAL);
+      })
+    );
+  }
+  public getFileForPreview(fileId: number): Observable<Blob> {
+    const url = `${this.baseUrl}/files/download/${fileId}`;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/octet-stream',
+    });
+    const options = {
+      headers,
+      observe: 'response' as 'body',
+      responseType: 'blob' as 'json',
+    };
+
+    return this.http.get<HttpResponse<Blob>>(url, options).pipe(
+      map((response: HttpResponse<Blob>) => response.body as Blob),
       catchError((error) => {
         console.log('An error occurred downloading the file:', error);
         return throwError(ERROR_MESSAGES.GENERAL);
@@ -961,6 +1012,23 @@ export class ApiService {
         console.error(
           'An error occurred getting count for steps in phase with ID: ',
           phaseId
+        );
+        return throwError(ERROR_MESSAGES.GENERAL);
+      })
+    );
+  }
+
+  public getCountForStepsInProject(projectId: number): Observable<any> {
+    if (!projectId) {
+      throw new Error('Project ID is not defined');
+    }
+    const url = `${this.baseUrl}/stats/count/stepsInProject/${projectId}`;
+    return this.http.get(url).pipe(
+      retry(3),
+      catchError((error) => {
+        console.error(
+          'An error occurred getting count for steps in project with ID: ',
+          projectId
         );
         return throwError(ERROR_MESSAGES.GENERAL);
       })

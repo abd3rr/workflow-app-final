@@ -38,43 +38,259 @@
   </div>
   <button (click)="resetFilters()">Reset Filters</button>
 </form>
-
+<!-- ---------- -->
 <div class="container">
   <h2 class="title">Tasks Waiting for Validation</h2>
 
-  <div *ngIf="tasksWaitingForValidation.length === 0" class="no-tasks-message">
+  <div
+    *ngIf="tasksWaitingForValidation.data.length === 0"
+    class="no-tasks-message"
+  >
     No tasks waiting for validation found.
   </div>
 
-  <div class="card-container">
-    <div
-      *ngFor="let task of tasksWaitingForValidation"
-      class="card validation"
-      (click)="task.id && goToVerificationDetail(task.id)"
+  <div
+    class="mat-elevation-z8"
+    *ngIf="tasksWaitingForValidation.data.length > 0"
+  >
+    <mat-table
+      [dataSource]="tasksWaitingForValidation"
+      #sort1="matSort"
+      matSort
     >
-      <div class="card-body">
-        <h5 class="card-title">{{ task.taskName }}</h5>
-        <p class="card-text">{{ task.description }}</p>
-        <span class="tag">Verification</span>
-      </div>
-    </div>
+      <!-- Task Name Column -->
+      <ng-container matColumnDef="taskName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          Task Name
+        </mat-header-cell>
+        <mat-cell *matCellDef="let task"> {{ task.taskName }} </mat-cell>
+      </ng-container>
+
+      <!-- Description Column -->
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+        <mat-cell *matCellDef="let task"> {{ task.description }} </mat-cell>
+      </ng-container>
+
+      <!-- Created Date Column -->
+      <ng-container matColumnDef="createdAt">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          Created Date
+        </mat-header-cell>
+        <mat-cell *matCellDef="let task">
+          {{ task.createdAt | date }}
+        </mat-cell>
+      </ng-container>
+
+      <!-- Started Date Column -->
+      <ng-container matColumnDef="startedAt">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          Started Date
+        </mat-header-cell>
+        <mat-cell *matCellDef="let task">
+          {{ task.startedAt | date }}
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row
+        *matHeaderRowDef="displayedColumnsValidation"
+      ></mat-header-row>
+      <mat-row
+        *matRowDef="let row; columns: displayedColumnsValidation"
+        (click)="goToVerificationDetail(row.id)"
+      ></mat-row>
+    </mat-table>
   </div>
 </div>
+
 <div class="container">
   <h2 class="title">User Task List</h2>
-  <div *ngIf="tasks.length === 0" class="no-tasks-message">No tasks found.</div>
-  <div class="card-container">
-    <div
-      *ngFor="let task of tasks"
-      class="card task"
-      [class.disabled]="task.isDisabled"
-      (click)="!task.isDisabled && task.id && goToTaskDetail(task.id)"
-    >
-      <div class="card-body">
-        <h5 class="card-title">{{ task.taskName }}</h5>
-        <p class="card-text">{{ task.description }}</p>
-        <span class="tag">Task</span>
-      </div>
+
+  <div *ngIf="tasks.data.length === 0" class="no-tasks-message">
+    No tasks found.
+  </div>
+  <div>
+    <div class="mat-elevation-z8" *ngIf="tasks.data.length > 0">
+      <mat-table
+        [dataSource]="tasks"
+        #sort2="matSort"
+        matSort
+        multiTemplateDataRows
+      >
+        <!-- Task Name Column -->
+        <ng-container matColumnDef="taskName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Task Name
+          </mat-header-cell>
+          <mat-cell *matCellDef="let task"> {{ task.taskName }} </mat-cell>
+        </ng-container>
+
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+          <mat-cell *matCellDef="let task"> {{ task.description }} </mat-cell>
+        </ng-container>
+
+        <!-- Created Date Column -->
+        <ng-container matColumnDef="createdAt">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Created Date
+          </mat-header-cell>
+          <mat-cell *matCellDef="let task">
+            {{ task.createdAt | date }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Started Date Column -->
+        <ng-container matColumnDef="startedAt">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Started Date
+          </mat-header-cell>
+          <mat-cell *matCellDef="let task">
+            {{ task.startedAt | date }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="isDisabled">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            is Disabled
+          </mat-header-cell>
+          <mat-cell *matCellDef="let task">
+            <ng-container *ngIf="task.isDisabled; else other_content">
+              Disabled</ng-container
+            >
+            <ng-template #other_content> Open</ng-template>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="expand">
+          <th mat-header-cell *matHeaderCellDef aria-label="row actions">
+            &nbsp;
+          </th>
+          <td mat-cell *matCellDef="let task">
+            <button
+              mat-icon-button
+              aria-label="expand row"
+              (click)="
+                expandedElement = expandedElement === task ? null : task;
+                $event.stopPropagation()
+              "
+            >
+              <mat-icon *ngIf="expandedElement !== task"
+                >keyboard_arrow_down</mat-icon
+              >
+              <mat-icon *ngIf="expandedElement === task"
+                >keyboard_arrow_up</mat-icon
+              >
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetail">
+          <td
+            mat-cell
+            *matCellDef="let task"
+            [attr.colspan]="displayedColumnsTaskWithExpand.length"
+          >
+            <div
+              *ngIf="expandedElement === task"
+              class="example-element-detail"
+              [@detailExpand]="
+                task == expandedElement ? 'expanded' : 'collapsed'
+              "
+            >
+              <div class="example-element-description">
+                {{ task.projectName }}
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <mat-header-row
+          *matHeaderRowDef="displayedColumnsTaskWithExpand"
+        ></mat-header-row>
+        <mat-row
+          *matRowDef="let row; columns: displayedColumnsTaskWithExpand"
+          class="example-element-row"
+          [class.example-expanded-row]="expandedElement === row"
+          (click)="expandedElement = expandedElement === row ? null : row"
+        >
+        </mat-row>
+
+        <mat-row
+          *matRowDef="let row; columns: ['expandedDetail']"
+          class="example-detail-row"
+          [@detailExpand]="row == expandedElement ? 'expanded' : 'collapsed'"
+        >
+        </mat-row>
+      </mat-table>
     </div>
   </div>
 </div>
+
+<!-- <div class="container">
+  <h2 class="title">User Task List</h2>
+
+  <div *ngIf="tasks.data.length === 0" class="no-tasks-message">
+    No tasks found.
+  </div>
+  <div>
+    <div class="mat-elevation-z8" *ngIf="tasks.data.length > 0">
+      <mat-table [dataSource]="tasks" #sort2="matSort" matSort>
+        
+        <ng-container matColumnDef="taskName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Task Name
+          </mat-header-cell>
+          <mat-cell *matCellDef="let task"> {{ task.taskName }} </mat-cell>
+        </ng-container>
+
+       
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+          <mat-cell *matCellDef="let task"> {{ task.description }} </mat-cell>
+        </ng-container>
+
+        
+        <ng-container matColumnDef="createdAt">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Created Date
+          </mat-header-cell>
+          <mat-cell *matCellDef="let task">
+            {{ task.createdAt | date }}
+          </mat-cell>
+        </ng-container>
+
+        
+        <ng-container matColumnDef="startedAt">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Started Date
+          </mat-header-cell>
+          <mat-cell *matCellDef="let task">
+            {{ task.startedAt | date }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="isDisabled">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            is Disabled
+          </mat-header-cell>
+          <mat-cell *matCellDef="let task">
+            <ng-container *ngIf="task.isDisabled; else other_content">
+              Disabled</ng-container
+            >
+            <ng-template #other_content> Open</ng-template>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row
+          *matHeaderRowDef="displayedColumnsTask"
+        ></mat-header-row>
+        <mat-row
+          *matRowDef="let row; columns: displayedColumnsTask"
+          [ngClass]="{ 'disabled-row': row.isDisabled }"
+        >
+        </mat-row>
+      </mat-table>
+    </div>
+  </div>
+</div> -->

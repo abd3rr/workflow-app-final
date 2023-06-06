@@ -1,4 +1,4 @@
-export interface File {
+export interface ApiFile {
   id: number | null;
   fileName: string;
   filePath: string;

@@ -1,83 +1,39 @@
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  margin-top: 2rem;
+  width: 100%;
 }
 
-.title {
-  font-size: 28px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 20px;
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+  width: 100%;
 }
 
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
+.mat-row,
+.mat-header-row {
+  transition: background 0.3s ease;
 }
 
-.card {
-  width: 300px;
-  border: 1px solid #e1e4e8;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
-  cursor: pointer;
+.mat-row:hover {
+  background: rgba(0, 0, 0, 0.04);
 }
 
-.card:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
-  transform: translateY(-4px);
+.mat-row:hover.mat-row-disabled {
+  background: inherit;
 }
 
-.card-body {
-  padding: 20px;
-}
-
-.card-title {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-
-.card-text {
-  font-size: 14px;
-  color: #586069;
-}
-
-/* Styles for tasks */
-.card.task {
-  background-color: #f0f8ff; /* Light blue background */
-}
-
-/* Styles for tasks waiting for validation */
-.card.validation {
-  background-color: #fff0f5; /* Light pink background */
-}
-.tag {
-  display: inline-block;
-  padding: 2px 8px;
-  margin-top: 8px;
-  font-size: 12px;
-  font-weight: bold;
-  color: #fff;
-  background-color: #586069;
-  border-radius: 4px;
+.mat-row.mat-row-disabled {
+  cursor: not-allowed;
 }
 
 .no-tasks-message {
-  font-size: 16px;
-  text-align: center;
-  color: #586069;
-  margin-top: 20px;
+  margin-top: 1rem;
 }
-.card.disabled {
-  background-color: #d3d3d3; /* Gray background */
-  cursor: not-allowed; /* Display a "not-allowed" cursor */
+
+.title {
+  margin-bottom: 1rem;
 }
-.card:not(.disabled):hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
-  transform: translateY(-4px);
+.example-element-detail {
+  overflow: hidden;
+  width: 100%;
 }

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Method } from '../interfaces/method';
 import { Step } from '../interfaces/step';
 import { Task } from '../interfaces/task';
-import { File } from '../interfaces/file';
+import { ApiFile } from '../interfaces/apiFile';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApiService } from '../services/api.service';
 import { MethodExecution } from '../interfaces/methodExecution';
@@ -19,7 +19,7 @@ import { Job } from '../interfaces/job';
 export class TaskDetailUserComponent {
   taskId!: number;
   task!: Task | null;
-  files: File[] = [];
+  files: ApiFile[] = [];
   step!: Step | null;
   users: { [id: number]: User } = {};
   jobs: { [id: number]: Job } = {};
@@ -60,7 +60,7 @@ export class TaskDetailUserComponent {
   fetchFiles(fileIds: number[]): void {
     for (const fileId of fileIds) {
       this.apiService.getFileById(fileId).subscribe(
-        (file: File) => {
+        (file: ApiFile) => {
           this.files.push(file);
         },
         (error) => {

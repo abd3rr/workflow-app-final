@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { Task } from '../interfaces/task';
-import { File } from '../interfaces/file';
+import { ApiFile } from '../interfaces/apiFile';
 import { Params } from '@angular/router';
 import { Subscription, forkJoin } from 'rxjs';
 import { Step } from '../interfaces/step';
@@ -22,7 +22,7 @@ export class TaskDetailsComponent {
 
   private routeParamSubscription: Subscription | null = null;
   task!: Task | null;
-  files: File[] = [];
+  files: ApiFile[] = [];
   step!: Step | null;
   methods: Method[] = [];
   childTaskNames: Record<number, string> = {};
@@ -77,7 +77,7 @@ export class TaskDetailsComponent {
   fetchFiles(fileIds: number[]): void {
     for (const fileId of fileIds) {
       this.apiService.getFileById(fileId).subscribe(
-        (file: File) => {
+        (file: ApiFile) => {
           this.files.push(file);
         },
         (error) => {

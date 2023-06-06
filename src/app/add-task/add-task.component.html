@@ -80,37 +80,150 @@
       </mat-select>
     </mat-form-field>
   </div>
+
+  <div class="toggle-margin">
+    <mat-slide-toggle formControlName="requiredVerification"
+      >Verification</mat-slide-toggle
+    >
+  </div>
+
   <h3>Actions :</h3>
+  <div>
+    <label for="existing-files">Existing Files:</label>
+    <mat-form-field appearance="fill">
+      <mat-label>Existing Files:</mat-label>
+      <mat-select
+        formControlName="existingFiles"
+        (selectionChange)="onExistingFileSelected()"
+        multiple
+      >
+        <mat-option *ngFor="let file of projectFiles" [value]="file">{{
+          file.fileName
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="selectedExisitingFiles && selectedExisitingFiles.length > 0">
+    <div class="alert alert-warning" role="alert">
+      <p>
+        If the files are not images or PDFs and will be downloaded instead when
+        you attempt to preview them.
+      </p>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th colspan="4" class="text-center">Existing Selected Files</th>
+        </tr>
+      </thead>
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">File Name</th>
+          <th scope="col">File Size</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let file of selectedExisitingFiles; index as i">
+          <tr>
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ file.fileName }}</td>
+            <td>{{ (file.size / 1048576).toFixed(2) }} MB</td>
+            <td>
+              <button
+                class="btn btn-info btn-sm"
+                *ngIf="
+                  file.id &&
+                  (file.contentType == 'image/png' ||
+                    file.contentType == 'image/jpeg' ||
+                    file.contentType == 'application/pdf')
+                "
+                (click)="previewImage(file)"
+              >
+                <mat-icon aria-hidden="false" aria-label="visibility"
+                  >visibility</mat-icon
+                >
+              </button>
+              <button
+                class="btn btn-warning btn-sm"
+                *ngIf="
+                  file.id &&
+                  !(
+                    file.contentType == 'image/png' ||
+                    file.contentType == 'image/jpeg' ||
+                    file.contentType == 'application/pdf'
+                  )
+                "
+                (click)="previewImage(file)"
+              >
+                <mat-icon aria-hidden="false" aria-label="download"
+                  >get_app</mat-icon
+                >
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
 
   <div>
-    <label for="task-name">Upload File:</label>
+    <label for="upload-file">Upload File:</label>
     <input
+      class="form-control"
       id="file"
       type="file"
       formControlName="file"
       (change)="onFileChange($event)"
       required
-    />
-  </div>
-  <div>
-    <label for="required-verification">Verification:</label>
-    <input
-      id="required-verification"
-      type="checkbox"
-      formControlName="requiredVerification"
-      required
+      multiple
     />
   </div>
 
+  <!-- Dropdown for selecting a method -->
   <div>
-    <label for="send-mail">Send Mail:</label>
-    <input
-      id="send-mail"
-      type="checkbox"
-      formControlName="sendEmail"
-      required
-    />
+    <label for="method">Method: </label>
+    <div class="d-flex">
+      <select id="method" formControlName="selectedMethod">
+        <option *ngFor="let method of methodList" [ngValue]="method">
+          {{ method.methodName }}
+        </option>
+      </select>
+      <!-- Button to add the selected method to the list -->
+      <button
+        class="class=btn btn-primary add-button"
+        type="button"
+        (click)="addMethod()"
+      >
+        Add
+      </button>
+    </div>
   </div>
+  <!-- Table for displaying the selected methods -->
+  <table class="table table-striped" *ngIf="selectedMethods.length > 0">
+    <thead>
+      <tr>
+        <th>methods</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let method of selectedMethods">
+        <td>{{ method.methodName }}</td>
+        <td>
+          <button
+            class="btn btn-danger"
+            type="button"
+            (click)="removeMethod(method)"
+          >
+            Remove
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
   <div>
     <button type="submit" name="submit">Submit</button>

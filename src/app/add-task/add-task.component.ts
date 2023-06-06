@@ -10,10 +10,12 @@ import { Phase } from '../interfaces/phase';
 import { Step } from '../interfaces/step';
 import { Job } from '../interfaces/job';
 import { Task } from '../interfaces/task';
+
 import { ApiService } from '../services/api.service';
 import { Method } from '../interfaces/method';
-import { forkJoin } from 'rxjs';
+import { catchError, forkJoin, map, of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ApiFile } from '../interfaces/apiFile';
 
 @Component({
   selector: 'app-add-task',
@@ -29,7 +31,12 @@ export class AddTaskComponent {
   taskList!: Task[];
   methodList!: Method[];
   actionList = ['Upload File'];
-  selectedFile: File | null = null;
+  selectedFiles: File[] = [];
+  projectFiles: ApiFile[] = [];
+  selectedExisitingFiles?: ApiFile[] | null = null;
+  selectedMethods: Method[] = [];
+  sanitizer: any;
+  nonPreviewableFilesExist = false;
   // ---------
   constructor(private apiService: ApiService, private snackBar: MatSnackBar) {}
 
@@ -53,6 +60,9 @@ export class AddTaskComponent {
         console.error('Error getting data:', error);
       }
     );
+    this.taskForm
+      .get('existingFiles')
+      ?.valueChanges.subscribe((value) => console.log(value));
   }
 
   taskForm = new FormGroup({
@@ -66,8 +76,27 @@ export class AddTaskComponent {
     parentTask: new FormControl([], Validators.required),
     file: new FormControl(null),
     requiredVerification: new FormControl(false),
-    sendEmail: new FormControl(false),
+    selectedMethod: new FormControl(null),
+    existingFiles: new FormControl(null),
   });
+
+  // Method to handle adding a method to the selected methods list
+  addMethod() {
+    const selectedMethod = this.taskForm.get('selectedMethod')?.value;
+    if (selectedMethod) {
+      this.selectedMethods.push(selectedMethod);
+    }
+    // Reset the selectedMethod control
+    this.taskForm.get('selectedMethod')?.setValue(null);
+  }
+
+  // Method to handle removing a method from the selected methods list
+  removeMethod(method: Method) {
+    const index = this.selectedMethods.indexOf(method);
+    if (index > -1) {
+      this.selectedMethods.splice(index, 1);
+    }
+  }
 
   onSubmit() {
     console.log(
@@ -75,8 +104,17 @@ export class AddTaskComponent {
       (this.taskForm.get('step')?.value as Step).id
     );
 
-    const createTask = (fileId?: number) => {
+    const createTask = (fileIds?: number[]) => {
       // Create the task object with all the necessary fields
+      const existingFiles = this.taskForm.get('existingFiles')?.value || [];
+      let existingFilesIds: number[] = [];
+
+      existingFiles.forEach((file: ApiFile) => {
+        if (file.id) {
+          existingFilesIds.push(file.id);
+        }
+      });
+
       const task: Task = {
         id: 0,
         taskName: this.taskForm.get('taskName')?.value,
@@ -86,7 +124,17 @@ export class AddTaskComponent {
           ?.value as boolean,
 
         stepId: (this.taskForm.get('step')?.value as Step).id,
-        fileIds: fileId ? [fileId] : [],
+
+        fileIds:
+          (fileIds && fileIds.length > 0) || existingFilesIds.length > 0
+            ? [
+                ...(fileIds || []),
+                ...existingFilesIds.filter(
+                  (id: any) => id !== null && id !== undefined
+                ),
+              ]
+            : [],
+
         methodIds: [], // We will add the method IDs later
         assignedJobIds: [], // We will add the job IDs later
         parentTaskIds: (this.taskForm.get('parentTask')?.value as Task[] | null)
@@ -108,13 +156,9 @@ export class AddTaskComponent {
         .map((job: Job) => job.id)
         .filter((id): id is number => id !== null);
 
-      // Check for each method in the methodList if there is a FormControl with a matching name
-      this.methodList.forEach((method: Method) => {
-        const methodControl = this.taskForm.get(method.methodName);
-        if (methodControl && methodControl.value && method.id !== null) {
-          task.methodIds.push(method.id);
-        }
-      });
+      task.methodIds = this.selectedMethods
+        .map((method: Method) => method.id)
+        .filter((id) => id !== null && id !== undefined) as number[];
 
       // Create the task using the ApiService
       this.apiService.createTask(task).subscribe(
@@ -125,16 +169,27 @@ export class AddTaskComponent {
           this.taskForm.get('assignedJobs')?.reset();
           this.taskForm.get('parentTask')?.reset();
           this.taskForm.get('file')?.reset();
+          this.taskForm.get('existingFiles')?.reset();
           this.taskForm.get('requiredVerification')?.reset();
+          this.taskForm.get('instructions')?.reset();
           this.methodList.forEach((method: Method) => {
             this.taskForm.get(method.methodName)?.reset();
           });
-          this.selectedFile = null;
+          this.selectedFiles = [];
+          this.selectedMethods = [];
+          this.selectedExisitingFiles = null;
+          // Refresh the list of files after creating a new task
+          const selectedProject = this.taskForm.get('project')
+            ?.value as Project;
+          if (selectedProject && selectedProject.id) {
+            this.getFilesByProjectId(selectedProject.id);
+          }
+
+          // Refresh the list of tasks after creating a new task
+          this.onStepSelected();
           this.snackBar.open('Task created successfully', 'Close', {
             duration: 5000,
           });
-          // Refresh the list of tasks after creating a new task
-          this.onStepSelected();
         },
         (error) => {
           console.log('Error creating task:', error);
@@ -152,34 +207,52 @@ export class AddTaskComponent {
 
     // Handle file upload
     const fileControl = this.taskForm.get('file');
-    // Handle file upload
-    if (this.selectedFile) {
-      this.apiService.createFile(this.selectedFile).subscribe(
-        (fileResponse: any) => {
-          console.log('File created:', fileResponse);
-          if (fileResponse.body && fileResponse.body.id) {
-            createTask(fileResponse.body.id);
-          }
-        },
-        (error) => {
-          console.log('Error creating file:', error);
-          alert(
-            'An error occurred while creating the file. Please try again later.'
-          );
-        }
+
+    if (this.selectedFiles.length > 0) {
+      const uploadRequests = this.selectedFiles.map((file) =>
+        this.apiService.createFile(file).pipe(
+          map((fileResponse: any) => fileResponse.body?.id),
+          catchError((error) => {
+            console.log('Error creating file:', error);
+            return of(null);
+          })
+        )
       );
+
+      forkJoin(uploadRequests).subscribe((fileIds) => {
+        fileIds = fileIds.filter((id) => id !== null);
+        if (fileIds.length === this.selectedFiles.length) {
+          console.log('All files uploaded successfully');
+          createTask(fileIds);
+        } else {
+          console.log('Some files failed to upload');
+          // Handle error here...
+        }
+      });
     } else {
       createTask();
     }
+  }
+  getFilesByProjectId(projectId: number) {
+    this.apiService.getFilesByProjectId(projectId).subscribe(
+      (files) => {
+        this.projectFiles = files;
+      },
+      (error) => {
+        console.log('Error getting files:', error);
+      }
+    );
   }
 
   onProjectSelected() {
     const selectedProject = this.taskForm.get('project')?.value as Project;
     console.log('aaaaaaaaa');
-    if (selectedProject && selectedProject.phases) {
+    if (selectedProject && selectedProject.phases && selectedProject.id) {
       this.phaseList = selectedProject.phases;
       this.taskForm.patchValue({ phase: null, step: null });
       this.taskList = [];
+      this.getFilesByProjectId(selectedProject.id);
+      this.selectedExisitingFiles = null;
     }
   }
   onPhaseSelected() {
@@ -202,14 +275,57 @@ export class AddTaskComponent {
         });
     }
   }
+  onExistingFileSelected() {
+    const selectedExistingFiles = this.taskForm.get('existingFiles')?.value;
+    if (selectedExistingFiles !== null) {
+      this.selectedExisitingFiles = selectedExistingFiles;
+    } else {
+      this.selectedExisitingFiles = null;
+    }
+  }
 
+  // onExistingFileSelected() {
+  //   const selectedExistingFiles: number[] | null =
+  //     this.taskForm.get('existingFiles')?.value || null;
+  //   if (selectedExistingFiles) {
+  //     this.selectedExisitingFiles = this.projectFiles.filter(
+  //       (file) =>
+  //         file.id !== null &&
+  //         (selectedExistingFiles as number[]).includes(file.id)
+  //     );
+  //   } else {
+  //     this.selectedExisitingFiles = null;
+  //   }
+  // }
   onFileChange(event: Event) {
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length) {
-      this.selectedFile = target.files[0];
-      console.log('Selected file:', this.selectedFile);
+      this.selectedFiles = Array.from(target.files);
+      console.log('Selected files:', this.selectedFiles);
     } else {
-      this.selectedFile = null;
+      this.selectedFiles = [];
+    }
+  }
+
+  previewImage(file: ApiFile) {
+    if (file.id) {
+      this.apiService.getFileForPreview(file.id).subscribe((blob) => {
+        let fileUrl;
+        if (file.contentType.startsWith('image')) {
+          fileUrl = URL.createObjectURL(blob);
+          window.open(fileUrl);
+        } else if (file.contentType === 'application/pdf') {
+          fileUrl = URL.createObjectURL(blob);
+          window.open(fileUrl);
+        } else {
+          // For simplicity, let's download the file
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = file.fileName;
+          link.click();
+          URL.revokeObjectURL(link.href);
+        }
+      });
     }
   }
 }

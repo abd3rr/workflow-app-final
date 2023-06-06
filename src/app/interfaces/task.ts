@@ -4,6 +4,7 @@ import { MethodExecution } from './methodExecution';
 export interface Task {
   id: number | null;
   taskName: string | null | undefined;
+  projectName?: string;
   phaseName?: string;
   phaseId?: number | null;
   stepName?: string;
