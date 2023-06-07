@@ -83,9 +83,17 @@ export class TaskListUserComponent {
     'createdAt',
     'startedAt',
     'isDisabled',
+    'Actions',
   ];
   displayedColumnsTaskWithExpand = [...this.displayedColumnsTask, 'expand'];
-  expandedElement?: Task | null = null;
+  displayedColumnsValidationWithExpand = [
+    ...this.displayedColumnsValidation,
+    'expand',
+  ];
+  expandedElementId?: any | null = null;
+  expandedElementValidationId?: number | null = null;
+
+  skipToggle = false;
 
   @ViewChild('sort1', { static: false }) sort1!: MatSort;
   @ViewChild('sort2', { static: false }) sort2!: MatSort;
