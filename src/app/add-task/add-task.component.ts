@@ -75,7 +75,7 @@ export class AddTaskComponent {
     assignedJobs: new FormControl([], Validators.required),
     parentTask: new FormControl([], Validators.required),
     file: new FormControl(null),
-    requiredVerification: new FormControl(false),
+    requiredVerification: new FormControl(true),
     selectedMethod: new FormControl(null),
     existingFiles: new FormControl(null),
   });
@@ -170,7 +170,7 @@ export class AddTaskComponent {
           this.taskForm.get('parentTask')?.reset();
           this.taskForm.get('file')?.reset();
           this.taskForm.get('existingFiles')?.reset();
-          this.taskForm.get('requiredVerification')?.reset();
+
           this.taskForm.get('instructions')?.reset();
           this.methodList.forEach((method: Method) => {
             this.taskForm.get(method.methodName)?.reset();
@@ -236,12 +236,19 @@ export class AddTaskComponent {
   getFilesByProjectId(projectId: number) {
     this.apiService.getFilesByProjectId(projectId).subscribe(
       (files) => {
-        this.projectFiles = files;
+        this.projectFiles = this.removeDuplicateFiles(files);
       },
       (error) => {
         console.log('Error getting files:', error);
       }
     );
+  }
+  // Helper method to remove duplicate files based on their 'id' property
+  removeDuplicateFiles(files: ApiFile[]): ApiFile[] {
+    const uniqueFiles = files.filter(
+      (file, index, self) => index === self.findIndex((f) => f.id === file.id)
+    );
+    return uniqueFiles;
   }
 
   onProjectSelected() {

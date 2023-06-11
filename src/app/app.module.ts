@@ -46,6 +46,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { TaskStatisticsWithFiltersComponent } from './task-statistics-with-filters/task-statistics-with-filters.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import { MatSortModule } from '@angular/material/sort';
     NgxChartsModule,
     MatTableModule,
     MatSortModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

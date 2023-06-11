@@ -23,6 +23,7 @@ export class TaskDetailUserComponent {
   step!: Step | null;
   users: { [id: number]: User } = {};
   jobs: { [id: number]: Job } = {};
+  isLoading = false;
 
   unexecutedMethods: {
     methodExecution: MethodExecution;
@@ -86,7 +87,11 @@ export class TaskDetailUserComponent {
   fetchUnexecutedMethods(): void {
     if (this.task && this.task.methodExecutions) {
       this.task.methodExecutions.forEach((methodExecution) => {
-        if (methodExecution && !methodExecution.executed) {
+        if (
+          methodExecution &&
+          (methodExecution.status === 'PENDING' ||
+            methodExecution.status === 'FAILURE')
+        ) {
           this.fetchMethodDetails(methodExecution);
         }
       });
@@ -169,7 +174,7 @@ export class TaskDetailUserComponent {
 
   submitForm(): void {
     console.log('submitForm called');
-
+    this.isLoading = true;
     const userParametersByMethodExecutionId: {
       [methodExecutionId: number]: userParameter[];
     } = {};
@@ -197,12 +202,15 @@ export class TaskDetailUserComponent {
       .subscribe(
         (response) => {
           console.log('Methods executed successfully:', response);
+          this.isLoading = false;
+          this.router.navigate(['/taskListUser']);
           this.snackBar.open('Methods executed successfully', 'Close', {
             duration: 5000,
           });
         },
         (error) => {
           console.error('Error executing methods:', error);
+          this.isLoading = false;
           this.snackBar.open('Error executing methods', 'Close', {
             duration: 5000,
           });

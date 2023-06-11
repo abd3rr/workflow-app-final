@@ -78,6 +78,14 @@ export class ValidateTaskDetailsComponent {
       );
     });
   }
+  // getMethodExecutionByMethodId(methodId: number): MethodExecution | undefined {
+  //   return this.methodExecutions.find(
+  //     (methodExecution) => methodExecution.methodId === methodId
+  //   );
+  // }
+  getMethodById(methodId: number): Method | undefined {
+    return this.methods.find((method) => method.id === methodId);
+  }
   // markAsFailed() {
   //   this.apiService.invalidateTask(this.taskId).subscribe(
   //     () => {

@@ -25,6 +25,7 @@ export interface Task {
   startedAt?: Date | null;
   finishedAt?: Date | null;
   isDisabled: boolean;
+  expanded?: boolean;
 
   [key: string]:
     | string

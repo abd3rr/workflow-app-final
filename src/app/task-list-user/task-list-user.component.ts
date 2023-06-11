@@ -41,6 +41,7 @@ export class TaskListUserComponent {
   phaseList!: Phase[] | null;
   stepList!: Step[];
 
+  // used to init the mat table for sorting, null value causing unexpected sorting behavior
   task: Task = {
     id: null,
     taskName: null,
@@ -75,6 +76,7 @@ export class TaskListUserComponent {
     'description',
     'createdAt',
     'startedAt',
+    'Actions',
   ];
 
   displayedColumnsTask = [
@@ -91,9 +93,8 @@ export class TaskListUserComponent {
     'expand',
   ];
   expandedElementId?: any | null = null;
-  expandedElementValidationId?: number | null = null;
 
-  skipToggle = false;
+  expandedElementValidationId?: any | null = null;
 
   @ViewChild('sort1', { static: false }) sort1!: MatSort;
   @ViewChild('sort2', { static: false }) sort2!: MatSort;

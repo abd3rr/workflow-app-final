@@ -1,5 +1,18 @@
 .container {
-  margin-top: 2rem;
+  padding: 2rem;
+}
+
+h2 {
+  color: #333;
+}
+
+.container1 {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.container2 {
+  padding-top: 20px;
   width: 100%;
 }
 
@@ -15,20 +28,14 @@
   transition: background 0.3s ease;
 }
 
-.mat-row:hover {
-  background: rgba(0, 0, 0, 0.04);
-}
 .mat-cell,
 .mat-header-cell {
   text-align: center;
 }
 
-.mat-row:hover.mat-row-disabled {
-  background: inherit;
-}
-
 .mat-row.mat-row-disabled {
   cursor: not-allowed;
+  background: inherit;
 }
 
 .no-tasks-message {
@@ -38,8 +45,15 @@
 .title {
   margin-bottom: 1rem;
 }
+
 .example-element-detail {
   overflow: hidden;
   width: 100%;
   text-align: center;
+}
+.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
 }
