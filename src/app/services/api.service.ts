@@ -13,6 +13,7 @@ import { ERROR_MESSAGES } from '../errors/error-messages';
 import { Task, TaskStatus } from '../interfaces/task';
 import { saveAs } from 'file-saver';
 import { Feedback } from '../interfaces/feedback';
+import { Job } from '../interfaces/job';
 
 @Injectable({
   providedIn: 'root',
@@ -197,6 +198,17 @@ export class ApiService {
       retry(3),
       catchError((error) => {
         console.log('An error occurred creating the task:', error);
+        return throwError(ERROR_MESSAGES.GENERAL);
+      })
+    );
+  }
+
+  public createJob(job: Job): Observable<any> {
+    const url = `${this.baseUrl}/jobs`;
+    return this.http.post(url, job).pipe(
+      retry(3),
+      catchError((error) => {
+        console.log('An error occurred creating the job:', error);
         return throwError(ERROR_MESSAGES.GENERAL);
       })
     );
@@ -661,6 +673,17 @@ export class ApiService {
         } else {
           return throwError(ERROR_MESSAGES.GENERAL);
         }
+      })
+    );
+  }
+
+  public getAllUsers(): Observable<any> {
+    const url = `${this.baseUrl}/users`;
+    return this.http.get(url).pipe(
+      retry(3),
+      catchError((error) => {
+        console.log('An error occured getting the users: ', error);
+        return throwError(ERROR_MESSAGES.GENERAL);
       })
     );
   }

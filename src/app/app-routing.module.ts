@@ -18,6 +18,13 @@ import { ValidateTaskComponent } from './validate-task/validate-task.component';
 import { ValidateTaskDetailsComponent } from './validate-task-details/validate-task-details.component';
 import { DashboardGridComponent } from './dashboard-grid/dashboard-grid.component';
 import { TaskStatisticsComponent } from './task-statistics/task-statistics.component';
+import { AddJobComponent } from './add-job/add-job.component';
+import { ManageJobGridComponent } from './manage-job-grid/manage-job-grid.component';
+import { ListJobsComponent } from './list-jobs/list-jobs.component';
+import { ListUsersComponent } from './list-users/list-users.component';
+import { AddUserComponent } from './add-user/add-user.component';
+import { UserDetailAdminComponent } from './user-detail-admin/user-detail-admin.component';
+import { ManageUserGridComponent } from './manage-user-grid/manage-user-grid.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -113,6 +120,48 @@ const routes: Routes = [
       {
         path: 'taskStatistics',
         component: TaskStatisticsComponent,
+        canActivate: [RoleGuard],
+        data: { expectedRoles: ['admin'] },
+      },
+      {
+        path: 'addJob',
+        component: AddJobComponent,
+        canActivate: [RoleGuard],
+        data: { expectedRoles: ['admin'] },
+      },
+      {
+        path: 'manageJobGrid',
+        component: ManageJobGridComponent,
+        canActivate: [RoleGuard],
+        data: { expectedRoles: ['admin'] },
+      },
+      {
+        path: 'listJobs',
+        component: ListJobsComponent,
+        canActivate: [RoleGuard],
+        data: { expectedRoles: ['admin'] },
+      },
+      {
+        path: 'manageUserGrid',
+        component: ManageUserGridComponent,
+        canActivate: [RoleGuard],
+        data: { expectedRoles: ['admin'] },
+      },
+      {
+        path: 'listUsers',
+        component: ListUsersComponent,
+        canActivate: [RoleGuard],
+        data: { expectedRoles: ['admin'] },
+      },
+      {
+        path: 'addUser',
+        component: AddUserComponent,
+        canActivate: [RoleGuard],
+        data: { expectedRoles: ['admin'] },
+      },
+      {
+        path: 'userDetailAdmin/:userId',
+        component: UserDetailAdminComponent,
         canActivate: [RoleGuard],
         data: { expectedRoles: ['admin'] },
       },

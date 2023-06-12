@@ -1,9 +1,19 @@
 <h1>Veuillez sélectionner une option ci-dessous pour commencer.</h1>
 <mat-grid-list cols="2" rowHeight="4:1">
-  <mat-grid-tile [routerLink]="'/addProject'"
-    >Ajouter un workflow Projet</mat-grid-tile
-  >
-  <mat-grid-tile [routerLink]="'/addTask'">Add Task</mat-grid-tile>
-  <mat-grid-tile>3</mat-grid-tile>
-  <mat-grid-tile>4</mat-grid-tile>
+  <mat-grid-tile [routerLink]="'/addProject'">
+    <mat-icon>add_box</mat-icon>
+    Ajouter un workflow Projet
+  </mat-grid-tile>
+  <mat-grid-tile [routerLink]="'/addTask'">
+    <mat-icon>task_alt</mat-icon>
+    Add Task
+  </mat-grid-tile>
+  <mat-grid-tile [routerLink]="'/manageJobGrid'">
+    <mat-icon>work_outline</mat-icon>
+    Manage Jobs
+  </mat-grid-tile>
+  <mat-grid-tile [routerLink]="'/manageUserGrid'">
+    <mat-icon>people_alt</mat-icon>
+    Manage Users
+  </mat-grid-tile>
 </mat-grid-list>

@@ -47,6 +47,14 @@ import { TaskStatisticsWithFiltersComponent } from './task-statistics-with-filte
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AddJobComponent } from './add-job/add-job.component';
+import { ManageJobGridComponent } from './manage-job-grid/manage-job-grid.component';
+import { ListJobsComponent } from './list-jobs/list-jobs.component';
+
+import { ListUsersComponent } from './list-users/list-users.component';
+import { AddUserComponent } from './add-user/add-user.component';
+import { UserDetailAdminComponent } from './user-detail-admin/user-detail-admin.component';
+import { ManageUserGridComponent } from './manage-user-grid/manage-user-grid.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +82,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     DashboardGridComponent,
     TaskStatisticsComponent,
     TaskStatisticsWithFiltersComponent,
+    AddJobComponent,
+    ManageJobGridComponent,
+    ListJobsComponent,
+    ListUsersComponent,
+    AddUserComponent,
+    UserDetailAdminComponent,
+    ManageUserGridComponent,
   ],
   imports: [
     BrowserModule,

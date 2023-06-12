@@ -1,0 +1,54 @@
+<div style="display: flex; align-items: center">
+  <button mat-icon-button [routerLink]="['/manageUserGrid']">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+</div>
+<h2>List of Users</h2>
+<div class="search-bar">
+  <input
+    type="text"
+    [formControl]="searchControl"
+    placeholder="Search users..."
+  />
+</div>
+
+<table class="user-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Full Name</th>
+      <th>Email</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of filteredUsers">
+      <td>{{ user.id }}</td>
+      <td>{{ user.fullName }}</td>
+      <td>{{ user.email }}</td>
+      <td>
+        <button
+          mat-icon-button
+          (click)="goToUserDetail(user)"
+          class="btn btn-primary"
+        >
+          <mat-icon>visibility</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          (click)="updateUser(user)"
+          class="btn btn-primary"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          (click)="deleteUser(user)"
+          class="btn btn-danger"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

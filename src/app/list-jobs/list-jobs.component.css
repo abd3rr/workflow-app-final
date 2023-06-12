@@ -1,0 +1,26 @@
+.search-bar {
+  margin: 20px 0;
+}
+
+.job-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.job-table th,
+.job-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.job-table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04aa6d;
+  color: white;
+}
+
+.btn {
+  margin-right: 10px;
+}

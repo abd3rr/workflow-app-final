@@ -1,0 +1,25 @@
+<div style="display: flex; align-items: center">
+  <button mat-icon-button [routerLink]="['/actionGrid']">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <h1>Veuillez sélectionner une option ci-dessous pour commencer.</h1>
+</div>
+
+<mat-grid-list cols="2" rowHeight="4:1">
+  <mat-grid-tile [routerLink]="'/listJobs'">
+    <mat-icon>view_list</mat-icon>
+    List all Jobs
+  </mat-grid-tile>
+  <mat-grid-tile [routerLink]="'/addJob'">
+    <mat-icon>add_circle_outline</mat-icon>
+    Add Job
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-icon>filter_3</mat-icon>
+    3
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-icon>filter_4</mat-icon>
+    4
+  </mat-grid-tile>
+</mat-grid-list>
