@@ -140,6 +140,16 @@ export class ApiService {
       })
     );
   }
+  getAllRoles(): Observable<any> {
+    const url = `${this.baseUrl}/roles`;
+    return this.http.get(url).pipe(
+      retry(3),
+      catchError((error) => {
+        console.log('An error occured getting the roles: ', error);
+        return throwError(ERROR_MESSAGES.GENERAL);
+      })
+    );
+  }
 
   public getPhasesByProjectId(id: number): Observable<any> {
     const url = `${this.baseUrl}/phases/project/${id}`;

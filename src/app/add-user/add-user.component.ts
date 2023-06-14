@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Job } from '../interfaces/job';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { tap, catchError, of } from 'rxjs';
+import { Role } from '../interfaces/role';
 
 @Component({
   selector: 'app-add-user',
@@ -19,6 +20,7 @@ import { tap, catchError, of } from 'rxjs';
 export class AddUserComponent {
   userForm!: FormGroup;
   jobs?: Job[];
+  roles?: Role[];
   profilePicture!: File | null | undefined;
   passwordForm!: FormGroup;
 
@@ -32,11 +34,11 @@ export class AddUserComponent {
     this.userForm = this.fb.group({
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      role: ['', Validators.required],
+      roleName: ['', Validators.required],
       passwordHash: ['', Validators.required],
       phoneNumber: ['', Validators.required],
       address: ['', Validators.required],
-      profilePicture: [null, Validators.required],
+      profilePictureId: [null, Validators.required],
       jobId: ['', Validators.required],
     });
 
@@ -47,6 +49,7 @@ export class AddUserComponent {
       useSpecialCharacters: [false],
     });
     this.getJobs();
+    this.getRoles();
   }
 
   getJobs() {
@@ -56,6 +59,16 @@ export class AddUserComponent {
       },
       (error) => {
         console.log('Error fetching jobs:', error);
+      }
+    );
+  }
+  getRoles() {
+    this.apiService.getAllRoles().subscribe(
+      (roles) => {
+        this.roles = roles;
+      },
+      (error) => {
+        console.log('Error fetching roles:', error);
       }
     );
   }
@@ -106,7 +119,7 @@ export class AddUserComponent {
           tap((response: HttpEvent<any>) => {
             if (response.type === HttpEventType.Response) {
               const user = this.userForm.value;
-              user.profilePicture = response.body?.filePath || '';
+              user.profilePictureId = response.body?.id;
               console.log('User:', user);
               this.apiService.createUser(user).subscribe(
                 (response) => {

@@ -8,23 +8,19 @@
 
   <div class="profile-container text-center">
     <img
-      [src]="
-        user.profilePicture.replace(
-          'D:\\I2S\\spring\\worfklow_api_final\\worfklow_api_final\\uploads\\',
-          '/uploads/'
-        )
-      "
-      alt="{{ user?.fullName }}"
+      [src]="profilePictureData"
+      alt="{{ user.fullName }}"
       class="profile-picture"
     />
 
     <h3 class="mt-3">{{ user.fullName }}</h3>
 
     <div class="user-info mt-3">
-      <p><strong>Role: </strong>{{ user.role }}</p>
+      <p><strong>Role: </strong>{{ user.roleName }}</p>
       <p><strong>Email: </strong>{{ user.email }}</p>
       <p><strong>Phone Number: </strong>{{ user.phoneNumber }}</p>
       <p><strong>Address: </strong>{{ user.address }}</p>
+      <p><strong>Job: </strong>{{ job.title }}</p>
     </div>
   </div>
 </div>

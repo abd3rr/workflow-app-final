@@ -13,6 +13,7 @@ export class UserDetailAdminComponent {
   user!: User;
   userId: number | null = null;
   job!: Job;
+  profilePictureData: any = null;
 
   constructor(private route: ActivatedRoute, private apiService: ApiService) {}
 
@@ -22,6 +23,7 @@ export class UserDetailAdminComponent {
       (user: User) => {
         this.user = user;
         this.fetchJob(user.jobId);
+        this.loadProfilePicture(user.profilePictureId);
       },
       (error) => {
         console.error('Error fetching user:', error);
@@ -40,5 +42,27 @@ export class UserDetailAdminComponent {
         }
       );
     }
+  }
+
+  loadProfilePicture(fileId: number): void {
+    this.apiService.getFileForPreview(fileId).subscribe(
+      (blob: Blob) => {
+        let reader = new FileReader();
+        reader.addEventListener(
+          'load',
+          () => {
+            this.profilePictureData = reader.result;
+          },
+          false
+        );
+
+        if (blob) {
+          reader.readAsDataURL(blob);
+        }
+      },
+      (error) => {
+        console.error('Error fetching profile picture:', error);
+      }
+    );
   }
 }
