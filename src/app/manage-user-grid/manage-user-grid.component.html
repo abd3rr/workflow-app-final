@@ -1,25 +1,30 @@
-<div style="display: flex; align-items: center">
-  <button mat-icon-button [routerLink]="['/actionGrid']">
-    <mat-icon>arrow_back</mat-icon>
-  </button>
-  <h1>Veuillez sélectionner une option ci-dessous pour commencer.</h1>
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center">
+    <h2>Veuillez sélectionner une option ci-dessous pour commencer.</h2>
+    <button
+      mat-icon-button
+      [routerLink]="['/actionGrid']"
+      class="btn btn-light"
+    >
+      <i class="material-icons">arrow_back</i>
+    </button>
+  </div>
+  <mat-grid-list cols="2" rowHeight="4:1">
+    <mat-grid-tile [routerLink]="'/listUsers'">
+      <mat-icon>view_list</mat-icon>
+      List all Users
+    </mat-grid-tile>
+    <mat-grid-tile [routerLink]="'/addUser'">
+      <mat-icon>person_add</mat-icon>
+      Add User
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-icon>filter_3</mat-icon>
+      3
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-icon>filter_4</mat-icon>
+      4
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>
-
-<mat-grid-list cols="2" rowHeight="4:1">
-  <mat-grid-tile [routerLink]="'/listUsers'">
-    <mat-icon>view_list</mat-icon>
-    List all Users
-  </mat-grid-tile>
-  <mat-grid-tile [routerLink]="'/addUser'">
-    <mat-icon>person_add</mat-icon>
-    Add User
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <mat-icon>filter_3</mat-icon>
-    3
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <mat-icon>filter_4</mat-icon>
-    4
-  </mat-grid-tile>
-</mat-grid-list>

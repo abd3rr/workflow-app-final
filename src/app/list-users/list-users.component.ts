@@ -41,8 +41,8 @@ export class ListUsersComponent implements OnInit {
     );
   }
 
-  goToUserDetail(user: User): void {
-    this.router.navigate(['/userDetailAdmin', user.id]);
+  goToUserDetail(userId: number): void {
+    this.router.navigate(['/userDetailAdmin', userId]);
   }
   deleteUser(user: User): void {
     console.log(`Delete user: `, user);

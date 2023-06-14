@@ -1,6 +1,144 @@
-<div style="display: flex; align-items: center">
-  <button mat-icon-button [routerLink]="['/manageUserGrid']">
-    <mat-icon>arrow_back</mat-icon>
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center">
+    <h2>Add User</h2>
+    <button
+      mat-icon-button
+      [routerLink]="['/manageUserGrid']"
+      class="btn btn-light"
+    >
+      <i class="material-icons">arrow_back</i>
+    </button>
+  </div>
+
+  <form
+    [formGroup]="userForm"
+    (ngSubmit)="onSubmit()"
+    class="bg-white px-5 py-4 rounded"
+  >
+    <div class="form-group">
+      <label for="fullName">Full Name</label>
+      <input
+        type="text"
+        formControlName="fullName"
+        class="form-control"
+        id="fullName"
+      />
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        formControlName="email"
+        class="form-control"
+        id="email"
+      />
+    </div>
+    <div class="form-group">
+      <label for="role">Role</label>
+      <input
+        type="text"
+        formControlName="role"
+        class="form-control"
+        id="role"
+      />
+    </div>
+    <div class="form-group">
+      <label for="passwordHash">Password</label>
+      <input
+        type="text"
+        formControlName="passwordHash"
+        class="form-control"
+        id="passwordHash"
+      />
+    </div>
+    <div class="form-group" [formGroup]="passwordForm">
+      <label for="passwordLength"
+        >Password Length: {{ passwordForm.get("passwordLength")?.value }}</label
+      >
+      <input
+        type="range"
+        id="passwordLength"
+        formControlName="passwordLength"
+        class="form-control-range"
+        min="1"
+        max="32"
+      />
+    </div>
+    <div class="form-check" [formGroup]="passwordForm">
+      <input
+        type="checkbox"
+        id="useNumbers"
+        formControlName="useNumbers"
+        class="form-check-input"
+      />
+      <label class="form-check-label" for="useNumbers">Use Numbers</label>
+    </div>
+    <div class="form-check" [formGroup]="passwordForm">
+      <input
+        type="checkbox"
+        id="useUppercase"
+        formControlName="useUppercase"
+        class="form-check-input"
+      />
+      <label class="form-check-label" for="useUppercase"
+        >Use Uppercase Letters</label
+      >
+    </div>
+    <div class="form-check" [formGroup]="passwordForm">
+      <input
+        type="checkbox"
+        id="useSpecialCharacters"
+        formControlName="useSpecialCharacters"
+        class="form-check-input"
+      />
+      <label class="form-check-label" for="useSpecialCharacters"
+        >Use Special Characters</label
+      >
+    </div>
+    <button (click)="generatePassword()" class="btn btn-secondary">
+      Generate Password
+    </button>
+
+    <!-- ... rest of your form -->
+
+    <div class="form-group">
+      <label for="phoneNumber">Phone Number</label>
+      <input
+        type="tel"
+        formControlName="phoneNumber"
+        class="form-control"
+        id="phoneNumber"
+      />
+    </div>
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input
+        type="text"
+        formControlName="address"
+        class="form-control"
+        id="address"
+      />
+    </div>
+    <div class="form-group">
+      <label for="profilePicture">Profile Picture</label>
+      <input
+        type="file"
+        class="form-control-file"
+        id="profilePicture"
+        (change)="onFileChange($event)"
+      />
+    </div>
+    <div class="form-group">
+      <label for="jobId">Job Title</label>
+      <select formControlName="jobId" class="form-control" id="jobId">
+        <option *ngFor="let job of jobs" [value]="job.id" class="form-control">
+          {{ job.title }}
+        </option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Create User</button>
+  </form>
+  <button class="btn btn-secondary mt-3" [routerLink]="'/listUsers'">
+    See List of users
   </button>
 </div>
-<p>add-user works!</p>

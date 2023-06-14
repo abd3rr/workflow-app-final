@@ -1,36 +1,48 @@
-<button (click)="goBack()" class="back-button">Back to Task List</button>
-
-<h2>Task Details</h2>
-<div *ngIf="task">
-  <p>
-    <strong>Step Name:</strong> {{ step?.stepName }} {{ step?.description }}
-  </p>
-  <p><strong>Step Description</strong> {{ step?.description }}</p>
-  <p><strong> Task ID:</strong> {{ task.id }}</p>
-  <p><strong>Name:</strong> {{ task.taskName }}</p>
-  <p><strong>Description:</strong> {{ task.description }}</p>
-  <p><strong>Instructions:</strong> {{ task.instructions }}</p>
-  <p><strong>Status:</strong> {{ task.status }}</p>
-  <h3>Method Details</h3>
-  <div *ngIf="methods.length">
-    <ul>
-      <li *ngFor="let methodExecution of methodExecutions">
-        <ng-container *ngIf="getMethodById(methodExecution.methodId) as method">
-          <p><strong>Method Name:</strong> {{ method.methodName }}</p>
-        </ng-container>
-        <p
-          [class.success]="methodExecution.status === 'SUCCESS'"
-          [class.failure]="methodExecution.status === 'FAILURE'"
-        >
-          <strong>Execution Status (ID {{ methodExecution.id }}):</strong>
-          {{ methodExecution.status }}
-        </p>
-      </li>
-    </ul>
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center">
+    <h2>Task Details</h2>
+    <button
+      mat-icon-button
+      [routerLink]="['/taskListUser']"
+      class="btn btn-light"
+    >
+      <i class="material-icons">arrow_back</i>
+    </button>
   </div>
-  <div class="verification-actions">
-    <h2>Verify the task</h2>
-    <button (click)="markAsFailed()">Mark as Failed</button>
-    <button (click)="markAsPassed()">Mark as Passed</button>
+
+  <div *ngIf="task">
+    <p>
+      <strong>Step Name:</strong> {{ step?.stepName }} {{ step?.description }}
+    </p>
+    <p><strong>Step Description</strong> {{ step?.description }}</p>
+    <p><strong> Task ID:</strong> {{ task.id }}</p>
+    <p><strong>Name:</strong> {{ task.taskName }}</p>
+    <p><strong>Description:</strong> {{ task.description }}</p>
+    <p><strong>Instructions:</strong> {{ task.instructions }}</p>
+    <p><strong>Status:</strong> {{ task.status }}</p>
+    <h3>Method Details</h3>
+    <div *ngIf="methods.length">
+      <ul>
+        <li *ngFor="let methodExecution of methodExecutions">
+          <ng-container
+            *ngIf="getMethodById(methodExecution.methodId) as method"
+          >
+            <p><strong>Method Name:</strong> {{ method.methodName }}</p>
+          </ng-container>
+          <p
+            [class.success]="methodExecution.status === 'SUCCESS'"
+            [class.failure]="methodExecution.status === 'FAILURE'"
+          >
+            <strong>Execution Status (ID {{ methodExecution.id }}):</strong>
+            {{ methodExecution.status }}
+          </p>
+        </li>
+      </ul>
+    </div>
+    <div class="verification-actions">
+      <h2>Verify the task</h2>
+      <button (click)="markAsFailed()">Mark as Failed</button>
+      <button (click)="markAsPassed()">Mark as Passed</button>
+    </div>
   </div>
 </div>

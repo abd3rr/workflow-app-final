@@ -1,0 +1,15 @@
+.profile-container {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.profile-picture {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-info p {
+  margin: 0;
+}

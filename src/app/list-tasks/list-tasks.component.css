@@ -4,8 +4,9 @@
 
 .color-legend {
   position: absolute;
-  top: 10px;
+  top: 30px;
   right: 10px;
+  margin-top: 8%;
   background-color: white;
   padding: 10px;
   border: 1px solid #ccc;

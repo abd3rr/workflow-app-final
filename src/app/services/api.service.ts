@@ -6,7 +6,7 @@ import {
   HttpParams,
   HttpResponse,
 } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, retry, tap, map } from 'rxjs/operators';
 import { config } from '../config/config';
 import { ERROR_MESSAGES } from '../errors/error-messages';
@@ -14,6 +14,7 @@ import { Task, TaskStatus } from '../interfaces/task';
 import { saveAs } from 'file-saver';
 import { Feedback } from '../interfaces/feedback';
 import { Job } from '../interfaces/job';
+import { User } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root',
@@ -214,6 +215,17 @@ export class ApiService {
     );
   }
 
+  public createUser(user: User): Observable<any> {
+    const url = `${this.baseUrl}/users`;
+    return this.http.post(url, user).pipe(
+      retry(3),
+      catchError((error) => {
+        console.log('An error occurred creating the user:', error);
+        return throwError(ERROR_MESSAGES.GENERAL);
+      })
+    );
+  }
+
   public getAllMethods(): Observable<any> {
     const url = `${this.baseUrl}/methods`;
     return this.http.get(url).pipe(
@@ -284,6 +296,46 @@ export class ApiService {
     }
 
     const url = `${this.baseUrl}/files`;
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+
+    return this.http
+      .post(url, formData, {
+        reportProgress: true,
+        observe: 'events',
+      })
+      .pipe(
+        tap((response) => console.log('API response:', response)),
+        retry(3),
+        catchError((error) => {
+          console.log('An error occurred creating the file:', error);
+          return throwError(ERROR_MESSAGES.GENERAL);
+        })
+      );
+  }
+
+  public createImageFile(file: File): Observable<any> {
+    const acceptedExtensions = [
+      'png',
+      'jpeg',
+      'jpg',
+      'gif',
+      'bmp',
+      'webp',
+      'tiff',
+      'ico',
+      'heic',
+    ];
+    const fileExtension = file.name.split('.').pop()?.toLowerCase();
+
+    if (!fileExtension || !acceptedExtensions.includes(fileExtension)) {
+      console.log('Invalid file type:', file.name);
+      return throwError(
+        'Invalid file type. Only PNG, JPEG, JPG, GIF, BMP, WEBP, TIFF, ICO, HEIC files are allowed.'
+      );
+    }
+
+    const url = `${this.baseUrl}/files/imageFiles`;
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
 

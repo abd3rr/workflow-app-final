@@ -1,231 +1,242 @@
-<h1>Add Task</h1>
-<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="Project Name">Project Name: </label>
-    <select formControlName="project" (change)="onProjectSelected()">
-      <option *ngFor="let project of projectList" [ngValue]="project">
-        {{ project.projectName }}
-      </option>
-    </select>
-  </div>
-  <!-- Load Phases on Project Change -->
-  <div>
-    <label for="Phase Name"> Phase Name: </label>
-    <select formControlName="phase" (change)="onPhaseSelected()">
-      <option [ngValue]="null">---</option>
-      <option *ngFor="let phase of phaseList" [ngValue]="phase">
-        {{ phase.phaseName }}
-      </option>
-    </select>
-  </div>
-  <!-- Load Steps on Phase Change -->
-  <div>
-    <label for="Step Name"> Step Name: </label>
-    <select formControlName="step" (change)="onStepSelected()">
-      <option [ngValue]="[]">---</option>
-      <option *ngFor="let step of stepList" [ngValue]="step">
-        {{ step.stepName }}
-      </option>
-    </select>
-  </div>
-
-  <div>
-    <label for="task-name">Task Name:</label>
-    <input id="task-name" type="text" formControlName="taskName" required />
-  </div>
-
-  <div>
-    <label for="description">Description: </label>
-    <input
-      id="description"
-      type="text"
-      formControlName="description"
-      required
-    />
-  </div>
-
-  <div>
-    <label for="instructions">Instructions: </label>
-    <textarea
-      id="instructions"
-      formControlName="instructions"
-      required
-      rows="4"
-    ></textarea>
-  </div>
-
-  <div>
-    <label for="task-name">Assigned Jobs:</label>
-    <mat-form-field appearance="fill">
-      <mat-label>Assigned Jobs</mat-label>
-      <mat-select formControlName="assignedJobs" multiple>
-        <mat-option *ngFor="let job of jobList" [value]="job">{{
-          job.title
-        }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-
-  <div>
-    <label for="task-name">Parent Task:</label>
-    <mat-form-field appearance="fill">
-      <mat-label> Parent Task</mat-label>
-      <mat-select formControlName="parentTask" multiple>
-        <mat-option Value="null"
-          >Aucune tâche précédente (première tâche)
-        </mat-option>
-        <mat-option *ngFor="let task of taskList" [value]="task">{{
-          task.taskName
-        }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-
-  <div class="toggle-margin">
-    <mat-slide-toggle formControlName="requiredVerification"
-      >Verification</mat-slide-toggle
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center">
+    <h2>Add Task</h2>
+    <button
+      mat-icon-button
+      [routerLink]="['/actionGrid']"
+      class="btn btn-light"
     >
+      <i class="material-icons">arrow_back</i>
+    </button>
   </div>
-
-  <h3>Actions :</h3>
-  <div>
-    <label for="existing-files">Existing Files:</label>
-    <mat-form-field appearance="fill">
-      <mat-label>Existing Files:</mat-label>
-      <mat-select
-        formControlName="existingFiles"
-        (selectionChange)="onExistingFileSelected()"
-        multiple
-      >
-        <mat-option *ngFor="let file of projectFiles" [value]="file">{{
-          file.fileName
-        }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-
-  <div *ngIf="selectedExisitingFiles && selectedExisitingFiles.length > 0">
-    <div class="alert alert-warning" role="alert">
-      <p>
-        If the files are not images or PDFs and will be downloaded instead when
-        you attempt to preview them.
-      </p>
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="Project Name">Project Name: </label>
+      <select formControlName="project" (change)="onProjectSelected()">
+        <option *ngFor="let project of projectList" [ngValue]="project">
+          {{ project.projectName }}
+        </option>
+      </select>
     </div>
-    <table class="table table-striped">
+    <!-- Load Phases on Project Change -->
+    <div>
+      <label for="Phase Name"> Phase Name: </label>
+      <select formControlName="phase" (change)="onPhaseSelected()">
+        <option [ngValue]="null">---</option>
+        <option *ngFor="let phase of phaseList" [ngValue]="phase">
+          {{ phase.phaseName }}
+        </option>
+      </select>
+    </div>
+    <!-- Load Steps on Phase Change -->
+    <div>
+      <label for="Step Name"> Step Name: </label>
+      <select formControlName="step" (change)="onStepSelected()">
+        <option [ngValue]="[]">---</option>
+        <option *ngFor="let step of stepList" [ngValue]="step">
+          {{ step.stepName }}
+        </option>
+      </select>
+    </div>
+
+    <div>
+      <label for="task-name">Task Name:</label>
+      <input id="task-name" type="text" formControlName="taskName" required />
+    </div>
+
+    <div>
+      <label for="description">Description: </label>
+      <input
+        id="description"
+        type="text"
+        formControlName="description"
+        required
+      />
+    </div>
+
+    <div>
+      <label for="instructions">Instructions: </label>
+      <textarea
+        id="instructions"
+        formControlName="instructions"
+        required
+        rows="4"
+      ></textarea>
+    </div>
+
+    <div>
+      <label for="task-name">Assigned Jobs:</label>
+      <mat-form-field appearance="fill">
+        <mat-label>Assigned Jobs</mat-label>
+        <mat-select formControlName="assignedJobs" multiple>
+          <mat-option *ngFor="let job of jobList" [value]="job">{{
+            job.title
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <label for="task-name">Parent Task:</label>
+      <mat-form-field appearance="fill">
+        <mat-label> Parent Task</mat-label>
+        <mat-select formControlName="parentTask" multiple>
+          <mat-option Value="null"
+            >Aucune tâche précédente (première tâche)
+          </mat-option>
+          <mat-option *ngFor="let task of taskList" [value]="task">{{
+            task.taskName
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="toggle-margin">
+      <mat-slide-toggle formControlName="requiredVerification"
+        >Verification</mat-slide-toggle
+      >
+    </div>
+
+    <h3>Actions :</h3>
+    <div>
+      <label for="existing-files">Existing Files:</label>
+      <mat-form-field appearance="fill">
+        <mat-label>Existing Files:</mat-label>
+        <mat-select
+          formControlName="existingFiles"
+          (selectionChange)="onExistingFileSelected()"
+          multiple
+        >
+          <mat-option *ngFor="let file of projectFiles" [value]="file">{{
+            file.fileName
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="selectedExisitingFiles && selectedExisitingFiles.length > 0">
+      <div class="alert alert-warning" role="alert">
+        <p>
+          If the files are not images or PDFs and will be downloaded instead
+          when you attempt to preview them.
+        </p>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th colspan="4" class="text-center">Existing Selected Files</th>
+          </tr>
+        </thead>
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">File Name</th>
+            <th scope="col">File Size</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let file of selectedExisitingFiles; index as i">
+            <tr>
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{ file.fileName }}</td>
+              <td>{{ (file.size / 1048576).toFixed(2) }} MB</td>
+              <td>
+                <button
+                  class="btn btn-info btn-sm"
+                  *ngIf="
+                    file.id &&
+                    (file.contentType == 'image/png' ||
+                      file.contentType == 'image/jpeg' ||
+                      file.contentType == 'application/pdf')
+                  "
+                  (click)="previewImage(file)"
+                >
+                  <mat-icon aria-hidden="false" aria-label="visibility"
+                    >visibility</mat-icon
+                  >
+                </button>
+                <button
+                  class="btn btn-warning btn-sm"
+                  *ngIf="
+                    file.id &&
+                    !(
+                      file.contentType == 'image/png' ||
+                      file.contentType == 'image/jpeg' ||
+                      file.contentType == 'application/pdf'
+                    )
+                  "
+                  (click)="previewImage(file)"
+                >
+                  <mat-icon aria-hidden="false" aria-label="download"
+                    >get_app</mat-icon
+                  >
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <label for="upload-file">Upload File:</label>
+      <input
+        class="form-control"
+        id="file"
+        type="file"
+        formControlName="file"
+        (change)="onFileChange($event)"
+        required
+        multiple
+      />
+    </div>
+
+    <!-- Dropdown for selecting a method -->
+    <div>
+      <label for="method">Method: </label>
+      <div class="d-flex">
+        <select id="method" formControlName="selectedMethod">
+          <option *ngFor="let method of methodList" [ngValue]="method">
+            {{ method.methodName }}
+          </option>
+        </select>
+        <!-- Button to add the selected method to the list -->
+        <button
+          class="class=btn btn-primary add-button"
+          type="button"
+          (click)="addMethod()"
+        >
+          Add
+        </button>
+      </div>
+    </div>
+    <!-- Table for displaying the selected methods -->
+    <table class="table table-striped" *ngIf="selectedMethods.length > 0">
       <thead>
         <tr>
-          <th colspan="4" class="text-center">Existing Selected Files</th>
-        </tr>
-      </thead>
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">File Name</th>
-          <th scope="col">File Size</th>
-          <th scope="col">Actions</th>
+          <th>methods</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
-        <ng-container *ngFor="let file of selectedExisitingFiles; index as i">
-          <tr>
-            <th scope="row">{{ i + 1 }}</th>
-            <td>{{ file.fileName }}</td>
-            <td>{{ (file.size / 1048576).toFixed(2) }} MB</td>
-            <td>
-              <button
-                class="btn btn-info btn-sm"
-                *ngIf="
-                  file.id &&
-                  (file.contentType == 'image/png' ||
-                    file.contentType == 'image/jpeg' ||
-                    file.contentType == 'application/pdf')
-                "
-                (click)="previewImage(file)"
-              >
-                <mat-icon aria-hidden="false" aria-label="visibility"
-                  >visibility</mat-icon
-                >
-              </button>
-              <button
-                class="btn btn-warning btn-sm"
-                *ngIf="
-                  file.id &&
-                  !(
-                    file.contentType == 'image/png' ||
-                    file.contentType == 'image/jpeg' ||
-                    file.contentType == 'application/pdf'
-                  )
-                "
-                (click)="previewImage(file)"
-              >
-                <mat-icon aria-hidden="false" aria-label="download"
-                  >get_app</mat-icon
-                >
-              </button>
-            </td>
-          </tr>
-        </ng-container>
+        <tr *ngFor="let method of selectedMethods">
+          <td>{{ method.methodName }}</td>
+          <td>
+            <button
+              class="btn btn-danger"
+              type="button"
+              (click)="removeMethod(method)"
+            >
+              Remove
+            </button>
+          </td>
+        </tr>
       </tbody>
     </table>
-  </div>
 
-  <div>
-    <label for="upload-file">Upload File:</label>
-    <input
-      class="form-control"
-      id="file"
-      type="file"
-      formControlName="file"
-      (change)="onFileChange($event)"
-      required
-      multiple
-    />
-  </div>
-
-  <!-- Dropdown for selecting a method -->
-  <div>
-    <label for="method">Method: </label>
-    <div class="d-flex">
-      <select id="method" formControlName="selectedMethod">
-        <option *ngFor="let method of methodList" [ngValue]="method">
-          {{ method.methodName }}
-        </option>
-      </select>
-      <!-- Button to add the selected method to the list -->
-      <button
-        class="class=btn btn-primary add-button"
-        type="button"
-        (click)="addMethod()"
-      >
-        Add
-      </button>
+    <div>
+      <button type="submit" name="submit">Submit</button>
     </div>
-  </div>
-  <!-- Table for displaying the selected methods -->
-  <table class="table table-striped" *ngIf="selectedMethods.length > 0">
-    <thead>
-      <tr>
-        <th>methods</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let method of selectedMethods">
-        <td>{{ method.methodName }}</td>
-        <td>
-          <button
-            class="btn btn-danger"
-            type="button"
-            (click)="removeMethod(method)"
-          >
-            Remove
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div>
-    <button type="submit" name="submit">Submit</button>
-  </div>
-</form>
+  </form>
+</div>

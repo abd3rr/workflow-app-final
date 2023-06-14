@@ -1,32 +1,44 @@
-<div style="display: flex; align-items: center">
-  <button mat-icon-button [routerLink]="['/manageJobGrid']">
-    <mat-icon>arrow_back</mat-icon>
-  </button>
-</div>
-<div class="container">
-  <h2 class="header">Create a new Job</h2>
-  <form
-    [formGroup]="jobForm"
-    (ngSubmit)="onSubmit()"
-    novalidate
-    class="job-form"
-  >
-    <div class="form-group">
-      <label for="title">Job Title</label>
-      <input
-        type="text"
-        class="form-control"
-        id="title"
-        formControlName="title"
-        required
-      />
-    </div>
-
-    <button type="submit" class="btn btn-primary" [disabled]="!jobForm.valid">
-      Create Job
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center">
+    <h2>Add Job</h2>
+    <button
+      mat-icon-button
+      [routerLink]="['/manageJobGrid']"
+      class="btn btn-light"
+    >
+      <i class="material-icons">arrow_back</i>
     </button>
-  </form>
-  <button class="btn btn-secondary" [routerLink]="'/listJobs'">
-    See List of Jobs
-  </button>
+  </div>
+  <div class="container py-5">
+    <div class="container">
+      <form
+        [formGroup]="jobForm"
+        (ngSubmit)="onSubmit()"
+        novalidate
+        class="job-form"
+      >
+        <div class="form-group">
+          <label for="title">Job Title</label>
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            formControlName="title"
+            required
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="!jobForm.valid"
+        >
+          Create Job
+        </button>
+      </form>
+      <button class="btn btn-secondary" [routerLink]="'/listJobs'">
+        See List of Jobs
+      </button>
+    </div>
+  </div>
 </div>

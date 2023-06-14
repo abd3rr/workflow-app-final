@@ -1,67 +1,82 @@
-<h1>List Task</h1>
-<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="Project Name">Project Name: </label>
-    <select formControlName="project" (change)="onProjectSelected()">
-      <option [ngValue]="null">---</option>
-      <option *ngFor="let project of projectList" [ngValue]="project">
-        {{ project.projectName }}
-      </option>
-    </select>
-  </div>
-  <!-- Load Phases on Project Change -->
-  <div>
-    <label for="Phase Name"> Phase Name: </label>
-    <select formControlName="phase" (change)="onPhaseSelected()">
-      <option [ngValue]="null">---</option>
-      <option *ngFor="let phase of phaseList" [ngValue]="phase">
-        {{ phase.phaseName }}
-      </option>
-    </select>
-  </div>
-  <!-- Load Steps on Phase Change -->
-  <div>
-    <label for="Step Name"> Step Name: </label>
-    <select formControlName="step" (change)="onStepSelected()">
-      <option [ngValue]="[]">---</option>
-      <option *ngFor="let step of stepList" [ngValue]="step">
-        {{ step.stepName }}
-      </option>
-    </select>
-  </div>
-  <div>
-    <button (click)="resetFilters()">Remove Phase or Step Filters</button>
-    <button type="submit" name="submit" [disabled]="tasksInitiated">
-      Deploy the Workflow
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center">
+    <h2>List Task</h2>
+    <button
+      mat-icon-button
+      [routerLink]="['/dashboardGrid']"
+      class="btn btn-light"
+    >
+      <i class="material-icons">arrow_back</i>
     </button>
   </div>
-</form>
 
-<div
-  id="network"
-  style="
-    width: 100%;
-    height: 600px;
-    border: 1px solid lightgray;
-    overflow: hidden;
-  "
-></div>
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="Project Name">Project Name: </label>
+      <select formControlName="project" (change)="onProjectSelected()">
+        <option [ngValue]="null">---</option>
+        <option *ngFor="let project of projectList" [ngValue]="project">
+          {{ project.projectName }}
+        </option>
+      </select>
+    </div>
+    <!-- Load Phases on Project Change -->
+    <div>
+      <label for="Phase Name"> Phase Name: </label>
+      <select formControlName="phase" (change)="onPhaseSelected()">
+        <option [ngValue]="null">---</option>
+        <option *ngFor="let phase of phaseList" [ngValue]="phase">
+          {{ phase.phaseName }}
+        </option>
+      </select>
+    </div>
+    <!-- Load Steps on Phase Change -->
+    <div>
+      <label for="Step Name"> Step Name: </label>
+      <select formControlName="step" (change)="onStepSelected()">
+        <option [ngValue]="[]">---</option>
+        <option *ngFor="let step of stepList" [ngValue]="step">
+          {{ step.stepName }}
+        </option>
+      </select>
+    </div>
+    <div>
+      <button (click)="resetFilters()">Remove Phase or Step Filters</button>
+      <button type="submit" name="submit" [disabled]="tasksInitiated">
+        Deploy the Workflow
+      </button>
+    </div>
+  </form>
 
-<div class="color-legend">
-  <h2>Color Legend:</h2>
-  <ul>
-    <li>
-      <span class="color-box" style="background-color: #ffa500"></span> Pending
-    </li>
-    <li>
-      <span class="color-box" style="background-color: #1e90ff"></span> Starting
-    </li>
-    <li>
-      <span class="color-box" style="background-color: #32cd32"></span> Finished
-    </li>
-    <li>
-      <span class="color-box" style="background-color: #ff69b4"></span> Waiting
-      for validation
-    </li>
-  </ul>
+  <div
+    id="network"
+    style="
+      width: 100%;
+      height: 600px;
+      border: 1px solid lightgray;
+      overflow: hidden;
+    "
+  ></div>
+
+  <div class="color-legend">
+    <h2>Color Legend:</h2>
+    <ul>
+      <li>
+        <span class="color-box" style="background-color: #ffa500"></span>
+        Pending
+      </li>
+      <li>
+        <span class="color-box" style="background-color: #1e90ff"></span>
+        Starting
+      </li>
+      <li>
+        <span class="color-box" style="background-color: #32cd32"></span>
+        Finished
+      </li>
+      <li>
+        <span class="color-box" style="background-color: #ff69b4"></span>
+        Waiting for validation
+      </li>
+    </ul>
+  </div>
 </div>

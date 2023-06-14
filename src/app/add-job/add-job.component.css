@@ -27,11 +27,6 @@
   margin-bottom: 20px;
 }
 
-.container .btn {
-  background-color: black;
-  color: white;
-}
-
 .container .btn:disabled {
   background-color: #555;
   color: #bbb;

@@ -29,7 +29,8 @@
       <td>
         <button
           mat-icon-button
-          (click)="goToUserDetail(user)"
+          *ngIf="user.id"
+          (click)="goToUserDetail(user.id)"
           class="btn btn-primary"
         >
           <mat-icon>visibility</mat-icon>

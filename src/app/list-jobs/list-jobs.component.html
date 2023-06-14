@@ -1,45 +1,52 @@
-<div style="display: flex; align-items: center">
-  <button mat-icon-button [routerLink]="['/manageJobGrid']">
-    <mat-icon>arrow_back</mat-icon>
-  </button>
-</div>
-<h2>List of Jobs</h2>
-<div class="search-bar">
-  <input
-    type="text"
-    [formControl]="searchControl"
-    placeholder="Search jobs..."
-  />
-</div>
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center">
+    <h2>List of Jobs</h2>
+    <button
+      mat-icon-button
+      [routerLink]="['/manageJobGrid']"
+      class="btn btn-light"
+    >
+      <i class="material-icons">arrow_back</i>
+    </button>
+  </div>
 
-<table class="job-table">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Title</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let job of filteredJobs">
-      <td>{{ job.id }}</td>
-      <td>{{ job.title }}</td>
-      <td>
-        <button
-          mat-icon-button
-          (click)="updateJob(job)"
-          class="btn btn-primary"
-        >
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          (click)="deleteJob(job.id)"
-          class="btn btn-danger"
-        >
-          <mat-icon>delete</mat-icon>
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <div class="search-bar">
+    <input
+      type="text"
+      [formControl]="searchControl"
+      placeholder="Search jobs..."
+    />
+  </div>
+
+  <table class="job-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let job of filteredJobs">
+        <td>{{ job.id }}</td>
+        <td>{{ job.title }}</td>
+        <td>
+          <button
+            mat-icon-button
+            (click)="updateJob(job)"
+            class="btn btn-primary"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            (click)="deleteJob(job.id)"
+            class="btn btn-danger"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
