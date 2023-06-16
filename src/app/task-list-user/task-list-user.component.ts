@@ -141,58 +141,109 @@ export class TaskListUserComponent {
     }
   }
 
+  // fetchUserTasks() {
+  //   if (this.authService.currentUser) {
+  //     this.apiService
+  //       .getUserByName(this.authService.currentUser.username)
+  //       .subscribe((user) => {
+  //         this.apiService.getJobByUserId(user.id).subscribe((job) => {
+  //           const project = this.taskForm.get('project')?.value;
+  //           const phase = this.taskForm.get('phase')?.value;
+  //           const step = this.taskForm.get('step')?.value;
+  //           const showAllTasks = this.taskForm.get('showAllTasks')?.value;
+
+  //           let statusList: TaskStatus[] = ['STARTING'];
+  //           if (showAllTasks) {
+  //             statusList.push('PENDING');
+  //           }
+
+  //           this.apiService
+  //             .getTasksByJobIdsStatusProjectPhaseStep(
+  //               [job.id],
+  //               statusList,
+  //               project?.id ?? undefined,
+  //               phase?.id ?? undefined,
+  //               step?.id ?? undefined
+  //             )
+  //             .subscribe((tasks) => {
+  //               this.tasks = new MatTableDataSource(
+  //                 tasks.map((task) => {
+  //                   // find corresponding project, phase and step for each task
+  //                   const project = this.findProjectByStepId(task.stepId);
+  //                   const phase = project?.phases.find((phase) =>
+  //                     phase.steps.some((step) => step.id === task.stepId)
+  //                   );
+  //                   const step = phase?.steps.find(
+  //                     (step) => step.id === task.stepId
+  //                   );
+
+  //                   // link each task with the appropriate project, phase and step
+  //                   task.projectName = project?.projectName;
+  //                   task.phaseName = phase?.phaseName;
+  //                   task.phaseId = phase?.id;
+  //                   task.stepName = step?.stepName;
+
+  //                   if (task.status === 'PENDING') {
+  //                     return { ...task, isDisabled: true };
+  //                   }
+  //                   return task;
+  //                 })
+  //               );
+  //               this.setSorts();
+  //             });
+  //         });
+  //       });
+  //   }
+  // }
   fetchUserTasks() {
-    if (this.authService.currentUser) {
-      this.apiService
-        .getUserByName(this.authService.currentUser.username)
-        .subscribe((user) => {
-          this.apiService.getJobByUserId(user.id).subscribe((job) => {
-            const project = this.taskForm.get('project')?.value;
-            const phase = this.taskForm.get('phase')?.value;
-            const step = this.taskForm.get('step')?.value;
-            const showAllTasks = this.taskForm.get('showAllTasks')?.value;
+    const userId = this.authService.currentUserId;
+    if (userId) {
+      this.apiService.getJobByUserId(userId).subscribe((job) => {
+        const project = this.taskForm.get('project')?.value;
+        const phase = this.taskForm.get('phase')?.value;
+        const step = this.taskForm.get('step')?.value;
+        const showAllTasks = this.taskForm.get('showAllTasks')?.value;
 
-            let statusList: TaskStatus[] = ['STARTING'];
-            if (showAllTasks) {
-              statusList.push('PENDING');
-            }
+        let statusList: TaskStatus[] = ['STARTING'];
+        if (showAllTasks) {
+          statusList.push('PENDING');
+        }
 
-            this.apiService
-              .getTasksByJobIdsStatusProjectPhaseStep(
-                [job.id],
-                statusList,
-                project?.id ?? undefined,
-                phase?.id ?? undefined,
-                step?.id ?? undefined
-              )
-              .subscribe((tasks) => {
-                this.tasks = new MatTableDataSource(
-                  tasks.map((task) => {
-                    // find corresponding project, phase and step for each task
-                    const project = this.findProjectByStepId(task.stepId);
-                    const phase = project?.phases.find((phase) =>
-                      phase.steps.some((step) => step.id === task.stepId)
-                    );
-                    const step = phase?.steps.find(
-                      (step) => step.id === task.stepId
-                    );
-
-                    // link each task with the appropriate project, phase and step
-                    task.projectName = project?.projectName;
-                    task.phaseName = phase?.phaseName;
-                    task.phaseId = phase?.id;
-                    task.stepName = step?.stepName;
-
-                    if (task.status === 'PENDING') {
-                      return { ...task, isDisabled: true };
-                    }
-                    return task;
-                  })
+        this.apiService
+          .getTasksByJobIdsStatusProjectPhaseStep(
+            [job.id],
+            statusList,
+            project?.id ?? undefined,
+            phase?.id ?? undefined,
+            step?.id ?? undefined
+          )
+          .subscribe((tasks) => {
+            this.tasks = new MatTableDataSource(
+              tasks.map((task) => {
+                // find corresponding project, phase and step for each task
+                const project = this.findProjectByStepId(task.stepId);
+                const phase = project?.phases.find((phase) =>
+                  phase.steps.some((step) => step.id === task.stepId)
                 );
-                this.setSorts();
-              });
+                const step = phase?.steps.find(
+                  (step) => step.id === task.stepId
+                );
+
+                // link each task with the appropriate project, phase and step
+                task.projectName = project?.projectName;
+                task.phaseName = phase?.phaseName;
+                task.phaseId = phase?.id;
+                task.stepName = step?.stepName;
+
+                if (task.status === 'PENDING') {
+                  return { ...task, isDisabled: true };
+                }
+                return task;
+              })
+            );
+            this.setSorts();
           });
-        });
+      });
     }
   }
 
@@ -207,48 +258,90 @@ export class TaskListUserComponent {
     return undefined;
   }
 
+  // fetchUserValidationTasks() {
+  //   if (this.authService.currentUser) {
+  //     this.apiService
+  //       .getUserByName(this.authService.currentUser.username)
+  //       .subscribe((user) => {
+  //         this.apiService.getJobByUserId(user.id).subscribe((job) => {
+  //           const project = this.taskForm.get('project')?.value;
+  //           const phase = this.taskForm.get('phase')?.value;
+  //           const step = this.taskForm.get('step')?.value;
+
+  //           this.apiService
+  //             .getTasksWaitingForValidationByJobIdAndProjectPhaseStep(
+  //               job.id,
+  //               project?.id ?? undefined,
+  //               phase?.id ?? undefined,
+  //               step?.id ?? undefined
+  //             )
+  //             .subscribe((tasksWaitingForValidation) => {
+  //               this.tasksWaitingForValidation = new MatTableDataSource(
+  //                 tasksWaitingForValidation.map((task: Task) => {
+  //                   // find corresponding project, phase and step for each task
+  //                   const project = this.findProjectByStepId(task.stepId);
+  //                   const phase = project?.phases.find((phase) =>
+  //                     phase.steps.some((step) => step.id === task.stepId)
+  //                   );
+  //                   const step = phase?.steps.find(
+  //                     (step) => step.id === task.stepId
+  //                   );
+
+  //                   // link each task with the appropriate project, phase and step
+  //                   task.projectName = project?.projectName;
+  //                   task.phaseName = phase?.phaseName;
+  //                   task.phaseId = phase?.id;
+  //                   task.stepName = step?.stepName;
+
+  //                   return task;
+  //                 })
+  //               );
+  //               this.setSorts();
+  //             });
+  //         });
+  //       });
+  //   }
+  // }
   fetchUserValidationTasks() {
-    if (this.authService.currentUser) {
-      this.apiService
-        .getUserByName(this.authService.currentUser.username)
-        .subscribe((user) => {
-          this.apiService.getJobByUserId(user.id).subscribe((job) => {
-            const project = this.taskForm.get('project')?.value;
-            const phase = this.taskForm.get('phase')?.value;
-            const step = this.taskForm.get('step')?.value;
+    const userId = this.authService.currentUserId;
 
-            this.apiService
-              .getTasksWaitingForValidationByJobIdAndProjectPhaseStep(
-                job.id,
-                project?.id ?? undefined,
-                phase?.id ?? undefined,
-                step?.id ?? undefined
-              )
-              .subscribe((tasksWaitingForValidation) => {
-                this.tasksWaitingForValidation = new MatTableDataSource(
-                  tasksWaitingForValidation.map((task: Task) => {
-                    // find corresponding project, phase and step for each task
-                    const project = this.findProjectByStepId(task.stepId);
-                    const phase = project?.phases.find((phase) =>
-                      phase.steps.some((step) => step.id === task.stepId)
-                    );
-                    const step = phase?.steps.find(
-                      (step) => step.id === task.stepId
-                    );
+    if (userId) {
+      this.apiService.getJobByUserId(userId).subscribe((job) => {
+        const project = this.taskForm.get('project')?.value;
+        const phase = this.taskForm.get('phase')?.value;
+        const step = this.taskForm.get('step')?.value;
 
-                    // link each task with the appropriate project, phase and step
-                    task.projectName = project?.projectName;
-                    task.phaseName = phase?.phaseName;
-                    task.phaseId = phase?.id;
-                    task.stepName = step?.stepName;
-
-                    return task;
-                  })
+        this.apiService
+          .getTasksWaitingForValidationByJobIdAndProjectPhaseStep(
+            job.id,
+            project?.id ?? undefined,
+            phase?.id ?? undefined,
+            step?.id ?? undefined
+          )
+          .subscribe((tasksWaitingForValidation) => {
+            this.tasksWaitingForValidation = new MatTableDataSource(
+              tasksWaitingForValidation.map((task: Task) => {
+                // find corresponding project, phase and step for each task
+                const project = this.findProjectByStepId(task.stepId);
+                const phase = project?.phases.find((phase) =>
+                  phase.steps.some((step) => step.id === task.stepId)
                 );
-                this.setSorts();
-              });
+                const step = phase?.steps.find(
+                  (step) => step.id === task.stepId
+                );
+
+                // link each task with the appropriate project, phase and step
+                task.projectName = project?.projectName;
+                task.phaseName = phase?.phaseName;
+                task.phaseId = phase?.id;
+                task.stepName = step?.stepName;
+
+                return task;
+              })
+            );
+            this.setSorts();
           });
-        });
+      });
     }
   }
 

@@ -23,12 +23,13 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   private baseUrl = config.apiUrl;
+  private adminUrl = config.apiUrlAdmin;
 
   public createProject(
     projectName: string,
     description: string | null
   ): Observable<any> {
-    const url = `${this.baseUrl}/projects`;
+    const url = `${this.adminUrl}/projects`;
     const body = { projectName, description };
     return this.http.post(url, body).pipe(
       retry(3),
@@ -61,7 +62,7 @@ export class ApiService {
       throw new Error('Project ID is not defined');
     }
     const body = { phaseName, description };
-    const url = `${this.baseUrl}/phases/projects/${projectId}`;
+    const url = `${this.adminUrl}/phases/projects/${projectId}`;
     return this.http.post(url, body).pipe(
       retry(3),
       catchError((error) => {
@@ -80,7 +81,7 @@ export class ApiService {
       throw new Error('Phase ID is not defined');
     }
     const body = { stepName, description };
-    const url = `${this.baseUrl}/steps/phases/${phaseId}`;
+    const url = `${this.adminUrl}/steps/phases/${phaseId}`;
     return this.http.post(url, body).pipe(
       retry(3),
       catchError((error) => {
@@ -109,7 +110,7 @@ export class ApiService {
   }
 
   public deleteProject(projectId: string): Observable<any> {
-    const url = `${this.baseUrl}/projects/${projectId}`;
+    const url = `${this.adminUrl}/projects/${projectId}`;
     return this.http.delete(url).pipe(
       retry(3),
       catchError((error) => {
@@ -204,7 +205,7 @@ export class ApiService {
   }
 
   public createTask(task: Task): Observable<any> {
-    const url = `${this.baseUrl}/tasks`;
+    const url = `${this.adminUrl}/tasks`;
     return this.http.post(url, task).pipe(
       retry(3),
       catchError((error) => {
@@ -215,7 +216,7 @@ export class ApiService {
   }
 
   public createJob(job: Job): Observable<any> {
-    const url = `${this.baseUrl}/jobs`;
+    const url = `${this.adminUrl}/jobs`;
     return this.http.post(url, job).pipe(
       retry(3),
       catchError((error) => {
@@ -226,7 +227,7 @@ export class ApiService {
   }
 
   public createUser(user: User): Observable<any> {
-    const url = `${this.baseUrl}/users`;
+    const url = `${this.adminUrl}/users`;
     return this.http.post(url, user).pipe(
       retry(3),
       catchError((error) => {
@@ -305,7 +306,7 @@ export class ApiService {
       );
     }
 
-    const url = `${this.baseUrl}/files`;
+    const url = `${this.adminUrl}/files`;
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
 
@@ -345,7 +346,7 @@ export class ApiService {
       );
     }
 
-    const url = `${this.baseUrl}/files/imageFiles`;
+    const url = `${this.adminUrl}/files/imageFiles`;
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
 
@@ -502,7 +503,7 @@ export class ApiService {
     if (!projectId) {
       throw new Error('Project ID is not defined');
     }
-    const url = `${this.baseUrl}/tasks/${projectId}/startInitialTasks`;
+    const url = `${this.adminUrl}/tasks/${projectId}/startInitialTasks`;
     return this.http.post(url, null).pipe(
       retry(3),
       catchError((error) => {
@@ -780,7 +781,7 @@ export class ApiService {
   }
   // Stats end points
   public getCompletionRateForAllTasks(): Observable<any> {
-    const url = `${this.baseUrl}/stats/tasks/completionRate/all`;
+    const url = `${this.adminUrl}/stats/tasks/completionRate/all`;
     return this.http.get(url).pipe(
       retry(3),
       catchError((error) => {
@@ -796,7 +797,7 @@ export class ApiService {
     if (!projectId) {
       throw new Error('Project ID is not defined');
     }
-    const url = `${this.baseUrl}/stats/tasks/completionRate/project/${projectId}`;
+    const url = `${this.adminUrl}/stats/tasks/completionRate/project/${projectId}`;
     return this.http.get(url).pipe(
       retry(3),
       catchError((error) => {
@@ -816,7 +817,7 @@ export class ApiService {
     if (!projectId || !phaseId) {
       throw new Error('Project ID or Phase ID is not defined');
     }
-    const url = `${this.baseUrl}/stats/tasks/completionRate/project/${projectId}/phase/${phaseId}`;
+    const url = `${this.adminUrl}/stats/tasks/completionRate/project/${projectId}/phase/${phaseId}`;
     return this.http.get(url).pipe(
       retry(3),
       catchError((error) => {
@@ -839,7 +840,7 @@ export class ApiService {
     if (!projectId || !phaseId || !stepId) {
       throw new Error('Project ID, Phase ID, or Step ID is not defined');
     }
-    const url = `${this.baseUrl}/stats/tasks/completionRate/project/${projectId}/phase/${phaseId}/step/${stepId}`;
+    const url = `${this.adminUrl}/stats/tasks/completionRate/project/${projectId}/phase/${phaseId}/step/${stepId}`;
     return this.http.get(url).pipe(
       retry(3),
       catchError((error) => {
@@ -860,7 +861,7 @@ export class ApiService {
     if (!status) {
       throw new Error('Status is not defined');
     }
-    const url = `${this.baseUrl}/stats/tasks/count/all/${status}`;
+    const url = `${this.adminUrl}/stats/tasks/count/all/${status}`;
     return this.http.get(url).pipe(
       retry(3),
       catchError((error) => {
@@ -880,7 +881,7 @@ export class ApiService {
     if (!projectId || !status) {
       throw new Error('Project ID or Status is not defined');
     }
-    const url = `${this.baseUrl}/stats/tasks/count/project/${projectId}/${status}`;
+    const url = `${this.adminUrl}/stats/tasks/count/project/${projectId}/${status}`;
     return this.http.get(url).pipe(
       retry(3),
       catchError((error) => {
@@ -902,7 +903,7 @@ export class ApiService {
     if (!projectId || !phaseId || !status) {
       throw new Error('Project ID, Phase ID, or Status is not defined');
     }
-    const url = `${this.baseUrl}/stats/tasks/count/project/${projectId}/phase/${phaseId}/${status}`;
+    const url = `${this.adminUrl}/stats/tasks/count/project/${projectId}/phase/${phaseId}/${status}`;
     return this.http.get(url).pipe(
       retry(3),
       catchError((error) => {
@@ -929,7 +930,7 @@ export class ApiService {
         'Project ID, Phase ID, Step ID, or Status is not defined'
       );
     }
-    const url = `${this.baseUrl}/stats/tasks/count/project/${projectId}/phase/${phaseId}/step/${stepId}/${status}`;
+    const url = `${this.adminUrl}/stats/tasks/count/project/${projectId}/phase/${phaseId}/step/${stepId}/${status}`;
     return this.http.get(url).pipe(
       retry(3),
       catchError((error) => {
@@ -948,7 +949,7 @@ export class ApiService {
     );
   }
   public getCountForAllTasks(): Observable<any> {
-    const url = `${this.baseUrl}/stats/tasks/count/all`;
+    const url = `${this.adminUrl}/stats/tasks/count/all`;
     return this.http.get(url).pipe(
       retry(3),
       catchError((error) => {
@@ -959,7 +960,7 @@ export class ApiService {
   }
 
   public getAverageCompletionTimeForAllTasks(): Observable<any> {
-    const url = `${this.baseUrl}/stats/tasks/averageCompletionTime/all`;
+    const url = `${this.adminUrl}/stats/tasks/averageCompletionTime/all`;
     return this.http.get(url).pipe(
       retry(3),
       catchError((error) => {
@@ -976,7 +977,7 @@ export class ApiService {
     if (!projectId) {
       throw new Error('Project ID is not defined');
     }
-    const url = `${this.baseUrl}/stats/tasks/averageCompletionTime/project/${projectId}`;
+    const url = `${this.adminUrl}/stats/tasks/averageCompletionTime/project/${projectId}`;
     return this.http.get(url).pipe(
       retry(3),
       catchError((error) => {
@@ -996,7 +997,7 @@ export class ApiService {
     if (!projectId || !phaseId) {
       throw new Error('Project ID or Phase ID is not defined');
     }
-    const url = `${this.baseUrl}/stats/tasks/averageCompletionTime/project/${projectId}/phase/${phaseId}`;
+    const url = `${this.adminUrl}/stats/tasks/averageCompletionTime/project/${projectId}/phase/${phaseId}`;
     return this.http.get(url).pipe(
       retry(3),
       catchError((error) => {
@@ -1019,7 +1020,7 @@ export class ApiService {
     if (!projectId || !phaseId || !stepId) {
       throw new Error('Project ID, Phase ID, or Step ID is not defined');
     }
-    const url = `${this.baseUrl}/stats/tasks/averageCompletionTime/project/${projectId}/phase/${phaseId}/step/${stepId}`;
+    const url = `${this.adminUrl}/stats/tasks/averageCompletionTime/project/${projectId}/phase/${phaseId}/step/${stepId}`;
     return this.http.get(url).pipe(
       retry(3),
       catchError((error) => {
@@ -1037,7 +1038,7 @@ export class ApiService {
   }
 
   public getCountForAllProjects(): Observable<any> {
-    const url = `${this.baseUrl}/stats/count/allProjects`;
+    const url = `${this.adminUrl}/stats/count/allProjects`;
     return this.http.get(url).pipe(
       retry(3),
       catchError((error) => {
@@ -1048,7 +1049,7 @@ export class ApiService {
   }
 
   public getCountForAllPhases(): Observable<any> {
-    const url = `${this.baseUrl}/stats/count/allPhases`;
+    const url = `${this.adminUrl}/stats/count/allPhases`;
     return this.http.get(url).pipe(
       retry(3),
       catchError((error) => {
@@ -1059,7 +1060,7 @@ export class ApiService {
   }
 
   public getCountForAllSteps(): Observable<any> {
-    const url = `${this.baseUrl}/stats/count/allSteps`;
+    const url = `${this.adminUrl}/stats/count/allSteps`;
     return this.http.get(url).pipe(
       retry(3),
       catchError((error) => {
@@ -1073,7 +1074,7 @@ export class ApiService {
     if (!projectId) {
       throw new Error('Project ID is not defined');
     }
-    const url = `${this.baseUrl}/stats/count/phasesInProject/${projectId}`;
+    const url = `${this.adminUrl}/stats/count/phasesInProject/${projectId}`;
     return this.http.get(url).pipe(
       retry(3),
       catchError((error) => {
@@ -1090,7 +1091,7 @@ export class ApiService {
     if (!phaseId) {
       throw new Error('Phase ID is not defined');
     }
-    const url = `${this.baseUrl}/stats/count/stepsInPhase/${phaseId}`;
+    const url = `${this.adminUrl}/stats/count/stepsInPhase/${phaseId}`;
     return this.http.get(url).pipe(
       retry(3),
       catchError((error) => {
@@ -1107,7 +1108,7 @@ export class ApiService {
     if (!projectId) {
       throw new Error('Project ID is not defined');
     }
-    const url = `${this.baseUrl}/stats/count/stepsInProject/${projectId}`;
+    const url = `${this.adminUrl}/stats/count/stepsInProject/${projectId}`;
     return this.http.get(url).pipe(
       retry(3),
       catchError((error) => {
@@ -1121,7 +1122,7 @@ export class ApiService {
   }
 
   public getCountForAllUsers(): Observable<any> {
-    const url = `${this.baseUrl}/stats/count/allUsers`;
+    const url = `${this.adminUrl}/stats/count/allUsers`;
     return this.http.get(url).pipe(
       retry(3),
       catchError((error) => {
@@ -1131,7 +1132,7 @@ export class ApiService {
     );
   }
   public getCountForAllJobs(): Observable<any> {
-    const url = `${this.baseUrl}/stats/count/allJobs`;
+    const url = `${this.adminUrl}/stats/count/allJobs`;
     return this.http.get(url).pipe(
       retry(3),
       catchError((error) => {

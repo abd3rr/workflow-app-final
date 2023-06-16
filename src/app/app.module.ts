@@ -9,7 +9,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -55,6 +55,7 @@ import { ListUsersComponent } from './list-users/list-users.component';
 import { AddUserComponent } from './add-user/add-user.component';
 import { UserDetailAdminComponent } from './user-detail-admin/user-detail-admin.component';
 import { ManageUserGridComponent } from './manage-user-grid/manage-user-grid.component';
+import { JwtInterceptor } from './jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -114,7 +115,9 @@ import { ManageUserGridComponent } from './manage-user-grid/manage-user-grid.com
     MatSortModule,
     MatProgressSpinnerModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

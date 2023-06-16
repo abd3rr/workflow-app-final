@@ -15,7 +15,8 @@
 
       <mat-list-item
         *ngIf="
-          authService.userRole === 'admin' || authService.userRole === 'user'
+          authService.userRole === 'ROLE_ADMIN' ||
+          authService.userRole === 'ROLE_USER'
         "
         [routerLink]="'/home'"
       >
@@ -29,7 +30,7 @@
       </mat-list-item>
 
       <mat-list-item
-        *ngIf="authService.userRole === 'admin'"
+        *ngIf="authService.userRole === 'ROLE_ADMIN'"
         [routerLink]="'/dashboardGrid'"
       >
         <mat-icon mat-list-icon>dashboard</mat-icon>
@@ -42,7 +43,7 @@
       </mat-list-item>
 
       <mat-list-item
-        *ngIf="authService.userRole === 'user'"
+        *ngIf="authService.userRole === 'ROLE_USER'"
         [routerLink]="'/taskListUser'"
       >
         <mat-icon mat-list-icon>view_list</mat-icon>
@@ -61,7 +62,7 @@
       </mat-list-item>
 
       <mat-list-item
-        *ngIf="authService.userRole === 'admin'"
+        *ngIf="authService.userRole === 'ROLE_ADMIN'"
         [routerLink]="'/actionGrid'"
       >
         <mat-icon mat-list-icon>library_add</mat-icon>
@@ -75,7 +76,8 @@
 
       <mat-list-item
         *ngIf="
-          authService.userRole === 'admin' || authService.userRole === 'user'
+          authService.userRole === 'ROLE_ADMIN' ||
+          authService.userRole === 'ROLE_USER'
         "
         [routerLink]="'/validateTask'"
       >

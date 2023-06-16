@@ -14,10 +14,15 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit() {
-    if (this.authService.login(this.username, this.password)) {
-      this.router.navigate(['/']);
-    } else {
-      alert('Invalid credentials');
-    }
+    this.authService.login(this.username, this.password).subscribe(
+      (user) => {
+        // On success, navigate to home
+        this.router.navigate(['/']);
+      },
+      (error) => {
+        // On error, show an alert message
+        alert('Invalid credentials');
+      }
+    );
   }
 }
