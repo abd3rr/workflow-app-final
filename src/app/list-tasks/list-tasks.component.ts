@@ -60,9 +60,9 @@ export class ListTasksComponent {
     const nodes = new DataSet(
       this.taskList.map((task) => ({
         id: task.id,
-        label: `${task.taskName}\nPhase: ${task.phaseName}\nStep: ${
-          task.stepName
-        }\nJobs: ${
+        label: `${task.taskName?.toUpperCase()}\nPhase: ${
+          task.phaseName
+        }\nStep: ${task.stepName}\nJobs: ${
           task.assignedJobs
             ? task.assignedJobs.map((job) => job.title).join(', ')
             : 'None'

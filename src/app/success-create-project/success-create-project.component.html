@@ -1,35 +1,51 @@
-<div class="container success">
-  <div class="header">
-    <h1 class="title">Project Created Successfully</h1>
-    <button name="add-task" type="button" [routerLink]="'/addTask'">
-      Add Task
-    </button>
-  </div>
-  <div class="row">
-    <div class="col">
-      <p><strong>Project Name:</strong> {{ projectVals.projectName }}</p>
-      <p><strong>Project Description:</strong> {{ projectVals.projectName }}</p>
+<div class="container mt-5">
+  <div class="card border-success">
+    <div
+      class="card-header bg-success text-white d-flex justify-content-between align-items-center"
+    >
+      <h1 class="card-title mb-0">Projet créé avec succès</h1>
+      <button
+        name="add-task"
+        type="button"
+        [routerLink]="'/addTask'"
+        class="btn btn-light"
+      >
+        <i class="bi bi-plus-lg"></i> Ajouter une tâche
+      </button>
     </div>
-    <div class="col">
-      <h2 class="subtitle">Phases and Steps:</h2>
-      <table class="datagrid">
-        <thead>
-          <tr>
-            <th>Phase Name</th>
-            <th>Step Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let phase of phaseList">
-            <td>{{ phase.phaseName }}</td>
-            <td>
-              <ul class="list">
-                <li *ngFor="let step of phase.steps">{{ step.stepName }}</li>
-              </ul>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="card-body">
+      <div class="row">
+        <div class="col">
+          <p><strong>Nom du projet :</strong> {{ projectVals.projectName }}</p>
+          <p>
+            <strong>Project Description:</strong>
+            {{ projectVals["projectDescription"] }}
+          </p>
+        </div>
+        <div class="col">
+          <h2 class="mb-3">Phases et étapes :</h2>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Nom de la phase :</th>
+                <th>Nom de l'étape :</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let phase of phaseList">
+                <td>{{ phase.phaseName }}</td>
+                <td>
+                  <ul class="list-unstyled">
+                    <li *ngFor="let step of phase.steps">
+                      {{ step.stepName }}
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>

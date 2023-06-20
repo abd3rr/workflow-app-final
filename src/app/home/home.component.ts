@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
+
+import { User } from '../interfaces/user';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -7,5 +9,12 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
+  user: User | null = null;
   constructor(public authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.user = localStorage.getItem('user')
+      ? JSON.parse(localStorage.getItem('user')!)
+      : null;
+  }
 }

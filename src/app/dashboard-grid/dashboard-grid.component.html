@@ -1,19 +1,97 @@
-<h1>Veuillez sélectionner une option ci-dessous pour commencer.</h1>
-<mat-grid-list cols="2" rowHeight="4:1">
-  <mat-grid-tile [routerLink]="'/listTasks'">
-    <mat-icon>list_alt</mat-icon>
-    Visualiser et Déployer un Workflow
-  </mat-grid-tile>
-  <mat-grid-tile [routerLink]="'/taskStatistics'">
-    <mat-icon>bar_chart</mat-icon>
-    Statistiques
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <mat-icon>filter_3</mat-icon>
-    3
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <mat-icon>filter_4</mat-icon>
-    4
-  </mat-grid-tile>
-</mat-grid-list>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12">
+      <div
+        class="section-title text-center mb-4 pb-2"
+        style="padding-top: 20px"
+      >
+        <h1 class="title mb-4">Dashboard</h1>
+      </div>
+    </div>
+    <!--end col-->
+  </div>
+  <!--end row-->
+
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-12 mt-4 pt-2" [routerLink]="'/listTasks'">
+      <div class="card service-wrapper rounded border-0 shadow p-4">
+        <div class="icon text-center text-custom h1 shadow rounded bg-white">
+          <span class="uim-svg">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 13c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
+              ></path>
+            </svg>
+          </span>
+        </div>
+        <div class="content mt-4">
+          <h2 class="title">Visualiser et Déployer un Workflow</h2>
+          <p class="text-muted mt-3 mb-0">
+            Cette action permet à l'utilisateur de visualiser et de déployer un
+            workflow.
+          </p>
+        </div>
+        <div class="big-icon h1 text-custom">
+          <span class="uim-svg">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 13c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
+              ></path>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
+    <!--end col-->
+
+    <div
+      class="col-lg-6 col-md-6 col-12 mt-4 pt-2"
+      [routerLink]="'/taskStatistics'"
+    >
+      <div class="card service-wrapper rounded border-0 shadow p-4">
+        <div class="icon text-center text-custom h1 shadow rounded bg-white">
+          <span class="uim-svg">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M4 22h2V11H4zm6 0h2V7h-2zm6 0h2V4h-2zm6 0h2V2h-2z"
+              ></path>
+            </svg>
+          </span>
+        </div>
+        <div class="content mt-4">
+          <h2 class="title">Statistiques</h2>
+          <p class="text-muted mt-3 mb-0">
+            Cette action permet à l'utilisateur de consulter les statistiques.
+          </p>
+        </div>
+        <div class="big-icon h1 text-custom">
+          <span class="uim-svg">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M4 22h2V11H4zm6 0h2V7h-2zm6 0h2V4h-2zm6 0h2V2h-2z"
+              ></path>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
+    <!--end col-->
+  </div>
+  <!--end row-->
+</div>

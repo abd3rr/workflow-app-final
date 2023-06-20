@@ -7,90 +7,148 @@
   </div>
 
   <div *ngIf="task">
-    <p>
-      <strong>Step Name:</strong> {{ step?.stepName }} {{ step?.description }}
-    </p>
-    <p><strong>Step Description</strong> {{ step?.description }}</p>
-    <p><strong> Task ID:</strong> {{ task.id }}</p>
-    <p><strong>Name:</strong> {{ task.taskName }}</p>
-    <p><strong>Description:</strong> {{ task.description }}</p>
-    <p><strong>Instructions:</strong> {{ task.instructions }}</p>
-    <p><strong>Status:</strong> {{ task.status }}</p>
-    <p>
-      <strong>Required Verification:</strong> {{ task.requiredVerification }}
-    </p>
-
-    <div *ngIf="task.fileIds.length > 0">
-      <h3>Files</h3>
-      <ul>
-        <li *ngFor="let file of files">
-          {{ file.fileName }} ({{ (file.size / 1048576).toFixed(2) }} MB)
-          <button
-            *ngIf="file.id"
-            (click)="downloadFile(file.id)"
-            class="download-button"
-          >
-            Download
-          </button>
-        </li>
-      </ul>
+    <div class="card mb-4">
+      <div class="card-header">Task Information</div>
+      <div class="card-body">
+        <!-- Task Information -->
+        <p><strong>Task ID:</strong> {{ task.id }}</p>
+        <p><strong>Name:</strong> {{ task.taskName }}</p>
+        <p><strong>Description:</strong> {{ task.description }}</p>
+        <p><strong>Instructions:</strong> {{ task.instructions }}</p>
+        <p><strong>Status:</strong> {{ task.status }}</p>
+        <p>
+          <strong>Required Verification:</strong>
+          {{ task.requiredVerification }}
+        </p>
+        <p><strong>Assigned Job IDs:</strong> {{ task.assignedJobIds }}</p>
+      </div>
     </div>
-    <p><strong>Assigned Job IDs:</strong> {{ task.assignedJobIds }}</p>
-    <div *ngIf="methods.length > 0">
-      <h3>Method Details</h3>
-      <div *ngFor="let method of methods">
-        <p><strong>Name:</strong> {{ method.methodName }}</p>
-        <div *ngIf="method.parameters.length > 0">
-          <h4>Parameters</h4>
-          <ul>
-            <li *ngFor="let parameter of method.parameters">
-              {{ parameter.parameterName }}
-            </li>
-          </ul>
+
+    <div class="card mb-4">
+      <div class="card-header">Step Information</div>
+      <div class="card-body">
+        <!-- Step Information -->
+        <p><strong>Step Name:</strong> {{ step?.stepName }}</p>
+        <p><strong>Step Description:</strong> {{ step?.description }}</p>
+      </div>
+    </div>
+
+    <div class="card mt-3" *ngIf="task.fileIds.length > 0">
+      <div class="card-header">Files</div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>File Name</th>
+              <th>Size</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let file of files">
+              <td>{{ file.fileName }}</td>
+              <td>{{ (file.size / 1048576).toFixed(2) }} MB</td>
+              <td>
+                <button
+                  *ngIf="file.id"
+                  (click)="downloadFile(file.id)"
+                  class="btn btn-primary btn-sm"
+                >
+                  Download
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ... -->
+
+    <div class="card mt-3" *ngIf="methods.length > 0">
+      <div class="card-header">Method Details</div>
+      <div class="card-body">
+        <div *ngFor="let method of methods; let i = index" class="card mt-3">
+          <div class="card-header">
+            <strong>Name:</strong> {{ method.methodName }}
+          </div>
+          <div class="card-body">
+            <h4>Parameters</h4>
+            <div class="d-flex flex-wrap">
+              <span
+                class="badge bg-dark text-white m-1"
+                *ngFor="let parameter of method.parameters"
+              >
+                {{ parameter.parameterName }}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div *ngIf="task && task.feedbacks && task.feedbacks.length > 0">
-      <h3>Feedbacks</h3>
-      <ul>
-        <li *ngFor="let feedback of task.feedbacks">
-          <p><strong>Feedback:</strong> {{ feedback?.['message'] }}</p>
-          <p>
-            <strong>Date:</strong>
-            {{ feedback?.['feedbackDate'] | date:'medium' }}
-          </p>
-        </li>
-      </ul>
+    <!-- ... -->
+
+    <div class="card mt-3" *ngIf="task.parentTaskIds.length > 0">
+      <div class="card-header">Parent Tasks</div>
+      <div class="card-body">
+        <ul class="list-group">
+          <li
+            class="list-group-item"
+            *ngFor="let parentTaskId of task.parentTaskIds"
+          >
+            <ng-container *ngIf="parentTaskId !== null">
+              <a
+                routerLink="/taskDetails/{{ parentTaskId }}"
+                class="text-decoration-none link-modern"
+              >
+                {{ parentTaskNames[parentTaskId] }}
+              </a>
+            </ng-container>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <!-- ... -->
-    <!-- ... -->
 
-    <div *ngIf="task.parentTaskIds.length > 0">
-      <h3>Parent Tasks</h3>
-      <ul>
-        <li *ngFor="let parentTaskId of task.parentTaskIds">
-          <ng-container *ngIf="parentTaskId !== null">
-            <a routerLink="/taskDetails/{{ parentTaskId }}">{{
-              parentTaskNames[parentTaskId]
-            }}</a>
-          </ng-container>
-        </li>
-      </ul>
+    <div class="card mt-3" *ngIf="task.childTaskIds.length > 0">
+      <div class="card-header">Child Tasks</div>
+      <div class="card-body">
+        <ul class="list-group">
+          <li
+            class="list-group-item"
+            *ngFor="let childTaskId of task.childTaskIds"
+          >
+            <ng-container *ngIf="childTaskId !== null">
+              <a
+                routerLink="/taskDetails/{{ childTaskId }}"
+                class="text-decoration-none link-modern"
+              >
+                {{ childTaskNames[childTaskId] }}
+              </a>
+            </ng-container>
+          </li>
+        </ul>
+      </div>
     </div>
 
-    <div *ngIf="task.childTaskIds.length > 0">
-      <h3>Child Tasks</h3>
-      <ul>
-        <li *ngFor="let childTaskId of task.childTaskIds">
-          <ng-container *ngIf="childTaskId !== null">
-            <a routerLink="/taskDetails/{{ childTaskId }}">{{
-              childTaskNames[childTaskId]
-            }}</a>
-          </ng-container>
-        </li>
-      </ul>
+    <div
+      class="card mt-3"
+      *ngIf="task && task.feedbacks && task.feedbacks.length > 0"
+    >
+      <div class="card-header">Feedbacks</div>
+      <div class="card-body">
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let feedback of task.feedbacks">
+            <p><strong>Feedback:</strong> {{ feedback?.['message'] }}</p>
+            <p>
+              <strong>Date:</strong
+              >{{ feedback?.['feedbackDate'] | date:'medium' }}
+            </p>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

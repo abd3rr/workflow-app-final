@@ -1,27 +1,27 @@
-/* General styles */
+/* 
 body {
   background-color: white;
   color: black;
   font-family: Arial, sans-serif;
 }
 
-/* Headings */
+
 h1,
 h2,
 h3 {
   color: black;
   margin-bottom: 0.5em;
-  font-size: 1.2em; /* Set the same font size for all headers */
+  font-size: 1.2em; 
 }
 
-/* Paragraphs */
+
 p {
   color: black;
   margin-top: 0;
   margin-bottom: 1em;
 }
 
-/* Lists */
+
 ul {
   list-style-type: none;
   padding: 0;
@@ -31,7 +31,7 @@ li {
   margin-bottom: 0.5em;
 }
 
-/* Buttons */
+
 button {
   background-color: black;
   color: white;
@@ -47,18 +47,17 @@ button:hover {
   background-color: #333;
 }
 
-/* Back button */
+
 .back-button {
   margin-bottom: 2em;
 }
 
-/* Strong elements */
+
 strong {
   color: #333;
   font-weight: bold;
-}
+} */
 
-/* Method execution status */
 .success {
   color: green;
 }
@@ -67,11 +66,11 @@ strong {
   color: red;
 }
 
-/* Method list */
+/* 
 ul.methods {
   padding-left: 1em;
 }
 
 li.method {
   margin-bottom: 1em;
-}
+} */

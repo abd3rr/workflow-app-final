@@ -1,152 +1,140 @@
-<h1>Formulaire d'ajout de phases de projet</h1>
-<div class="project-details">
-  <h2>Détails du projet</h2>
-  <table>
-    <tr>
-      <td><strong>Nom du projet :</strong></td>
-      <td>{{ projectVals.projectName }}</td>
-    </tr>
-    <tr>
-      <td><strong>Description:</strong></td>
-      <td>{{ projectVals.description }}</td>
-    </tr>
-  </table>
-</div>
-<!-- to do  -->
-<div class="form-data-grid-container">
-  <h2>Veuillez ajouter une phase au projet</h2>
-  <!-- Form to add Phases -->
-  <form [formGroup]="phaseForm" (ngSubmit)="onSubmit()">
-    <div class="form">
-      <div>
-        <label for="phase-name">Nom de la phase:</label>
-        <input
-          id="phase-name"
-          type="text"
-          formControlName="phaseName"
-          required
-        />
-      </div>
-      <div
-        *ngIf="
-          phaseForm.controls['phaseName'].invalid &&
-          (phaseForm.controls['phaseName'].touched ||
-            phaseForm.controls['phaseName'].dirty)
-        "
-        class="error-display"
-      >
-        <div *ngIf="phaseForm.controls['phaseName'].errors?.['required']">
-          Veuillez remplir ce champ; ne pas laisser ce champ vide.
-        </div>
-        <div
-          *ngIf="phaseForm.controls['phaseName'].errors?.['invalidNameOfPhase']"
-        >
-          Le nom saisi est invalide. Veuillez saisir un nom valide.
-        </div>
-      </div>
-      <div>
-        <label for="description">Description:</label>
-        <input
-          id="description"
-          type="text"
-          formControlName="description"
-          required
-        />
-      </div>
-      <div>
-        <button name="add-phase" type="button" (click)="savePhase()">
-          Ajouter une Phase
-        </button>
-      </div>
-    </div>
-
-    <!-- List of project phase -->
-    <h2>Phases du Projet</h2>
-
-    <table>
-      <tr>
-        <th>Numéro de phase</th>
-        <th>Nom de la phase</th>
-        <th>Description</th>
-      </tr>
-      <ng-container *ngFor="let phase of phaseList; let i = index">
+<div class="container d-flex align-items-start min-vh-100">
+  <div class="card shadow mx-auto p-3 w-75">
+    <h1 class="text-center">Formulaire d'ajout de phases de projet</h1>
+    <div class="project-details my-3 pt-2">
+      <h2 class="bg-light text-black p-2">Détails du projet</h2>
+      <table class="table table-sm">
+        <!-- Your table contents -->
         <tr>
-          <td>{{ i + 1 }}</td>
-          <td>{{ phase.phaseName }}</td>
-          <td>{{ phase.description }}</td>
-          <td>
-            <!-- button for : expand div for update phase -->
-            <button
-              name="expand-update"
-              type="button"
-              (click)="expandUpdate(phase)"
-            >
-              <mat-icon>update</mat-icon>
-              <p>Mettre à jour</p>
-            </button>
-          </td>
-
-          <td>
-            <!-- button for : delete phase -->
-            <button name="delete-phase" type="button" (click)="deletePhase(i)">
-              <mat-icon>delete_forever</mat-icon>
-              <p>Supprimer la phase</p>
-            </button>
-          </td>
+          <td><strong>Nom du projet :</strong></td>
+          <td>{{ projectVals.projectName }}</td>
         </tr>
-        <!-- expanded div for fields to update phase -->
-        <div *ngIf="phase.isExpanded">
-          <h3>
-            Veuillez remplir les informations pour mettre à jour le numéro de
-            phase {{ i + 1 }} :
-          </h3>
-          <label for="new-phase-name">Nom de la phase:</label>
-          <input
-            id="new-phase-name"
-            type="text"
-            formControlName="newPhaseName"
-            required
-          />
-          <div
-            *ngIf="
-              phaseForm.controls['newPhaseName'].invalid &&
-              (phaseForm.controls['newPhaseName'].touched ||
-                phaseForm.controls['newPhaseName'].dirty)
-            "
-            class="error-display"
-          >
-            <div
-              *ngIf="phaseForm.controls['newPhaseName'].errors?.['required']"
-            >
-              Veuillez remplir ce champ; ne pas laisser ce champ vide.
-            </div>
-            <div
-              *ngIf="phaseForm.controls['newPhaseName'].errors?.['invalidNameOfPhase']"
-            >
-              Le nom saisi est invalide. Veuillez saisir un nom valide.
-            </div>
-          </div>
-          <div>
-            <label for="new-description">Description:</label>
+        <tr>
+          <td><strong>Description:</strong></td>
+          <td>{{ projectVals.description }}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="form-data-grid-container pt-2">
+      <form [formGroup]="phaseForm" (ngSubmit)="onSubmit()" class="mb-4">
+        <div class="bg-light text-black p-2">
+          <h2>Veuillez ajouter une phase au projet</h2>
+          <!-- Your form contents -->
+          <div class="form-group">
+            <label for="phase-name">Nom de la phase:</label>
             <input
-              id="new-description"
+              id="phase-name"
               type="text"
-              formControlName="newDescription"
+              formControlName="phaseName"
+              class="form-control"
               required
             />
           </div>
-          <div>
-            <button name="update-phase" (click)="updatePhase(phase)">
-              <mat-icon>get_app</mat-icon>
-              <p>Valider les modifications</p>
+          <div class="form-group">
+            <label for="description">Description:</label>
+            <input
+              id="description"
+              type="text"
+              formControlName="description"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="py-3">
+            <button type="button" class="btn btn-primary" (click)="savePhase()">
+              Ajouter une Phase
             </button>
           </div>
         </div>
-      </ng-container>
-    </table>
 
-    <div>
-      <button type="submit" name="submit">Submit</button>
+        <div class="pt-5 bg-light">
+          <h2 class="text-black p-2">Phases du Projet</h2>
+          <table class="table table-hover">
+            <thead class="thead-dark">
+              <tr>
+                <th>Numéro de phase</th>
+                <th>Nom de la phase</th>
+                <th>Description</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let phase of phaseList; let i = index">
+                <tr>
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ phase.phaseName }}</td>
+                  <td>{{ phase.description }}</td>
+                  <td>
+                    <button
+                      class="btn btn-primary"
+                      type="button"
+                      (click)="expandUpdate(phase)"
+                    >
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      class="btn btn-danger"
+                      type="button"
+                      (click)="deletePhase(i)"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="phase.isExpanded">
+                  <td
+                    colspan="5"
+                    class="bg-light p-3 my-4 border rounded shadow pt-5"
+                  >
+                    <h2 class="text-primary">
+                      Veuillez remplir les informations pour mettre à jour le
+                      numéro de phase {{ i + 1 }} :
+                    </h2>
+                    <div class="form-group">
+                      <label for="new-phase-name">Nom de la phase:</label>
+                      <input
+                        id="new-phase-name"
+                        type="text"
+                        formControlName="newPhaseName"
+                        class="form-control"
+                        required
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="new-description">Description:</label>
+                      <input
+                        id="new-description"
+                        type="text"
+                        formControlName="newDescription"
+                        class="form-control"
+                        required
+                      />
+                    </div>
+                    <div class="py-3">
+                      <button
+                        class="btn btn-dark btn-block"
+                        type="button"
+                        (click)="expandUpdate(phase)"
+                      >
+                        <mat-icon>update</mat-icon>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-primary" name="submit">
+            Submit
+          </button>
+        </div>
+      </form>
     </div>
-  </form>
+  </div>
 </div>

@@ -1,36 +1,40 @@
-<h1 style="text-align: center">Ajouter un Projet</h1>
-<form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="project-name"> Nom du Projet:</label>
-    <input
-      id="project-name"
-      type="text"
-      formControlName="projectName"
-      required
-    />
-  </div>
-  <div
-    *ngIf="
-      projectForm.controls['projectName'].invalid &&
-      (projectForm.controls['projectName'].touched ||
-        projectForm.controls['projectName'].dirty)
-    "
-    class="error-display"
-  >
-    <div *ngIf="projectForm.controls['projectName'].errors?.['required']">
-      Veuillez remplir ce champ; ne pas laisser ce champ vide.
+<div class="d-flex justify-content-center align-items-center vh-100">
+  <div class="card shadow-lg w-50">
+    <div class="card-header text-center">
+      <h1>Ajouter un Projet</h1>
     </div>
-    <div
-      *ngIf="projectForm.controls['projectName'].errors?.['invalidNameOfProject']"
-    >
-      Le nom saisi est invalide. Veuillez saisir un nom valide.
+    <div class="card-body">
+      <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="project-name">Nom du Projet:</label>
+          <input
+            id="project-name"
+            type="text"
+            formControlName="projectName"
+            class="form-control"
+            required
+          />
+          <!-- Error messages -->
+        </div>
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <input
+            id="description"
+            type="text"
+            formControlName="description"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!projectForm.valid"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
     </div>
   </div>
-  <div>
-    <label for="description"> Description:</label>
-    <input id="description" type="text" formControlName="description" />
-  </div>
-  <div>
-    <button type="submit" [disabled]="!projectForm.valid">Submit</button>
-  </div>
-</form>
+</div>

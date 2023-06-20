@@ -1,44 +1,30 @@
 <div class="container py-5">
-  <div class="d-flex justify-content-between align-items-center">
-    <h2>Add Job</h2>
-    <button
-      mat-icon-button
-      [routerLink]="['/manageJobGrid']"
-      class="btn btn-light"
-    >
-      <i class="material-icons">arrow_back</i>
-    </button>
-  </div>
-  <div class="container py-5">
-    <div class="container">
-      <form
-        [formGroup]="jobForm"
-        (ngSubmit)="onSubmit()"
-        novalidate
-        class="job-form"
-      >
-        <div class="form-group">
-          <label for="title">Job Title</label>
-          <input
-            type="text"
-            class="form-control"
-            id="title"
-            formControlName="title"
-            required
-          />
-        </div>
+  <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 class="card-title">Ajouter un profil</h2>
+        <a href="/manageJobGrid" class="btn btn-light">
+          <i class="material-icons">arrow_back</i>
+        </a>
+      </div>
+      <div class="container py-5">
+        <div class="container">
+          <form class="job-form needs-validation" novalidate>
+            <div class="form-group">
+              <label for="title">Titre de l'emploi</label>
+              <input type="text" class="form-control" id="title" required />
+              <div class="invalid-feedback">Please provide a job title.</div>
+            </div>
 
-        <button
-          type="submit"
-          class="btn btn-primary"
-          [disabled]="!jobForm.valid"
-        >
-          Create Job
-        </button>
-      </form>
-      <button class="btn btn-secondary" [routerLink]="'/listJobs'">
-        See List of Jobs
-      </button>
+            <button type="submit" class="btn btn-primary btn-block">
+              Créer un profil
+            </button>
+          </form>
+          <a href="/listJobs" class="btn btn-secondary btn-block mt-3">
+            Consulter la liste des profils
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </div>

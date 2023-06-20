@@ -1,48 +1,57 @@
 <div class="container py-5">
   <div class="d-flex justify-content-between align-items-center">
     <h2>Task Details</h2>
-    <button
-      mat-icon-button
-      [routerLink]="['/taskListUser']"
-      class="btn btn-light"
-    >
+    <a href="/taskListUser" class="btn btn-light">
       <i class="material-icons">arrow_back</i>
-    </button>
+    </a>
   </div>
 
-  <div *ngIf="task">
-    <p>
-      <strong>Step Name:</strong> {{ step?.stepName }} {{ step?.description }}
-    </p>
-    <p><strong>Step Description</strong> {{ step?.description }}</p>
-    <p><strong> Task ID:</strong> {{ task.id }}</p>
-    <p><strong>Name:</strong> {{ task.taskName }}</p>
-    <p><strong>Description:</strong> {{ task.description }}</p>
-    <p><strong>Instructions:</strong> {{ task.instructions }}</p>
-    <p><strong>Status:</strong> {{ task.status }}</p>
-    <h3>Method Details</h3>
-    <div *ngIf="methods.length">
-      <ul>
-        <li *ngFor="let methodExecution of methodExecutions">
-          <ng-container
-            *ngIf="getMethodById(methodExecution.methodId) as method"
-          >
-            <p><strong>Method Name:</strong> {{ method.methodName }}</p>
-          </ng-container>
-          <p
-            [class.success]="methodExecution.status === 'SUCCESS'"
-            [class.failure]="methodExecution.status === 'FAILURE'"
-          >
-            <strong>Execution Status (ID {{ methodExecution.id }}):</strong>
-            {{ methodExecution.status }}
-          </p>
-        </li>
-      </ul>
+  <div *ngIf="task" class="card my-3">
+    <div class="card-body">
+      <h5 class="card-title">{{ step?.stepName }} {{ step?.description }}</h5>
+      <p class="card-text">
+        <strong>Step Description: </strong>{{ step?.description }}
+        <br />
+        <strong>Task ID: </strong>{{ task.id }}
+        <br />
+        <strong>Name: </strong>{{ task.taskName }}
+        <br />
+        <strong>Description: </strong>{{ task.description }}
+        <br />
+        <strong>Instructions: </strong>{{ task.instructions }}
+        <br />
+        <strong>Status: </strong>{{ task.status }}
+      </p>
     </div>
-    <div class="verification-actions">
-      <h2>Verify the task</h2>
-      <button (click)="markAsFailed()">Mark as Failed</button>
-      <button (click)="markAsPassed()">Mark as Passed</button>
+  </div>
+
+  <h3>Method Details</h3>
+  <div *ngIf="methods.length">
+    <div *ngFor="let methodExecution of methodExecutions" class="card my-3">
+      <div class="card-body">
+        <ng-container *ngIf="getMethodById(methodExecution.methodId) as method">
+          <p><strong>Method Name: </strong>{{ method.methodName }}</p>
+        </ng-container>
+        <p
+          [ngClass]="{
+            'text-success': methodExecution.status === 'SUCCESS',
+            'text-danger': methodExecution.status === 'FAILURE'
+          }"
+        >
+          <strong>Execution Status (ID {{ methodExecution.id }}): </strong
+          >{{ methodExecution.status }}
+        </p>
+      </div>
     </div>
+  </div>
+
+  <div class="verification-actions text-center my-5">
+    <h2>Verify the task</h2>
+    <button (click)="markAsFailed()" class="btn btn-danger m-2">
+      Mark as Failed
+    </button>
+    <button (click)="markAsPassed()" class="btn btn-success m-2">
+      Mark as Passed
+    </button>
   </div>
 </div>

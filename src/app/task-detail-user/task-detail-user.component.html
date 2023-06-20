@@ -9,82 +9,111 @@
       <i class="material-icons">arrow_back</i>
     </button>
   </div>
-  <div *ngIf="task">
-    <h1>Step informations:</h1>
-    <div *ngIf="step">
-      <h3>Step Name: {{ step.stepName }}</h3>
-      <p>Description: {{ step.description }}</p>
-    </div>
-    <h1>Task informations:</h1>
-    <h2>Task Name: {{ task.taskName }}</h2>
-    <p>Description: {{ task.description }}</p>
-    <p><strong>Instructions:</strong> {{ task.instructions }}</p>
-    <div *ngIf="unexecutedMethods.length > 0">
-      <h3>Methods</h3>
-      <ul>
-        <li *ngFor="let item of unexecutedMethods">
-          <ng-container *ngIf="item.method">
-            Method Name: {{ item.method.methodName }}
-          </ng-container>
-        </li>
-      </ul>
-    </div>
 
-    <div *ngIf="files.length > 0">
-      <h3>Files</h3>
-      <ul>
-        <li *ngFor="let file of files">
-          File Name: {{ file.fileName }} ({{ (file.size / 1048576).toFixed(2) }}
-          MB)
-          <button *ngIf="file.id" (click)="downloadFile(file.id)">
-            Download
-          </button>
-        </li>
-      </ul>
-    </div>
-
-    <div *ngIf="task && task.feedbacks && task.feedbacks.length > 0">
-      <h3>Feedbacks</h3>
-      <ul>
-        <li *ngFor="let feedback of task.feedbacks">
-          <p><strong>Feedback Message:</strong> {{ feedback?.['message'] }}</p>
-          <p>
-            <strong>Date:</strong>
-            {{ feedback?.['feedbackDate'] | date:'medium' }} ,
-            <strong>User:</strong>
-            {{ feedback && feedback.userId && users[feedback.userId].fullName }}
-            <strong>Job:</strong>
-            {{ feedback && feedback.userId && jobs[feedback.userId].title }}
-          </p>
-        </li>
-      </ul>
-    </div>
-
-    <div *ngIf="unexecutedMethods.length > 0">
-      <h3>Methods</h3>
-      <form (ngSubmit)="submitForm()">
-        <ng-container *ngFor="let item of unexecutedMethods">
-          <h4>{{ item.method?.methodName }}</h4>
-          <div *ngFor="let parameter of item.method?.parameters">
-            <label
-              for="{{ item.methodExecution.id }}_{{ parameter.parameterName }}"
-              >{{ parameter.parameterName }} ({{
-                parameter.parameterType
-              }})</label
-            >
-            <input
-              id="{{ item.methodExecution.id }}_{{ parameter.parameterName }}"
-              [type]="getParameterInputType(parameter.parameterType)"
-              [(ngModel)]="item.inputs[parameter.parameterName]"
-              name="{{ item.methodExecution.id }}_{{ parameter.parameterName }}"
-            />
+  <div class="container" *ngIf="task">
+    <div class="row mt-4">
+      <!-- Task Information -->
+      <div class="col-md-6">
+        <h1>Task Information</h1>
+        <!-- ... unchanged code ... -->
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title">{{ task.taskName }}</h2>
+            <p class="card-text">Description: {{ task.description }}</p>
+            <p class="card-text">
+              <strong>Instructions:</strong> {{ task.instructions }}
+            </p>
           </div>
-        </ng-container>
-        <button type="submit">Submit All</button>
-      </form>
+        </div>
+        <div
+          *ngIf="task && task.feedbacks && task.feedbacks.length > 0"
+          class="mt-3"
+        >
+          <h3>Feedbacks</h3>
+          <div *ngFor="let feedback of task.feedbacks" class="card mt-2">
+            <div class="card-body">
+              <p>
+                <strong>Feedback Message:</strong> {{ feedback?.['message'] }}
+              </p>
+              <p>
+                <strong>Date:</strong>
+                {{ feedback?.['feedbackDate'] | date:'medium' }} ,
+                <strong>User:</strong>
+                {{
+                  feedback && feedback.userId && users[feedback.userId].fullName
+                }}
+                <strong>Job:</strong>
+                {{ feedback && feedback.userId && jobs[feedback.userId].title }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step Information -->
+      <div class="col-md-6">
+        <h1>Step Information</h1>
+        <!-- ... unchanged code ... -->
+        <div *ngIf="step" class="card">
+          <div class="card-body">
+            <h3 class="card-title">{{ step.stepName }}</h3>
+            <p class="card-text">Description: {{ step.description }}</p>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div *ngIf="isLoading" class="spinner-overlay">
-    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+
+    <!-- Methods -->
+    <div class="row mt-4" *ngIf="unexecutedMethods.length > 0">
+      <div class="col-md-12">
+        <h3>Methods</h3>
+        <form (ngSubmit)="submitForm()">
+          <div
+            *ngFor="let item of unexecutedMethods; let i = index"
+            class="card mt-2"
+          >
+            <!-- ... unchanged code ... -->
+            <div class="card-header">
+              <h4>{{ item.method?.methodName }}</h4>
+            </div>
+            <div class="card-body">
+              <div *ngFor="let parameter of item.method?.parameters">
+                <div class="row mb-3">
+                  <label
+                    class="col-sm-2 col-form-label"
+                    for="{{ item.methodExecution.id }}_{{
+                      parameter.parameterName
+                    }}"
+                  >
+                    {{ parameter.parameterName }} ({{
+                      parameter.parameterType
+                    }})
+                  </label>
+                  <div class="col-sm-10">
+                    <input
+                      id="{{ item.methodExecution.id }}_{{
+                        parameter.parameterName
+                      }}"
+                      [type]="getParameterInputType(parameter.parameterType)"
+                      [(ngModel)]="item.inputs[parameter.parameterName]"
+                      name="{{ item.methodExecution.id }}_{{
+                        parameter.parameterName
+                      }}"
+                      class="form-control"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary mt-3">Submit All</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="isLoading" class="spinner-overlay">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
   </div>
 </div>

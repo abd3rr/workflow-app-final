@@ -1,19 +1,202 @@
-<h1>Veuillez sélectionner une option ci-dessous pour commencer.</h1>
-<mat-grid-list cols="2" rowHeight="4:1">
-  <mat-grid-tile [routerLink]="'/addProject'">
-    <mat-icon>add_box</mat-icon>
-    Ajouter un workflow Projet
-  </mat-grid-tile>
-  <mat-grid-tile [routerLink]="'/addTask'">
-    <mat-icon>task_alt</mat-icon>
-    Add Task
-  </mat-grid-tile>
-  <mat-grid-tile [routerLink]="'/manageJobGrid'">
-    <mat-icon>work_outline</mat-icon>
-    Manage Jobs
-  </mat-grid-tile>
-  <mat-grid-tile [routerLink]="'/manageUserGrid'">
-    <mat-icon>people_alt</mat-icon>
-    Manage Users
-  </mat-grid-tile>
-</mat-grid-list>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12">
+      <div
+        class="section-title text-center mb-4 pb-2"
+        style="padding-top: 20px"
+      >
+        <h1 class="title mb-4">Les Actions</h1>
+      </div>
+    </div>
+    <!--end col-->
+  </div>
+  <!--end row-->
+
+  <div class="row">
+    <div
+      class="col-lg-6 col-md-6 col-12 mt-4 pt-2"
+      [routerLink]="'/addProject'"
+    >
+      <div class="card service-wrapper rounded border-0 shadow p-4">
+        <div class="icon text-center text-custom h1 shadow rounded bg-white">
+          <span class="uim-svg">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+          </span>
+        </div>
+        <div class="content mt-4">
+          <h2 class="title">Ajouter un projet</h2>
+          <p class="text-muted mt-3 mb-0">
+            Cette action permet à l'utilisateur de créer et d'ajouter un nouveau
+            projet.
+          </p>
+        </div>
+        <div class="big-icon h1 text-custom">
+          <span class="uim-svg">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
+    <!--end col-->
+
+    <div class="col-lg-6 col-md-6 col-12 mt-4 pt-2" [routerLink]="'/addTask'">
+      <div class="card service-wrapper rounded border-0 shadow p-4">
+        <div class="icon text-center text-custom h1 shadow rounded bg-white">
+          <span class="uim-svg">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+          </span>
+        </div>
+        <div class="content mt-4">
+          <h2 class="title">Ajouter une tâche</h2>
+          <p class="text-muted mt-3 mb-0">
+            Cette action permet à l'utilisateur de créer et d'ajouter une
+            nouvelle tâche à un projet.
+          </p>
+        </div>
+        <div class="big-icon h1 text-custom">
+          <span class="uim-svg">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
+    <!--end col-->
+
+    <div
+      class="col-lg-6 col-md-6 col-12 mt-4 pt-2"
+      [routerLink]="'/manageJobGrid'"
+    >
+      <div class="card service-wrapper rounded border-0 shadow p-4">
+        <div class="icon text-center text-custom h1 shadow rounded bg-white">
+          <span class="uim-svg">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M20.944 13.13c.038-.32.056-.647.056-.98s-.018-.66-.056-.98l2.3-1.78c.19-.147.24-.4.12-.61l-2.18-3.77c-.11-.21-.37-.28-.58-.17l-2.71 1.1c-.52-.4-1.08-.75-1.67-1.03l-.4-2.89c-.02-.24-.22-.42-.47-.42h-4.6c-.25 0-.45.18-.47.42l-.4 2.89c-.59.28-1.15.63-1.67 1.03l-2.71-1.1c-.21-.11-.47-.04-.58.17l-2.18 3.77c-.12.21-.07.46.12.61l2.3 1.78c-.038.32-.056.647-.056.98s.018.66.056.98l-2.3 1.78c-.19.15-.24.4-.12.61l2.18 3.77c.11.21.37.28.58.17l2.71-1.1c.52.4 1.08.75 1.67 1.03l.4 2.89c.02.24.22.42.47.42h4.6c.25 0 .45-.18.47-.42l.4-2.89c.59-.28 1.15-.63 1.67-1.03l2.71 1.1c.21.11.47.04.58-.17l2.18-3.77c.12-.21.07-.46-.12-.61l-2.3-1.78zm-8.944 2.87c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"
+              ></path>
+            </svg>
+          </span>
+        </div>
+        <div class="content mt-4">
+          <h2 class="title">Gérer les profils</h2>
+          <p class="text-muted mt-3 mb-0">
+            Cette action permet à l'utilisateur d'ajouter et de lister les
+            profils.
+          </p>
+        </div>
+        <div class="big-icon h1 text-custom">
+          <span class="uim-svg">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M20.944 13.13c.038-.32.056-.647.056-.98s-.018-.66-.056-.98l2.3-1.78c.19-.147.24-.4.12-.61l-2.18-3.77c-.11-.21-.37-.28-.58-.17l-2.71 1.1c-.52-.4-1.08-.75-1.67-1.03l-.4-2.89c-.02-.24-.22-.42-.47-.42h-4.6c-.25 0-.45.18-.47.42l-.4 2.89c-.59.28-1.15.63-1.67 1.03l-2.71-1.1c-.21-.11-.47-.04-.58.17l-2.18 3.77c-.12.21-.07.46.12.61l2.3 1.78c-.038.32-.056.647-.056.98s.018.66.056.98l-2.3 1.78c-.19.15-.24.4-.12.61l2.18 3.77c.11.21.37.28.58.17l2.71-1.1c.52.4 1.08.75 1.67 1.03l.4 2.89c.02.24.22.42.47.42h4.6c.25 0 .45-.18.47-.42l.4-2.89c.59-.28 1.15-.63 1.67-1.03l2.71 1.1c.21.11.47.04.58-.17l2.18-3.77c.12-.21.07-.46-.12-.61l-2.3-1.78zm-8.944 2.87c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"
+              ></path>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
+    <!--end col-->
+
+    <div
+      class="col-lg-6 col-md-6 col-12 mt-4 pt-2"
+      [routerLink]="'/manageUserGrid'"
+    >
+      <div class="card service-wrapper rounded border-0 shadow p-4">
+        <div class="icon text-center text-custom h1 shadow rounded bg-white">
+          <span class="uim-svg">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M20.944 13.13c.038-.32.056-.647.056-.98s-.018-.66-.056-.98l2.3-1.78c.19-.147.24-.4.12-.61l-2.18-3.77c-.11-.21-.37-.28-.58-.17l-2.71 1.1c-.52-.4-1.08-.75-1.67-1.03l-.4-2.89c-.02-.24-.22-.42-.47-.42h-4.6c-.25 0-.45.18-.47.42l-.4 2.89c-.59.28-1.15.63-1.67 1.03l-2.71-1.1c-.21-.11-.47-.04-.58.17l-2.18 3.77c-.12.21-.07.46.12.61l2.3 1.78c-.038.32-.056.647-.056.98s.018.66.056.98l-2.3 1.78c-.19.15-.24.4-.12.61l2.18 3.77c.11.21.37.28.58.17l2.71-1.1c.52.4 1.08.75 1.67 1.03l.4 2.89c.02.24.22.42.47.42h4.6c.25 0 .45-.18.47-.42l.4-2.89c.59-.28 1.15-.63 1.67-1.03l2.71 1.1c.21.11.47.04.58-.17l2.18-3.77c.12-.21.07-.46-.12-.61l-2.3-1.78zm-8.944 2.87c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"
+              ></path>
+            </svg>
+          </span>
+        </div>
+        <div class="content mt-4">
+          <h2 class="title">Gérer les utilisateurs</h2>
+          <p class="text-muted mt-3 mb-0">
+            Cette action permet à l'utilisateur d'ajouter et de lister les
+            utilisateurs.
+          </p>
+        </div>
+        <div class="big-icon h1 text-custom">
+          <span class="uim-svg">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M20.944 13.13c.038-.32.056-.647.056-.98s-.018-.66-.056-.98l2.3-1.78c.19-.147.24-.4.12-.61l-2.18-3.77c-.11-.21-.37-.28-.58-.17l-2.71 1.1c-.52-.4-1.08-.75-1.67-1.03l-.4-2.89c-.02-.24-.22-.42-.47-.42h-4.6c-.25 0-.45.18-.47.42l-.4 2.89c-.59.28-1.15.63-1.67 1.03l-2.71-1.1c-.21-.11-.47-.04-.58.17l-2.18 3.77c-.12.21-.07.46.12.61l2.3 1.78c-.038.32-.056.647-.056.98s.018.66.056.98l-2.3 1.78c-.19.15-.24.4-.12.61l2.18 3.77c.11.21.37.28.58.17l2.71-1.1c.52.4 1.08.75 1.67 1.03l.4 2.89c.02.24.22.42.47.42h4.6c.25 0 .45-.18.47-.42l.4-2.89c.59-.28 1.15-.63 1.67-1.03l2.71 1.1c.21.11.47.04.58-.17l2.18-3.77c.12-.21.07-.46-.12-.61l-2.3-1.78zm-8.944 2.87c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"
+              ></path>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
+    <!--end col-->
+  </div>
+  <!--end row-->
+</div>

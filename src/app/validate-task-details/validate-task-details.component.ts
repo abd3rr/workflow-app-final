@@ -108,45 +108,32 @@ export class ValidateTaskDetailsComponent {
 
     dialogRef.afterClosed().subscribe((feedbackMessage) => {
       if (feedbackMessage) {
-        this.apiService
-          .getUserByName(this.authService.currentUser.username)
-          .subscribe(
-            (user) => {
-              const feedback: Feedback = {
-                id: 0,
-                message: feedbackMessage,
-                feedbackDateTime: undefined,
-                userId: user.id,
-              };
+        const feedback: Feedback = {
+          id: 0,
+          message: feedbackMessage,
+          feedbackDateTime: undefined,
+          userId: this.authService.currentUserId,
+        };
 
-              this.apiService.addFeedback(this.taskId, feedback).subscribe(
-                (response) => {
-                  console.log('Feedback added successfully');
-                  this.apiService.invalidateTask(this.taskId).subscribe(
-                    () => {
-                      this.router.navigate(['/taskListUser']);
-                      this.snackBar.open(
-                        'Task invalidated successfully',
-                        'Close',
-                        {
-                          duration: 5000,
-                        }
-                      );
-                    },
-                    (error) => {
-                      console.error('Error invalidating the task', error);
-                    }
-                  );
-                },
-                (error) => {
-                  console.error('Error adding feedback', error);
-                }
-              );
-            },
-            (error) => {
-              console.error('Error getting user by name', error);
-            }
-          );
+        this.apiService.addFeedback(this.taskId, feedback).subscribe(
+          (response) => {
+            console.log('Feedback added successfully');
+            this.apiService.invalidateTask(this.taskId).subscribe(
+              () => {
+                this.router.navigate(['/taskListUser']);
+                this.snackBar.open('Task invalidated successfully', 'Close', {
+                  duration: 5000,
+                });
+              },
+              (error) => {
+                console.error('Error invalidating the task', error);
+              }
+            );
+          },
+          (error) => {
+            console.error('Error adding feedback', error);
+          }
+        );
       }
     });
   }
