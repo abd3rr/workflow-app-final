@@ -1,6 +1,6 @@
 <div class="container py-5">
   <div class="d-flex justify-content-between align-items-center">
-    <h2>Task Details</h2>
+    <h2>Détails de la tâche</h2>
     <a href="/taskListUser" class="btn btn-light">
       <i class="material-icons">arrow_back</i>
     </a>
@@ -10,27 +10,27 @@
     <div class="card-body">
       <h5 class="card-title">{{ step?.stepName }} {{ step?.description }}</h5>
       <p class="card-text">
-        <strong>Step Description: </strong>{{ step?.description }}
+        <strong>Description de l'étape : </strong>{{ step?.description }}
         <br />
         <strong>Task ID: </strong>{{ task.id }}
         <br />
-        <strong>Name: </strong>{{ task.taskName }}
+        <strong>Nom: </strong>{{ task.taskName }}
         <br />
         <strong>Description: </strong>{{ task.description }}
         <br />
         <strong>Instructions: </strong>{{ task.instructions }}
         <br />
-        <strong>Status: </strong>{{ task.status }}
+        <strong>Statut: </strong>{{ task.status }}
       </p>
     </div>
   </div>
 
-  <h3>Method Details</h3>
+  <h3>Détails de la méthode</h3>
   <div *ngIf="methods.length">
     <div *ngFor="let methodExecution of methodExecutions" class="card my-3">
       <div class="card-body">
         <ng-container *ngIf="getMethodById(methodExecution.methodId) as method">
-          <p><strong>Method Name: </strong>{{ method.methodName }}</p>
+          <p><strong> Nom de la méthode : </strong>{{ method.methodName }}</p>
         </ng-container>
         <p
           [ngClass]="{
@@ -38,7 +38,7 @@
             'text-danger': methodExecution.status === 'FAILURE'
           }"
         >
-          <strong>Execution Status (ID {{ methodExecution.id }}): </strong
+          <strong>Statut d'exécution (ID {{ methodExecution.id }}): </strong
           >{{ methodExecution.status }}
         </p>
       </div>
@@ -46,12 +46,12 @@
   </div>
 
   <div class="verification-actions text-center my-5">
-    <h2>Verify the task</h2>
+    <h2>Vérifier la tâche</h2>
     <button (click)="markAsFailed()" class="btn btn-danger m-2">
-      Mark as Failed
+      Marquer comme échoué
     </button>
     <button (click)="markAsPassed()" class="btn btn-success m-2">
-      Mark as Passed
+      Marquer comme réussi
     </button>
   </div>
 </div>

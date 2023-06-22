@@ -164,13 +164,13 @@ export class TaskStatisticsComponent {
 
   updateBarChartData(): void {
     this.barChartDataForAllProjects = [
-      { name: 'Pending', value: this.allPendingTasks },
-      { name: 'Starting', value: this.allStartingTasks },
+      { name: 'En attente', value: this.allPendingTasks },
+      { name: 'En cours de démarrage', value: this.allStartingTasks },
       {
-        name: 'Waiting for Validation',
+        name: 'En attente de validation',
         value: this.allWaitingForValidationTasks,
       },
-      { name: 'Finished', value: this.allFinishedTasks },
+      { name: 'Terminé', value: this.allFinishedTasks },
     ];
   }
 }

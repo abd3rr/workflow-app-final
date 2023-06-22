@@ -1,6 +1,6 @@
 <div class="container py-5">
   <div class="d-flex justify-content-between align-items-center">
-    <h2>Task Details</h2>
+    <h2>Détails de la tâche</h2>
     <button
       mat-icon-button
       [routerLink]="['/taskListUser']"
@@ -14,7 +14,7 @@
     <div class="row mt-4">
       <!-- Task Information -->
       <div class="col-md-6">
-        <h1>Task Information</h1>
+        <h1>Informations sur la tâche</h1>
         <!-- ... unchanged code ... -->
         <div class="card">
           <div class="card-body">
@@ -52,7 +52,7 @@
 
       <!-- Step Information -->
       <div class="col-md-6">
-        <h1>Step Information</h1>
+        <h1>Informations sur l'étape</h1>
         <!-- ... unchanged code ... -->
         <div *ngIf="step" class="card">
           <div class="card-body">
@@ -66,7 +66,7 @@
     <!-- Methods -->
     <div class="row mt-4" *ngIf="unexecutedMethods.length > 0">
       <div class="col-md-12">
-        <h3>Methods</h3>
+        <h3>Méthodes</h3>
         <form (ngSubmit)="submitForm()">
           <div
             *ngFor="let item of unexecutedMethods; let i = index"

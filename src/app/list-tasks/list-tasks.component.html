@@ -1,6 +1,7 @@
 <div class="container py-5">
   <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>List Task</h2>
+    <h2>Visualiser et Initier le workflow</h2>
+
     <button
       mat-icon-button
       [routerLink]="['/dashboardGrid']"
@@ -11,8 +12,12 @@
   </div>
 
   <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+    <div class="alert alert-info text-center" role="alert">
+      Veuillez commencer par sélectionner un projet. N'oubliez pas que vous
+      pouvez également appliquer des filtres!
+    </div>
     <div class="form-group">
-      <label for="Project Name">Project Name: </label>
+      <label for="Project Name">Nom du projet: </label>
       <select
         formControlName="project"
         (change)="onProjectSelected()"
@@ -26,7 +31,7 @@
     </div>
 
     <div class="form-group">
-      <label for="Phase Name"> Phase Name: </label>
+      <label for="Phase Name"> Nom de la phase: </label>
       <select
         formControlName="phase"
         (change)="onPhaseSelected()"
@@ -40,7 +45,7 @@
     </div>
 
     <div class="form-group">
-      <label for="Step Name"> Step Name: </label>
+      <label for="Step Name"> Nom de l'étape: </label>
       <select
         formControlName="step"
         (change)="onStepSelected()"
@@ -54,16 +59,21 @@
     </div>
 
     <div class="form-group">
-      <button (click)="resetFilters()" class="btn btn-warning">
-        Remove Phase or Step Filters
+      <button
+        (click)="resetFilters()"
+        class="btn btn-dark"
+        style="margin-right: 10px"
+      >
+        Supprimer les filtres de phase ou d'étape
       </button>
       <button
         type="submit"
         name="submit"
         [disabled]="tasksInitiated"
         class="btn btn-primary"
+        style="margin-left: 10px"
       >
-        Deploy the Workflow
+        Déployer le flux de travail
       </button>
     </div>
   </form>
@@ -80,23 +90,23 @@
   ></div>
 
   <div class="color-legend">
-    <h2>Color Legend:</h2>
+    <h2>Légende des couleurs</h2>
     <ul class="list-unstyled">
       <li>
         <span class="color-box" style="background-color: #ffa500"></span>
-        Pending
+        En attente
       </li>
       <li>
         <span class="color-box" style="background-color: #1e90ff"></span>
-        Starting
+        En cours de démarrage
       </li>
       <li>
         <span class="color-box" style="background-color: #32cd32"></span>
-        Finished
+        Terminé
       </li>
       <li>
         <span class="color-box" style="background-color: #ff69b4"></span>
-        Waiting for validation
+        En attente de validation
       </li>
     </ul>
   </div>

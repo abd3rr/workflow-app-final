@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <h2 class="my-3 center-text">Tasks Management</h2>
+      <h2 class="my-3 center-text">Gestion des tâches</h2>
     </div>
   </div>
 
@@ -13,7 +13,9 @@
           <!-- Your form code goes here -->
           <form [formGroup]="taskForm" class="form-group">
             <div class="form-group">
-              <label for="Project Name" class="form-label">Project Name:</label>
+              <label for="Project Name" class="form-label"
+                >Nom du projet :</label
+              >
               <select
                 class="form-control"
                 formControlName="project"
@@ -26,7 +28,9 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="Phase Name" class="form-label">Phase Name:</label>
+              <label for="Phase Name" class="form-label"
+                >Nom de la phase :</label
+              >
               <select
                 class="form-control"
                 formControlName="phase"
@@ -39,7 +43,7 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="Step Name" class="form-label">Step Name:</label>
+              <label for="Step Name" class="form-label">Nom de l'étape :</label>
               <select
                 class="form-control"
                 formControlName="step"
@@ -60,11 +64,11 @@
                 (change)="onShowAllTasksChange($event)"
               />
               <label class="form-check-label" for="showAllTasksToggle"
-                >Show all tasks</label
+                >Afficher toutes les tâches</label
               >
             </div>
             <button class="btn btn-primary mt-3" (click)="resetFilters()">
-              Reset Filters
+              Réinitialiser les filtres
             </button>
           </form>
         </div>
@@ -78,14 +82,14 @@
         <div class="col-md-12">
           <!-- your first table goes here -->
           <div class="container1">
-            <h2 class="title">Tasks Waiting for Validation</h2>
+            <h2 class="title">Tâches en attente de validation</h2>
 
             <div
               *ngIf="tasksWaitingForValidation.data.length === 0"
               class="alert alert-info center-text"
               role="alert"
             >
-              <strong>No tasks</strong> waiting for validation found.
+              Aucune <strong>tâche</strong> en attente de validation trouvée.
             </div>
 
             <div
@@ -101,7 +105,7 @@
                 <!-- Task Name Column -->
                 <ng-container matColumnDef="taskName">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>
-                    Task Name
+                    Nom de la tâche
                   </mat-header-cell>
                   <mat-cell *matCellDef="let task">
                     {{ task.taskName }}
@@ -121,7 +125,7 @@
                 <!-- Created Date Column -->
                 <ng-container matColumnDef="createdAt">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>
-                    Created Date
+                    Date de création
                   </mat-header-cell>
                   <mat-cell *matCellDef="let task">
                     {{ task.createdAt | date }}
@@ -131,7 +135,7 @@
                 <!-- Started Date Column -->
                 <ng-container matColumnDef="startedAt">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>
-                    Started Date
+                    Date de début
                   </mat-header-cell>
                   <mat-cell *matCellDef="let task">
                     {{ task.startedAt | date }}
@@ -181,11 +185,10 @@
                     *matCellDef="let task"
                     [attr.colspan]="displayedColumnsValidationWithExpand.length"
                   >
-                    <p>test</p>
                     <div class="example-element-detail">
-                      <p>Project :{{ task.projectName }}</p>
+                      <p>Projet :{{ task.projectName }}</p>
                       <p>Phase :{{ task.phaseName }}</p>
-                      <p>Step :{{ task.stepName }}</p>
+                      <p>Étape :{{ task.stepName }}</p>
                     </div>
                   </mat-cell>
                 </ng-container>
@@ -227,14 +230,14 @@
         <div class="col-md-12">
           <!-- your second table goes here -->
           <div class="container2">
-            <h2 class="title">User Task List</h2>
+            <h2 class="title">Liste des tâches de l'utilisateur</h2>
 
             <div
               *ngIf="tasks.data.length === 0"
               class="alert alert-info center-text"
               role="alert"
             >
-              <strong>No tasks</strong> found.
+              <strong>Aucune tâche</strong> trouvée.
             </div>
 
             <div>
@@ -248,7 +251,7 @@
                   <!-- Task Name Column -->
                   <ng-container matColumnDef="taskName">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>
-                      Task Name
+                      Nom de la tâche
                     </mat-header-cell>
                     <mat-cell *matCellDef="let task">
                       {{ task.taskName }}
@@ -268,7 +271,7 @@
                   <!-- Created Date Column -->
                   <ng-container matColumnDef="createdAt">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>
-                      Created Date
+                      Date de création
                     </mat-header-cell>
                     <mat-cell *matCellDef="let task">
                       {{ task.createdAt | date }}
@@ -278,7 +281,7 @@
                   <!-- Started Date Column -->
                   <ng-container matColumnDef="startedAt">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>
-                      Started Date
+                      Date de début
                     </mat-header-cell>
                     <mat-cell *matCellDef="let task">
                       {{ task.startedAt | date }}
@@ -345,9 +348,9 @@
                       [attr.colspan]="displayedColumnsTaskWithExpand.length"
                     >
                       <div class="example-element-detail">
-                        <p>Project :{{ task.projectName }}</p>
+                        <p>Projet :{{ task.projectName }}</p>
                         <p>Phase :{{ task.phaseName }}</p>
-                        <p>Step :{{ task.stepName }}</p>
+                        <p>Étape :{{ task.stepName }}</p>
                       </div>
                     </mat-cell>
                   </ng-container>

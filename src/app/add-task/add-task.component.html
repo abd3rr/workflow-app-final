@@ -1,6 +1,6 @@
 <div class="container py-5">
   <div class="d-flex justify-content-between align-items-center">
-    <h2>Add Task</h2>
+    <h2>Ajouter une tâche</h2>
     <button
       mat-icon-button
       [routerLink]="['/actionGrid']"
@@ -11,7 +11,7 @@
   </div>
   <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
     <div>
-      <label for="Project Name">Project Name: </label>
+      <label for="Project Name">Nom du projet:</label>
       <select formControlName="project" (change)="onProjectSelected()">
         <option *ngFor="let project of projectList" [ngValue]="project">
           {{ project.projectName }}
@@ -20,7 +20,7 @@
     </div>
     <!-- Load Phases on Project Change -->
     <div>
-      <label for="Phase Name"> Phase Name: </label>
+      <label for="Phase Name"> Nom de la phase:</label>
       <select formControlName="phase" (change)="onPhaseSelected()">
         <option [ngValue]="null">---</option>
         <option *ngFor="let phase of phaseList" [ngValue]="phase">
@@ -30,7 +30,7 @@
     </div>
     <!-- Load Steps on Phase Change -->
     <div>
-      <label for="Step Name"> Step Name: </label>
+      <label for="Step Name">Nom de l'étape: </label>
       <select formControlName="step" (change)="onStepSelected()">
         <option [ngValue]="[]">---</option>
         <option *ngFor="let step of stepList" [ngValue]="step">
@@ -40,7 +40,7 @@
     </div>
 
     <div>
-      <label for="task-name">Task Name:</label>
+      <label for="task-name">Nom de la tâche:</label>
       <input id="task-name" type="text" formControlName="taskName" required />
     </div>
 
@@ -65,9 +65,9 @@
     </div>
 
     <div>
-      <label for="task-name">Assigned Jobs:</label>
+      <label for="task-name">Profils assignés:</label>
       <mat-form-field appearance="fill">
-        <mat-label>Assigned Jobs</mat-label>
+        <mat-label>Profils assignés</mat-label>
         <mat-select formControlName="assignedJobs" multiple>
           <mat-option *ngFor="let job of jobList" [value]="job">{{
             job.title
@@ -77,9 +77,9 @@
     </div>
 
     <div>
-      <label for="task-name">Parent Task:</label>
+      <label for="task-name">Tâche précédente:</label>
       <mat-form-field appearance="fill">
-        <mat-label> Parent Task</mat-label>
+        <mat-label> Tâche précédente</mat-label>
         <mat-select formControlName="parentTask" multiple>
           <mat-option Value="null"
             >Aucune tâche précédente (première tâche)
@@ -93,15 +93,15 @@
 
     <div class="toggle-margin">
       <mat-slide-toggle formControlName="requiredVerification"
-        >Verification</mat-slide-toggle
+        >Vérification</mat-slide-toggle
       >
     </div>
 
     <h3>Actions :</h3>
     <div>
-      <label for="existing-files">Existing Files:</label>
+      <label for="existing-files">Fichiers existants:</label>
       <mat-form-field appearance="fill">
-        <mat-label>Existing Files:</mat-label>
+        <mat-label>Fichiers existants:</mat-label>
         <mat-select
           formControlName="existingFiles"
           (selectionChange)="onExistingFileSelected()"
@@ -117,21 +117,23 @@
     <div *ngIf="selectedExisitingFiles && selectedExisitingFiles.length > 0">
       <div class="alert alert-warning" role="alert">
         <p>
-          If the files are not images or PDFs and will be downloaded instead
-          when you attempt to preview them.
+          Si les fichiers ne sont pas des images ou des PDF, ils seront
+          téléchargés lorsque vous tenterez de les prévisualiser.
         </p>
       </div>
       <table class="table table-striped">
         <thead>
           <tr>
-            <th colspan="4" class="text-center">Existing Selected Files</th>
+            <th colspan="4" class="text-center">
+              Fichiers sélectionnés existants
+            </th>
           </tr>
         </thead>
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">File Name</th>
-            <th scope="col">File Size</th>
+            <th scope="col">Nom du fichier</th>
+            <th scope="col">Taille du fichier</th>
             <th scope="col">Actions</th>
           </tr>
         </thead>
@@ -180,7 +182,7 @@
     </div>
 
     <div>
-      <label for="upload-file">Upload File:</label>
+      <label for="upload-file">Télécharger un fichier:</label>
       <input
         class="form-control"
         id="file"

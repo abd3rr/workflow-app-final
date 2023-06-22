@@ -1,6 +1,6 @@
 <div class="container py-5">
   <div class="d-flex justify-content-between align-items-center">
-    <h2>Add User</h2>
+    <h2>Ajouter un utilisateur</h2>
     <button
       mat-icon-button
       [routerLink]="['/manageUserGrid']"
@@ -16,7 +16,7 @@
     class="bg-white px-5 py-4 rounded"
   >
     <div class="form-group">
-      <label for="fullName">Full Name</label>
+      <label for="fullName">Nom complet</label>
       <input
         type="text"
         formControlName="fullName"
@@ -47,7 +47,7 @@
       </select>
     </div>
     <div class="form-group">
-      <label for="passwordHash">Password</label>
+      <label for="passwordHash">Mot de passe</label>
       <input
         type="text"
         formControlName="passwordHash"
@@ -57,7 +57,8 @@
     </div>
     <div class="form-group" [formGroup]="passwordForm">
       <label for="passwordLength"
-        >Password Length: {{ passwordForm.get("passwordLength")?.value }}</label
+        >Longueur du mot de passe:
+        {{ passwordForm.get("passwordLength")?.value }}</label
       >
       <input
         type="range"
@@ -75,7 +76,9 @@
         formControlName="useNumbers"
         class="form-check-input"
       />
-      <label class="form-check-label" for="useNumbers">Use Numbers</label>
+      <label class="form-check-label" for="useNumbers"
+        >Utiliser des chiffres</label
+      >
     </div>
     <div class="form-check" [formGroup]="passwordForm">
       <input
@@ -85,7 +88,7 @@
         class="form-check-input"
       />
       <label class="form-check-label" for="useUppercase"
-        >Use Uppercase Letters</label
+        >Utiliser des lettres majuscules</label
       >
     </div>
     <div class="form-check" [formGroup]="passwordForm">
@@ -96,17 +99,17 @@
         class="form-check-input"
       />
       <label class="form-check-label" for="useSpecialCharacters"
-        >Use Special Characters</label
+        >Utiliser des caractères spéciaux</label
       >
     </div>
     <button (click)="generatePassword()" class="btn btn-secondary">
-      Generate Password
+      Générer un mot de passe
     </button>
 
     <!-- ... rest of your form -->
 
     <div class="form-group">
-      <label for="phoneNumber">Phone Number</label>
+      <label for="phoneNumber">Numéro de téléphone</label>
       <input
         type="tel"
         formControlName="phoneNumber"
@@ -115,7 +118,7 @@
       />
     </div>
     <div class="form-group">
-      <label for="address">Address</label>
+      <label for="address">Adresse</label>
       <input
         type="text"
         formControlName="address"
@@ -124,7 +127,7 @@
       />
     </div>
     <div class="form-group">
-      <label for="profilePicture">Profile Picture</label>
+      <label for="profilePicture">Photo de profil</label>
       <input
         type="file"
         class="form-control-file"
@@ -133,16 +136,16 @@
       />
     </div>
     <div class="form-group">
-      <label for="jobId">Job Title</label>
+      <label for="jobId">Titre du profil</label>
       <select formControlName="jobId" class="form-control" id="jobId">
         <option *ngFor="let job of jobs" [value]="job.id" class="form-control">
           {{ job.title }}
         </option>
       </select>
     </div>
-    <button type="submit" class="btn btn-primary">Create User</button>
+    <button type="submit" class="btn btn-primary">Créer un utilisateur</button>
   </form>
   <button class="btn btn-secondary mt-3" [routerLink]="'/listUsers'">
-    See List of users
+    Consulter la liste des utilisateurs
   </button>
 </div>
